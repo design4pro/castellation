@@ -1,0 +1,53 @@
+---
+import SiteHeader from '../components/SiteHeader.astro';
+import Layout from '../layouts/Layout.astro';
+import { env } from 'cloudflare:workers';
+const lang = Astro.url.searchParams.get('lang') === 'pl' ? 'pl' : 'en';
+const pl = lang === 'pl';
+let example;
+try {
+  const api = import.meta.env.PUBLIC_API_URL;
+  const request = (path) => api ? fetch(`${api}${path}`) : env.API.fetch(new Request(`${Astro.url.origin}${path}`));
+  const catalog = await request('/api/books');
+  if (catalog.ok) {
+    const { books } = await catalog.json();
+    if (books[0]) {
+      const response = await request(`/api/books/${encodeURIComponent(books[0].slug)}`);
+      if (response.ok) {
+        const data = await response.json();
+        const relation = data.story.relations[0];
+        const from = data.story.characters.find((item) => item.id === relation?.from);
+        const to = data.story.characters.find((item) => item.id === relation?.to);
+        if (from && to) example = { book: data.book, progress: data.progress, relation, from, to };
+      }
+    }
+  }
+} catch { /* The guide remains available if the catalog is temporarily unavailable. */ }
+const steps = pl ? [
+  { number: '01', title: 'Wybierz historię', text: 'Otwórz książkę z biblioteki i przejdź do jej mapy bohaterów.', visual: 'A WORLD OF STORIES', mark: '✳' },
+  { number: '02', title: 'Ustaw swój postęp', text: 'Wybierz w mapie tom i rozdział, do którego już dotarłeś. Mapa pokazuje informacje dostępne do tego miejsca.', visual: 'YOUR READING PROGRESS', mark: '01 → 02' },
+  { number: '03', title: 'Odkrywaj powiązania', text: 'Przeglądaj postacie, ich relacje i wydarzenia. Otwórz profil bohatera, aby zobaczyć jego połączenia.', visual: 'CHARACTERS & CONNECTIONS', mark: '✦ — ✦' },
+] : [
+  { number: '01', title: 'Choose a story', text: 'Open a book from the library and step into its character map.', visual: 'A WORLD OF STORIES', mark: '✳' },
+  { number: '02', title: 'Set your reading progress', text: 'Choose the volume and chapter you have reached on the map. It shows information available up to that point.', visual: 'YOUR READING PROGRESS', mark: '01 → 02' },
+  { number: '03', title: 'Follow the connections', text: 'Explore characters, relationships and events. Open a character profile to see their connections.', visual: 'CHARACTERS & CONNECTIONS', mark: '✦ — ✦' },
+];
+---
+<Layout lang={lang} title={pl ? 'Jak działa mapa bohaterów książki - Castellation' : 'How a book character map works - Castellation'} description={pl ? 'Dowiedz się, jak odkrywać bohaterów książek i ich relacje, wybierając własny postęp czytania.' : 'Learn how to explore book characters and their connections at your own reading pace.'}>
+  <SiteHeader lang={lang} />
+  <main><section class="guide-hero"><div class="wrap guide-hero-inner"><p class="eyebrow">✦ {pl ? 'TWÓJ PRZEWODNIK' : 'YOUR READER’S GUIDE'}</p><h1>{pl ? 'Widzisz tylko tyle,' : 'See only what'}<br /><em>{pl ? 'ile przeczytasz.' : 'you have read.'}</em></h1><p>{pl ? 'Historie mają wiele wątków. Castellation pomaga je śledzić we własnym tempie.' : 'Stories have many threads. Castellation helps you follow them at your own pace.'}</p><a class="primary-button" href={`/library?lang=${lang}`}>{pl ? 'Wybierz książkę' : 'Choose a book'} <span aria-hidden="true">↗</span></a><span class="guide-hero-symbol" aria-hidden="true">✳</span></div></section>
+    <section class="wrap guide-steps" aria-labelledby="guide-steps-title"><div class="collection-bar"><h2 id="guide-steps-title">{pl ? 'Trzy kroki do historii' : 'Three steps into the story'}</h2><span>01 - 03</span></div>{steps.map((step) => <article class="guide-step"><div class="guide-step-copy"><span class="guide-number">{step.number}</span><h3>{step.title}</h3><p>{step.text}</p></div><div class="guide-visual" aria-hidden="true"><span>{step.visual}</span><strong>{step.mark}</strong></div></article>)}</section>
+    {example && <section class="wrap example-section" aria-labelledby="example-title"><div class="example-heading"><div><p class="eyebrow">✦ {pl ? 'ZOBACZ NA PRZYKŁADZIE' : 'SEE IT IN A STORY'}</p><h2 id="example-title">{pl ? 'Jedna relacja. Więcej kontekstu.' : 'One connection. More context.'}</h2></div><p>{pl ? 'Tak wygląda początek mapy książki' : 'This is how the map begins for'} <strong>{example.book.title}</strong>. {pl ? 'Wybór rozdziału wyznacza zakres widocznych informacji.' : 'Your selected chapter determines what is visible.'}</p></div><div class="example-map"><div class="example-meta"><span>✳ {example.book.title}</span><span>{pl ? 'TOM' : 'VOLUME'} {example.progress.volume} / {pl ? 'ROZDZIAŁ' : 'CHAPTER'} {example.progress.chapter}</span></div><div class="example-connection"><a href={`/books/${encodeURIComponent(example.book.slug)}/characters/${encodeURIComponent(example.from.slug)}?lang=${lang}`}><span class="example-avatar" aria-hidden="true">{example.from.name.slice(0, 1)}</span><strong>{example.from.name}</strong><small>{pl ? 'Profil bohatera' : 'Character profile'} ↗</small></a><div class="example-edge"><span>{example.relation.label}</span><div aria-hidden="true">────────→</div></div><a href={`/books/${encodeURIComponent(example.book.slug)}/characters/${encodeURIComponent(example.to.slug)}?lang=${lang}`}><span class="example-avatar" aria-hidden="true">{example.to.name.slice(0, 1)}</span><strong>{example.to.name}</strong><small>{pl ? 'Profil bohatera' : 'Character profile'} ↗</small></a></div><div class="example-bottom"><p>{pl ? 'To powiązanie jest dostępne na początku historii.' : 'This connection is available at the beginning of the story.'}</p><a class="primary-button" href={`/books/${encodeURIComponent(example.book.slug)}/map?lang=${lang}`}>{pl ? 'Otwórz mapę książki' : 'Open the story map'} ↗</a></div></div></section>}
+    <section class="wrap method-promo"><div><p class="eyebrow">✦ {pl ? 'ZA MAPĄ' : 'BEHIND THE MAP'}</p><h2>{pl ? 'Skąd biorą się informacje?' : 'Where do the details come from?'}</h2><p>{pl ? 'Poznaj nasze podejście do źródeł, AI i ograniczania spoilerów.' : 'Explore our approach to sources, AI and limiting spoilers.'}</p></div><a href={`/our-method?lang=${lang}`}>{pl ? 'Poznaj nasze podejście' : 'Explore our approach'} ↗</a></section>
+    <section class="wrap help-promo"><div><p class="eyebrow">✦ {pl ? 'POMOC CZYTELNIKA' : 'READER HELP'}</p><h2>{pl ? 'Masz jeszcze pytania?' : 'Still have questions?'}</h2><p>{pl ? 'Sprawdź odpowiedzi o koncie, zapisie i rozdziałach.' : 'Find answers about accounts, saving and chapters.'}</p></div><a href={`/help?lang=${lang}`}>{pl ? 'Otwórz pomoc' : 'Visit reader help'} ↗</a></section>
+    <section class="guide-cta"><div class="wrap"><p class="eyebrow">✦ {pl ? 'GOTOWY NA POCZĄTEK?' : 'READY TO BEGIN?'}</p><h2>{pl ? 'Twoja następna historia czeka.' : 'Your next story awaits.'}</h2><a class="primary-button" href={`/library?lang=${lang}`}>{pl ? 'Odkryj bibliotekę' : 'Explore the library'} <span aria-hidden="true">↗</span></a></div></section>
+  </main><footer class="wrap footer"><a class="brand" href={`/?lang=${lang}`}>✳ castellation<span class="brand-dot">.</span></a><p>{pl ? 'Historie są lepsze, gdy widzisz ich powiązania.' : 'Stories are better when you see the connections.'}</p><span>© {new Date().getFullYear()} CASTELLATION</span></footer>
+</Layout>
+
+<style>
+.example-section{padding-block:20px 100px}.example-heading{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:end;margin-bottom:35px}.example-heading h2{font:500 clamp(34px,4vw,50px)/1.15 'Playfair Display',serif;margin:15px 0 0}.example-heading>p{color:#53675a;line-height:1.75;max-width:450px}.example-map{background:#dfe8dd;padding:36px 42px}.example-meta{display:flex;justify-content:space-between;gap:15px;border-bottom:1px solid #b3c5b4;padding-bottom:20px;font-size:10px;font-weight:700;letter-spacing:.12em}.example-connection{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:center;gap:20px;padding:50px 0}.example-connection>a{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}.example-avatar{width:110px;height:110px;display:grid;place-items:center;border-radius:50%;background:#526e5a;color:#fff;font:500 54px 'Playfair Display',serif}.example-connection>a:last-child .example-avatar{background:#a66a4d}.example-connection strong{overflow-wrap:anywhere;max-width:100%;font:500 25px 'Playfair Display',serif}.example-connection small{font-size:12px;text-decoration:underline;text-underline-offset:4px}.example-edge{min-width:0;text-align:center;color:#53675a;font-size:13px}.example-edge div{letter-spacing:-2px;white-space:nowrap;overflow:hidden;color:#a35e3e;font-size:20px}.example-bottom{display:flex;justify-content:space-between;gap:20px;align-items:center;border-top:1px solid #b3c5b4;padding-top:20px}.example-bottom p{font-size:13px;line-height:1.6;color:#405448}@media(max-width:760px){.example-section{padding-block:10px 65px}.example-heading{grid-template-columns:1fr;gap:5px}.example-map{padding:24px 18px}.example-meta{flex-wrap:wrap}.example-connection{gap:5px;padding:35px 0}.example-avatar{width:68px;height:68px;font-size:36px}.example-connection strong{font-size:17px}.example-edge{font-size:11px}.example-bottom{display:block}.example-bottom .primary-button{margin-top:12px}}
+</style>
+
+<style>.method-promo{display:flex;align-items:end;justify-content:space-between;gap:35px;border-top:1px solid #b8c3b7;padding-block:50px 75px}.method-promo h2{font:500 clamp(30px,3vw,42px) 'Playfair Display',serif;margin:15px 0}.method-promo p:not(.eyebrow){color:#53675a;line-height:1.7}.method-promo a{font-size:13px;font-weight:700;text-decoration:underline;text-underline-offset:5px;white-space:nowrap}@media(max-width:760px){.method-promo{display:block;padding-block:40px 60px}.method-promo a{display:inline-block;margin-top:12px}}</style>
+
+<style>.help-promo{display:flex;align-items:end;justify-content:space-between;gap:30px;padding:35px 40px;margin-bottom:75px;background:#e9e5d9}.help-promo h2{font:500 clamp(30px,3vw,40px) 'Playfair Display',serif;margin:15px 0}.help-promo p:not(.eyebrow){color:#405448;line-height:1.7}.help-promo a{font-size:13px;font-weight:700;text-decoration:underline;text-underline-offset:5px;white-space:nowrap}@media(max-width:760px){.help-promo{display:block;padding:25px;margin-bottom:55px}.help-promo a{display:inline-block;margin-top:12px}}</style>

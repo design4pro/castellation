@@ -1,0 +1,26 @@
+---
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import Layout from '../../layouts/Layout.astro';
+import { env } from 'cloudflare:workers';
+const author = Astro.params.author || '';
+const lang = Astro.url.searchParams.get('lang') === 'pl' ? 'pl' : 'en';
+const pl = lang === 'pl';
+type Book = { slug: string; title: string; author: string };
+let books: Book[] = [];
+let status = 200;
+try {
+  const api = import.meta.env.PUBLIC_API_URL;
+  const response = api ? await fetch(`${api}/api/books`) : await env.API.fetch(new Request(`${Astro.url.origin}/api/books`));
+  if (!response.ok) status = 503;
+  else { const data = await response.json(); books = data.books.filter((book: Book) => book.author === author); if (!books.length) status = 404; }
+} catch { status = 503; }
+Astro.response.status = status;
+const title = status === 200 ? `${author} - ${pl ? 'książki i bohaterowie' : 'books and characters'} - Castellation` : (pl ? 'Autor - Castellation' : 'Author - Castellation');
+const description = status === 200 ? (pl ? `Odkryj książki autora ${author} dostępne w Castellation i poznaj ich bohaterów.` : `Explore books by ${author} available on Castellation and discover their characters.`) : '';
+---
+<Layout lang={lang} title={title} description={description} noindex={status !== 200}>
+  <SiteHeader lang={lang} />
+  <main class="wrap author-page">{status === 200 ? <><Breadcrumbs lang={lang} structured={true} items={[{ label: pl ? 'Biblioteka' : 'Library', href: `/library?lang=${lang}` }, { label: author }]} /><section class="author-hero"><div><p class="eyebrow">✦ {pl ? 'AUTOR W BIBLIOTECE' : 'AUTHOR IN THE LIBRARY'}</p><h1>{author}</h1><p>{pl ? 'Odkrywaj historie tego autora dostępne w Castellation i poznawaj ich bohaterów we własnym tempie.' : 'Explore this author’s stories available on Castellation and meet their characters at your own pace.'}</p><a class="author-jump" href="#author-books">{pl ? 'Zobacz książki' : 'See the books'} ↓</a></div><div class="author-emblem" aria-hidden="true"><span>{author.slice(0, 1)}</span><small>✳ CASTELLATION</small></div></section>{author === 'Lewis Carroll' && books.some((book) => book.slug === 'alices-adventures-in-wonderland') && <aside class="author-editorial"><div><p class="eyebrow">✦ {pl ? 'ZA HISTORIĄ' : 'BEHIND THE STORY'}</p><h2>{pl ? 'Od rzeki do Krainy Czarów.' : 'From the river to Wonderland.'}</h2><p>{pl ? 'Poznaj początki opowieści o Alicji na podstawie źródeł bibliotecznych.' : 'Explore the origins of Alice through library sources.'}</p></div><a href={`/guides/lewis-carroll-and-alice?lang=${lang}`}>{pl ? 'Przeczytaj historię' : 'Read the story'} ↗</a></aside>}<section id="author-books"><div class="collection-bar"><h2>{pl ? 'Książki w Castellation' : 'Books on Castellation'}</h2><span>{String(books.length).padStart(2, '0')}</span></div><ol class="author-books">{books.map((book, index) => <li><a href={`/books/${encodeURIComponent(book.slug)}?lang=${lang}`}><span>{String(index + 1).padStart(2, '0')}</span><strong>{book.title}</strong><span>{pl ? 'Odkryj historię' : 'Explore story'} ↗</span></a></li>)}</ol></section></> : <h1>{status === 503 ? (pl ? 'Biblioteka jest chwilowo niedostępna' : 'Library temporarily unavailable') : (pl ? 'Nie znaleziono autora' : 'Author not found')}</h1>}</main>
+  <footer class="wrap footer"><a class="brand" href={`/?lang=${lang}`}>✳ castellation<span class="brand-dot">.</span></a><p>{pl ? 'Historie są lepsze, gdy widzisz ich powiązania.' : 'Stories are better when you see the connections.'}</p><span>© {new Date().getFullYear()} CASTELLATION</span></footer>
+</Layout>

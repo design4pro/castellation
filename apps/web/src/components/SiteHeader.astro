@@ -1,0 +1,14 @@
+---
+import LanguageSwitcher from './LanguageSwitcher.astro';
+const { lang = 'en' } = Astro.props;
+const pl = lang === 'pl';
+const links = [
+  { href: `/library?lang=${lang}`, text: pl ? 'Biblioteka' : 'Library', active: Astro.url.pathname === '/library' },
+  { href: `/guides?lang=${lang}`, text: pl ? 'Przewodniki' : 'Guides', active: Astro.url.pathname.startsWith('/guides') },
+  { href: `/how-it-works?lang=${lang}`, text: pl ? 'Jak to działa' : 'How it works', active: Astro.url.pathname === '/how-it-works' },
+  { href: `/account?lang=${lang}`, text: pl ? 'Konto' : 'Account', active: Astro.url.pathname === '/account' },
+];
+---
+<header class="site-header wrap"><a class="brand" href={`/?lang=${lang}`} aria-label={pl ? 'Castellation - strona główna' : 'Castellation home'}><span class="brand-mark">✳</span> castellation<span class="brand-dot">.</span></a><nav class="site-nav-desktop" aria-label={pl ? 'Nawigacja główna' : 'Main navigation'}>{links.map((link) => <a href={link.href} aria-current={link.active ? 'page' : undefined}>{link.text}</a>)}<LanguageSwitcher lang={lang} /></nav><details class="site-nav-mobile"><summary>{pl ? 'Menu' : 'Menu'} <span aria-hidden="true">☰</span></summary><nav aria-label={pl ? 'Nawigacja główna' : 'Main navigation'}>{links.map((link) => <a href={link.href} aria-current={link.active ? 'page' : undefined}>{link.text}<span aria-hidden="true">↗</span></a>)}<LanguageSwitcher lang={lang} /></nav></details></header>
+
+<style>.site-header .site-nav-mobile .locale-switch{align-self:flex-start;margin-top:14px}.site-header .site-nav-mobile .locale-switch a{display:grid;place-items:center;min-height:38px;border:0;font-size:11px}</style>

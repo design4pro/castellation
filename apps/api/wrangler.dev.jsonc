@@ -40,6 +40,7 @@
   ],
   "vars": {
     "BETTER_AUTH_URL": "https://castellation-web-dev.design4pro.workers.dev",
-    "WEB_ORIGIN": "https://castellation-web-dev.design4pro.workers.dev"
+    "WEB_ORIGIN": "https://castellation-web-dev.design4pro.workers.dev",
+    "EMAIL_FROM": "no-replay@design4.pro"
   }
 }

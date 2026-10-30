@@ -18,7 +18,8 @@ const d1 = {
 };
 const repository = d1Repository(d1);
 const messages=[];
-const env={DB:d1,EMAIL:{async send(message){messages.push(message)}},EMAIL_FROM:'dev@example.test',BETTER_AUTH_SECRET:'local-development-only-secret-1234567890',BETTER_AUTH_URL:process.env.DEV_AUTH_URL || 'http://localhost:8787',WEB_ORIGIN:process.env.DEV_WEB_ORIGIN || 'http://localhost:4321'};
+const port = Number(process.env.DEV_PORT || 8787);
+const env={DB:d1,EMAIL:{async send(message){messages.push(message)}},EMAIL_FROM:'dev@example.test',BETTER_AUTH_SECRET:'local-development-only-secret-1234567890',BETTER_AUTH_URL:process.env.DEV_AUTH_URL || `http://localhost:${port}`,WEB_ORIGIN:process.env.DEV_WEB_ORIGIN || 'http://localhost:4321'};
 createServer(async (request, response) => {
   try {
     if (request.url === '/__dev/outbox' && process.env.DEV_TEST_OUTBOX === '1') { response.writeHead(200,{'content-type':'application/json','cache-control':'no-store'}); response.end(JSON.stringify(messages)); return; }
@@ -31,4 +32,4 @@ createServer(async (request, response) => {
     response.writeHead(result.status, Object.fromEntries(result.headers));
     response.end(Buffer.from(await result.arrayBuffer()));
   } catch(error) { console.error('Request failed',error.message); response.writeHead(500); response.end('Internal error'); }
-}).listen(8787, process.env.DEV_LISTEN_HOST || 'localhost', () => console.log('Demo API listening at http://127.0.0.1:8787'));
+}).listen(port, process.env.DEV_LISTEN_HOST || 'localhost', () => console.log(`Demo API listening on port ${port}`));

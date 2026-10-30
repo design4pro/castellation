@@ -1,5 +1,7 @@
 ---
+import SiteHeader from '../components/SiteHeader.astro';
 import Layout from '../layouts/Layout.astro';
+import { env } from 'cloudflare:workers';
 const lang = Astro.url.searchParams.get('lang') === 'pl' ? 'pl' : 'en';
 const t = lang === 'pl' ? {
   nav: 'Biblioteka', explore: 'Odkryj książki', eyebrow: 'KAŻDA HISTORIA MA SWOJĄ KONSTELACJĘ',
@@ -10,32 +12,71 @@ const t = lang === 'pl' ? {
   title1: 'See stories in', title2: 'a different light.', intro: 'Meet the characters, discover their connections, and follow the story at your own pace. No spoilers.',
   button: 'Explore the library', note: 'Your companion between the pages', section: 'CHOOSE YOUR STORY', heading: 'Step into another world', desc: 'Discover stories and the characters who live in them.', loading: 'Loading the library...', empty: 'The library is being prepared. Please come back soon.', footer: 'Stories are better when you see the connections.', switch: 'Polski', ticker1:'EVERY CHARACTER', ticker2:'EVERY CONNECTION', ticker3:'ONE STORY AT A TIME', manifestoEyebrow:'A LITTLE MORE WONDER', manifestoTitle:'Every page is a', manifestoEm:'new connection.', manifestoText:'Follow the threads between characters as their stories unfold, chapter by chapter.'
 };
-const api = import.meta.env.PUBLIC_API_URL || Astro.url.origin;
+const api = import.meta.env.PUBLIC_API_URL;
+type Book = { slug: string; title: string; author: string };
+let books: Book[] = [];
+try {
+  const response = api ? await fetch(`${api}/api/books`) : await env.API.fetch(new Request(`${Astro.url.origin}/api/books`));
+  if (response.ok) books = (await response.json()).books;
+} catch { /* Keep the page usable when the catalog is unavailable. */ }
+const featured = books.slice(0, 2);
 ---
-<Layout lang={lang}>
-  <header class="site-header wrap"><a class="brand" href={`/?lang=${lang}`} aria-label="Castellation home"><span class="brand-mark">✳</span> castellation<span class="brand-dot">.</span></a><nav aria-label="Main navigation"><a href={`/account?lang=${lang}`}>{lang === "pl" ? "Konto" : "Account"}</a><a href="#library">{t.nav}</a><a class="language" href={`/?lang=${lang === 'en' ? 'pl' : 'en'}`}>{t.switch}</a><a class="header-cta" href="#library">{t.explore}<span>↗</span></a></nav></header>
+<Layout lang={lang} title={lang === 'pl' ? 'Castellation - odkrywaj bohaterów książek i ich relacje' : 'Castellation - discover book characters and their connections'} description={lang === 'pl' ? 'Odkrywaj bohaterów książek i ich relacje we własnym tempie, bez spoilerów.' : 'Explore book characters and their connections at your own pace, without spoilers.'}>
+  <SiteHeader lang={lang} />
   <main>
-    <section class="hero wrap"><div class="hero-copy"><p class="eyebrow"><span>✦</span> {t.eyebrow}</p><h1>{t.title1}<br /><em>{t.title2}</em></h1><p class="hero-intro">{t.intro}</p><a class="primary-button" href="#library">{t.button}<span>↗</span></a><p class="hero-note"><span>✦</span> {t.note}</p></div><div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="art-center"><span class="art-spark">✳</span><span class="art-caption">A WORLD OF STORIES<br />CONNECTED</span></div><div class="star s1">✦</div><div class="star s2">✦</div><div class="star s3">✧</div><div class="star s4">✦</div><div class="art-label label-one">CHARACTERS <span>01</span></div><div class="art-label label-two">CONNECTIONS <span>02</span></div><div class="art-label label-three">YOUR JOURNEY <span>03</span></div></div></section>
+    <section class="hero wrap"><div class="hero-copy"><p class="eyebrow"><span>✦</span> {t.eyebrow}</p><h1>{t.title1}<br /><em>{t.title2}</em></h1><p class="hero-intro">{t.intro}</p><a class="primary-button" href={`/library?lang=${lang}`}>{t.button}<span>↗</span></a><p class="hero-note"><span>✦</span> {t.note}</p></div>{featured.length > 0 && <div class="story-choices" aria-label={lang === 'pl' ? 'Wybierz historię' : 'Choose a story'}>{featured.map((book, index) => <a class={`story-choice ${book.slug === 'alices-adventures-in-wonderland' ? 'story-choice-illustrated' : ''}`} href={`/books/${encodeURIComponent(book.slug)}?lang=${lang}`}>{book.slug === 'alices-adventures-in-wonderland' ? <><img src="/images/alice-rabbit-hole.webp" alt="" width="768" height="1152" fetchpriority="high" /><span class="story-choice-shade" aria-hidden="true"></span></> : <span class="story-choice-mark" aria-hidden="true">✳</span>}<span class="story-choice-number">0{index + 1} / {lang === 'pl' ? 'HISTORIA' : 'STORY'}</span><span class="story-choice-copy"><strong>{book.title}</strong><span>{book.author}</span><span class="story-choice-action">{lang === 'pl' ? 'Odkryj historię' : 'Explore the story'} ↗</span></span></a>)}</div>}</section>
+    <section id="resume-shelf" class="resume-shelf wrap" data-api={api || Astro.url.origin} data-lang={lang} hidden aria-labelledby="resume-title"><div class="resume-heading"><div><p class="eyebrow" id="resume-source-label">✦ {lang === 'pl' ? 'TWOJE HISTORIE NA TYM URZĄDZENIU' : 'YOUR STORIES ON THIS DEVICE'}</p><h2 id="resume-title">{lang === 'pl' ? 'Wróć do historii.' : 'Return to your stories.'}</h2></div><p id="resume-source-description">{lang === 'pl' ? 'Lokalny zapis z tej przeglądarki - osobny od postępu konta.' : 'A local copy from this browser, separate from account progress.'}</p></div><div class="resume-list">{books.map((book) => <a class="resume-item" data-slug={book.slug} hidden><span aria-hidden="true">✳</span><span><strong>{book.title}</strong><small class="resume-position"></small></span><span class="resume-action">{lang === 'pl' ? 'Wróć do mapy' : 'Return to the map'} ↗</span></a>)}</div></section>
     <div class="ticker" aria-hidden="true"><span>{t.ticker1}</span><i>✳</i><span>{t.ticker2}</span><i>✳</i><span>{t.ticker3}</span><i>✳</i><span>{t.ticker1}</span><i>✳</i><span>{t.ticker2}</span></div>
-    <section class="library wrap" id="library"><div class="section-heading"><div><p class="eyebrow">{t.section}</p><h2>{t.heading}</h2></div><p>{t.desc}</p></div><div id="books" class="book-grid" data-api={api} data-lang={lang} data-empty={t.empty}><p class="empty-state">{t.loading}</p></div></section>
-    <section class="manifesto"><div class="wrap manifesto-inner"><span class="manifesto-star">✳</span><div><p class="eyebrow">{t.manifestoEyebrow}</p><h2>{t.manifestoTitle}<br /><em>{t.manifestoEm}</em></h2></div><p>{t.manifestoText}</p></div></section>
+    <section class="library wrap" id="library"><div class="section-heading"><div><p class="eyebrow">{t.section}</p><h2>{t.heading}</h2></div><p>{t.desc}</p></div><div id="books" class="book-grid">{books.length ? books.map((book, index) => <a class="book-card" href={`/books/${encodeURIComponent(book.slug)}?lang=${lang}`}><div class={`book-art tone-${index % 3}`} aria-hidden="true">{book.slug === 'alices-adventures-in-wonderland' ? <img src="/images/alice-rabbit-hole.webp" alt="" width="768" height="1152" loading="lazy" /> : '✳'}</div><h3>{book.title}</h3><p>{book.author}</p></a>) : <p class="empty-state">{t.empty}</p>}</div></section>
+    <section class="wrap editorial-feature"><div><p class="eyebrow">✦ {lang === 'pl' ? 'PORADNIK CZYTELNIKA' : 'THE READER’S GUIDE'}</p><h2>{lang === 'pl' ? 'Nie zgub wątku.' : 'Keep the threads together.'}</h2><p>{lang === 'pl' ? 'Jak zapamiętać bohaterów i ich relacje bez odkrywania historii naprzód.' : 'How to remember characters and their connections without reading ahead.'}</p><a href={`/guides/track-characters?lang=${lang}`}>{lang === 'pl' ? 'Przeczytaj poradnik' : 'Read the guide'} ↗</a></div><div class="editorial-feature-art" aria-hidden="true"><span>✳</span><span>✦</span></div></section>
+    <section class="manifesto"><div class="wrap manifesto-inner"><span class="manifesto-star">✳</span><div><p class="eyebrow">{t.manifestoEyebrow}</p><h2>{t.manifestoTitle}<br /><em>{t.manifestoEm}</em></h2></div><div><p>{t.manifestoText}</p><a class="guide-inline-link" href={`/how-it-works?lang=${lang}`}>{lang === 'pl' ? 'Jak to działa?' : 'How does it work?'} ↗</a></div></div></section>
   </main><footer class="wrap footer"><a class="brand" href="/">✳ castellation<span class="brand-dot">.</span></a><p>{t.footer}</p><span>© {new Date().getFullYear()} CASTELLATION</span></footer>
-  <script>
-    const container = document.querySelector<HTMLElement>('#books');
-    if (container) {
-      const { api, lang, empty } = container.dataset;
-      if (!api) container.textContent = empty ?? '';
-      else fetch(`${api}/api/books`).then((response) => { if (!response.ok) throw new Error('Unable to load books'); return response.json(); }).then(({books}) => {
-        container.replaceChildren();
-        if (!books.length) { container.textContent = empty ?? ''; return; }
-        books.forEach((book: {slug: string; title: string; author: string}, index: number) => {
-          const link = document.createElement('a'); link.className = 'book-card'; link.href = `/books/${encodeURIComponent(book.slug)}?lang=${lang}`;
-          const art = document.createElement('div'); art.className = `book-art tone-${index % 3}`; art.setAttribute('aria-hidden', 'true'); art.textContent = '✳';
-          const title = document.createElement('h3'); title.textContent = book.title;
-          const author = document.createElement('p'); author.textContent = book.author;
-          link.append(art, title, author); container.append(link);
+<script>
+  const shelf = document.querySelector<HTMLElement>('#resume-shelf');
+  if (shelf) {
+    const api = shelf.dataset.api;
+    const lang = shelf.dataset.lang;
+    const items = [...shelf.querySelectorAll<HTMLAnchorElement>('.resume-item')];
+    const valid = (saved: any) => Number.isSafeInteger(saved?.volume) && saved.volume > 0 && Number.isSafeInteger(saved?.chapter) && saved.chapter > 0;
+    const local = items.flatMap((item) => {
+      try { const saved = JSON.parse(localStorage.getItem(`castellation:guest-progress:${item.dataset.slug}`) || 'null'); return valid(saved) ? [{ item, saved }] : []; } catch { return []; }
+    });
+    if (api && items.length) {
+      const check = async () => {
+        let first: Response | undefined;
+        try { first = await fetch(`${api}/api/progress/${encodeURIComponent(items[0].dataset.slug || '')}`, { credentials: 'include' }); } catch { /* A separate local copy may remain available. */ }
+        let candidates = local;
+        if (first?.ok) {
+          const accountResults = await Promise.all(items.map(async (item, index) => {
+            try {
+              const response = index === 0 ? first : await fetch(`${api}/api/progress/${encodeURIComponent(item.dataset.slug || '')}`, { credentials: 'include' });
+              if (!response?.ok) return null;
+              const { progress } = await response.json();
+              return valid(progress) ? { item, saved: progress } : null;
+            } catch { return null; }
+          }));
+          candidates = accountResults.filter((entry): entry is NonNullable<typeof entry> => entry !== null);
+          shelf.querySelector('#resume-source-label')!.textContent = lang === 'pl' ? '✦ TWOJE HISTORIE NA KONCIE' : '✦ YOUR ACCOUNT STORIES';
+          shelf.querySelector('#resume-source-description')!.textContent = lang === 'pl' ? 'Postęp zapisany na Twoim koncie.' : 'Progress saved to your account.';
+        } else if (first && first.status !== 401 && first.status < 500) return;
+        const results = await Promise.all(candidates.map(async ({ item, saved }) => {
+          try { const response = await fetch(`${api}/api/books/${encodeURIComponent(item.dataset.slug || '')}?volume=${saved.volume}&chapter=${saved.chapter}`); return response.ok ? { item, saved } : null; } catch { return null; }
+        }));
+        results.forEach((entry) => {
+          if (!entry) return;
+          const { item, saved } = entry;
+          item.href = `/books/${encodeURIComponent(item.dataset.slug || '')}/map?lang=${lang}&volume=${saved.volume}&chapter=${saved.chapter}`;
+          item.querySelector('.resume-position')!.textContent = lang === 'pl' ? `Tom ${saved.volume} · Rozdział ${saved.chapter}` : `Volume ${saved.volume} · Chapter ${saved.chapter}`;
+          item.hidden = false;
         });
-      }).catch(() => { container.textContent = empty ?? ''; });
+        if (results.some(Boolean)) shelf.hidden = false;
+      };
+      void check();
     }
-  </script>
+  }
+</script>
 </Layout>
+
+<style>
+.story-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:stretch}.story-choice{min-height:430px;position:relative;overflow:hidden;border-radius:48% 48% 2px 2px;background:#334b3d;color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:45px 24px 26px}.story-choice img,.story-choice-shade{position:absolute;inset:0;width:100%;height:100%}.story-choice img{object-fit:cover;object-position:center 42%}.story-choice-shade{background:linear-gradient(180deg,rgba(20,35,25,.45),rgba(20,35,25,.1) 30%,rgba(20,35,25,.95) 100%)}.story-choice-mark{position:absolute;top:23%;left:50%;transform:translateX(-50%);font-size:95px;color:#cda58a}.story-choice-number{position:relative;z-index:1;text-align:center;font-size:9px;letter-spacing:.14em;font-weight:700}.story-choice-copy{position:relative;z-index:1;display:flex;flex-direction:column;gap:10px}.story-choice-copy strong{font:500 clamp(25px,2.4vw,34px)/1.12 'Playfair Display',serif;letter-spacing:-.02em;overflow-wrap:anywhere}.story-choice-copy>span:not(.story-choice-action){font-size:13px;color:#e3e9e0}.story-choice-action{border-top:1px solid #b4c5b4;padding-top:14px;margin-top:10px;font-size:12px;font-weight:700}.story-choice:hover .story-choice-copy strong{text-decoration:underline;text-underline-offset:4px}@media(max-width:760px){.story-choices{gap:12px}.story-choice{min-height:340px;padding:38px 18px 22px}.story-choice-mark{font-size:75px}}@media(max-width:430px){.story-choices{grid-template-columns:1fr}.story-choice{min-height:320px;padding:38px 24px 22px}.story-choice-copy strong{font-size:30px}.story-choice-number{font-size:8px}.story-choice-mark{font-size:60px}}
+</style>

@@ -1,0 +1,24 @@
+---
+const { lang, items, structured = true } = Astro.props;
+const data = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, index) => ({
+    '@type': 'ListItem', position: index + 1, name: item.label,
+    ...(item.href ? { item: new URL(item.href.split('?')[0], Astro.url.origin).href } : {}),
+  })),
+};
+---
+<nav class="breadcrumbs" aria-label={lang === 'pl' ? 'Ścieżka nawigacji' : 'Breadcrumb'}>
+  <ol>{items.map((item) => <li>{item.href ? <a href={item.href}>{item.label}</a> : <span aria-current="page">{item.label}</span>}</li>)}</ol>
+</nav>
+{structured && <script type="application/ld+json" set:html={JSON.stringify(data).replace(/</g, '\\u003c')} />}
+<style>
+  .breadcrumbs { margin: 0 0 2rem; font-size: .8rem; line-height: 1.5; }
+  ol { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem .65rem; padding: 0; margin: 0; list-style: none; }
+  li { display: flex; align-items: baseline; gap: .65rem; min-width: 0; }
+  li + li::before { content: '/'; opacity: .45; }
+  a { color: inherit; text-underline-offset: .2em; }
+  a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  [aria-current] { opacity: .7; overflow-wrap: anywhere; }
+</style>

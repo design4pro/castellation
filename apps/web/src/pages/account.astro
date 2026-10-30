@@ -1,18 +1,22 @@
 ---
+import SiteHeader from '../components/SiteHeader.astro';
 import Layout from '../layouts/Layout.astro';
 const lang = Astro.url.searchParams.get('lang') === 'pl' ? 'pl' : 'en';
 const pl = lang === 'pl';
+const signup = Astro.url.searchParams.get('mode') === 'signup';
 const api = import.meta.env.PUBLIC_API_URL || Astro.url.origin;
 ---
 <Layout title={pl ? 'Konto - Castellation' : 'Account - Castellation'} lang={lang} noindex={true}>
-<header class="site-header wrap"><a class="brand" href={`/?lang=${lang}`}>✳ castellation<span class="brand-dot">.</span></a><nav><a href={`/?lang=${lang}`}>{pl ? 'Biblioteka' : 'Library'}</a></nav></header>
-<main class="wrap account-page" data-api={api} data-lang={lang}>
-  <p class="eyebrow">CASTELLATION</p><h1>{pl ? 'Twoje konto' : 'Your account'}</h1>
-  <p class="muted">{pl ? 'Zaloguj się, aby synchronizować postęp czytania.' : 'Sign in to synchronize your reading progress.'}</p>
+<SiteHeader lang={lang} />
+<main class="wrap account-shell"><section class="account-story"><p class="eyebrow">✦ {pl ? 'TWOJA HISTORIA TRWA' : 'YOUR STORY CONTINUES'}</p><h1>{pl ? 'Wróć do historii' : 'Pick up where'}<br /><em>{pl ? 'w swoim tempie.' : 'you left off.'}</em></h1><p>{pl ? 'Zaloguj się, aby zapisać postęp czytania i korzystać z niego na innych urządzeniach.' : 'Sign in to save your reading progress and continue on another device.'}</p><div class="account-story-art" aria-hidden="true"><span>✳</span><small>{pl ? 'JEDNA HISTORIA NARAZ' : 'ONE STORY AT A TIME'}</small></div><a class="account-guest" href={`/library?lang=${lang}`}>{pl ? 'Przeglądaj bibliotekę bez konta' : 'Explore the library without an account'} ↗</a></section><section class="account-page" data-api={api} data-lang={lang}>
+  <p class="eyebrow">CASTELLATION</p><h2>{signup ? (pl ? 'Utwórz konto' : 'Create your account') : (pl ? 'Zaloguj się' : 'Sign in')}</h2>
+  <p class="muted">{signup ? (pl ? 'Zapisuj postęp i wracaj do historii na innych urządzeniach.' : 'Save your progress and return to your stories on other devices.') : (pl ? 'Wróć do zapisanego postępu czytania.' : 'Return to your saved reading progress.')}</p>
   <div id="signed-in" hidden><p id="account-email"></p><button id="sign-out" class="primary-button" type="button">{pl ? 'Wyloguj' : 'Sign out'}</button></div>
-  <form id="account-form"><label for="account-name">{pl ? 'Imię' : 'Name'}</label><input id="account-name" name="name" autocomplete="name" maxlength="100" /><label for="account-email-input">E-mail</label><input id="account-email-input" name="email" type="email" autocomplete="email" required maxlength="254" /><label for="account-password">{pl ? 'Hasło - co najmniej 12 znaków' : 'Password - at least 12 characters'}</label><input id="account-password" name="password" type="password" autocomplete="current-password" required minlength="12" maxlength="128" /><div class="account-actions"><button class="primary-button" type="submit" name="action" value="signin">{pl ? 'Zaloguj' : 'Sign in'}</button><button class="secondary-button" type="submit" name="action" value="signup">{pl ? 'Utwórz konto' : 'Create account'}</button></div><button id="forgot-password" class="secondary-button" type="button">{pl ? "Nie pamiętam hasła" : "Forgot password"}</button></form>
-  <p id="account-status" role="status"></p>
-</main>
+  <div id="auth-unavailable" class="auth-unavailable" hidden><p>{pl ? 'Usługa konta jest chwilowo niedostępna. Spróbuj ponownie lub przeglądaj bibliotekę bez konta.' : 'The account service is temporarily unavailable. Try again or explore the library without an account.'}</p><button id="auth-retry" class="secondary-button" type="button">{pl ? 'Spróbuj ponownie' : 'Try again'}</button></div>
+  <form id="account-form" data-action={signup ? 'signup' : 'signin'} hidden>{signup && <><label for="account-name">{pl ? 'Imię' : 'Name'}</label><input id="account-name" name="name" autocomplete="name" required maxlength="100" /></>}<label for="account-email-input">E-mail</label><input id="account-email-input" name="email" type="email" autocomplete="email" required maxlength="254" /><label for="account-password">{pl ? 'Hasło - co najmniej 12 znaków' : 'Password - at least 12 characters'}</label><input id="account-password" name="password" type="password" autocomplete={signup ? 'new-password' : 'current-password'} required minlength="12" maxlength="128" /><div class="account-actions"><button class="primary-button" type="submit">{signup ? (pl ? 'Utwórz konto' : 'Create account') : (pl ? 'Zaloguj' : 'Sign in')}</button></div>{!signup && <button id="forgot-password" class="secondary-button" type="button">{pl ? 'Nie pamiętam hasła' : 'Forgot password'}</button>}<p class="account-switch">{signup ? (pl ? 'Masz już konto?' : 'Already have an account?') : (pl ? 'Nie masz jeszcze konta?' : 'New to Castellation?')} <a href={signup ? `/account?lang=${lang}` : `/account?lang=${lang}&mode=signup`}>{signup ? (pl ? 'Zaloguj się' : 'Sign in') : (pl ? 'Utwórz konto' : 'Create an account')} ↗</a></p></form>
+  <noscript><p>{pl ? 'Logowanie i rejestracja wymagają JavaScript.' : 'Sign-in and registration require JavaScript.'}</p></noscript>
+  <p id="account-status" role="status"></p><p><a class="guide-inline-link" href={`/help?lang=${lang}#progress`}>{pl ? 'Pomoc: konto i postęp' : 'Help: account and progress'} ↗</a></p>
+</section></main>
 <script>
 import { createAuthClient } from 'better-auth/client';
 const root=document.querySelector<HTMLElement>('.account-page')!;
@@ -20,10 +24,20 @@ const api=root.dataset.api!, pl=root.dataset.lang==='pl';
 const status=document.querySelector<HTMLElement>('#account-status')!;
 const form=document.querySelector<HTMLFormElement>('#account-form')!;
 const signed=document.querySelector<HTMLElement>('#signed-in')!;
+const unavailable=document.querySelector<HTMLElement>('#auth-unavailable')!;
 const auth=createAuthClient({baseURL:api,fetchOptions:{credentials:'include'}});
-async function refresh(){try{const result=await auth.getSession();if(result.data?.user){form.hidden=true;signed.hidden=false;document.querySelector('#account-email')!.textContent=result.data.user.email;}else{form.hidden=false;signed.hidden=true;}}catch{status.textContent=pl?'Nie udało się sprawdzić sesji.':'Unable to check your session.';}}
-form.addEventListener('submit',async(event)=>{event.preventDefault();const action=(event as SubmitEvent).submitter as HTMLButtonElement;const values=new FormData(form);const email=String(values.get('email')||'').trim();const password=String(values.get('password')||'');const name=String(values.get('name')||'').trim();if(action?.value==='signup'&&!name){status.textContent=pl?'Podaj imię.':'Enter your name.';return;}status.textContent=pl?'Proszę czekać...':'Please wait...';try{const result=action?.value==='signup'?await auth.signUp.email({email,password,name}):await auth.signIn.email({email,password});if(result.error)throw Error();form.reset();if(action?.value==='signup'){status.textContent=pl?'Sprawdź e-mail i potwierdź adres przed zalogowaniem.':'Check your email and verify your address before signing in.';}else{status.textContent='';}await refresh();}catch{status.textContent=pl?'Nie udało się zalogować lub utworzyć konta.':'Unable to sign in or create an account.';}});
-document.querySelector('#forgot-password')!.addEventListener('click',async()=>{const email=(document.querySelector<HTMLInputElement>('#account-email-input')?.value||'').trim();if(!email){status.textContent=pl?'Podaj adres e-mail.':'Enter your email address.';return;}try{await auth.requestPasswordReset({email,redirectTo:`${location.origin}/reset-password?lang=${pl?'pl':'en'}`});status.textContent=pl?'Jeśli konto istnieje, otrzymasz wiadomość z linkiem.':'If the account exists, a reset link will be sent.';}catch{status.textContent=pl?'Nie udało się wysłać prośby.':'Unable to request a reset.';}});
+async function refresh(){
+  form.hidden=true; signed.hidden=true; unavailable.hidden=true;
+  try {
+    const result=await auth.getSession();
+    if(result.error) throw Error('Session unavailable');
+    if(result.data?.user){signed.hidden=false;document.querySelector('#account-email')!.textContent=result.data.user.email;}
+    else form.hidden=false;
+  } catch { unavailable.hidden=false; }
+}
+document.querySelector('#auth-retry')!.addEventListener('click',()=>{void refresh();});
+form.addEventListener('submit',async(event)=>{event.preventDefault();const action=form.dataset.action;const values=new FormData(form);const email=String(values.get('email')||'').trim();const password=String(values.get('password')||'');const name=String(values.get('name')||'').trim();if(action==='signup'&&!name){status.textContent=pl?'Podaj imię.':'Enter your name.';return;}status.textContent=pl?'Proszę czekać...':'Please wait...';try{const result=action==='signup'?await auth.signUp.email({email,password,name}):await auth.signIn.email({email,password});if(result.error)throw Error();form.reset();if(action==='signup'){status.textContent=pl?'Sprawdź e-mail i potwierdź adres przed zalogowaniem.':'Check your email and verify your address before signing in.';}else{status.textContent='';}await refresh();}catch{status.textContent=action==='signup'?(pl?'Nie udało się utworzyć konta.':'Unable to create an account.'):(pl?'Nie udało się zalogować.':'Unable to sign in.');}});
+document.querySelector('#forgot-password')?.addEventListener('click',async()=>{const email=(document.querySelector<HTMLInputElement>('#account-email-input')?.value||'').trim();if(!email){status.textContent=pl?'Podaj adres e-mail.':'Enter your email address.';return;}try{const result=await auth.requestPasswordReset({email,redirectTo:`${location.origin}/reset-password?lang=${pl?'pl':'en'}`});if(result.error)throw Error();status.textContent=pl?'Jeśli konto istnieje, otrzymasz wiadomość z linkiem.':'If the account exists, a reset link will be sent.';}catch{status.textContent=pl?'Nie udało się wysłać prośby.':'Unable to request a reset.';}});
 document.querySelector('#sign-out')!.addEventListener('click',async()=>{try{const result=await auth.signOut();if(result.error)throw Error();status.textContent='';await refresh();}catch{status.textContent=pl?'Nie udało się wylogować.':'Unable to sign out.';}});
 if(api)refresh();else status.textContent=pl?'Brak skonfigurowanego API.':'The API is not configured.';
 </script>

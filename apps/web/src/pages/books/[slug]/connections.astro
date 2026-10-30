@@ -1,0 +1,31 @@
+---
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import SiteHeader from '../../../components/SiteHeader.astro';
+import Layout from '../../../layouts/Layout.astro';
+import { env } from 'cloudflare:workers';
+const { slug } = Astro.params;
+const lang = Astro.url.searchParams.get('lang') === 'pl' ? 'pl' : 'en';
+const pl = lang === 'pl';
+let book, progress, connections = [];
+let status = 200;
+try {
+  const api = import.meta.env.PUBLIC_API_URL || Astro.url.origin;
+  const url = `${api}/api/books/${encodeURIComponent(slug || '')}`;
+  const response = import.meta.env.PUBLIC_API_URL ? await fetch(url) : await env.API.fetch(new Request(url));
+  if (!response.ok) status = response.status === 404 ? 404 : 503;
+  else {
+    const data = await response.json(); book = data.book; progress = data.progress;
+    const characters = new Map(data.story.characters.map((character) => [character.id, character]));
+    connections = data.story.relations.map((relation) => ({ ...relation, fromCharacter: characters.get(relation.from), toCharacter: characters.get(relation.to) })).filter((relation) => relation.fromCharacter && relation.toCharacter);
+    if (!connections.length) status = 404;
+  }
+} catch { status = 503; }
+Astro.response.status = status;
+const title = status === 200 ? (pl ? `Relacje bohaterów - ${book.title} - Castellation` : `${book.title} character connections - Castellation`) : (pl ? 'Relacje bohaterów - Castellation' : 'Character connections - Castellation');
+const description = status === 200 ? (pl ? `Poznaj relacje bohaterów na początku ${book.title} i odkrywaj ich profile.` : `Explore the character connections at the beginning of ${book.title} and discover their profiles.`) : '';
+---
+<Layout lang={lang} title={title} description={description} noindex={status !== 200}>
+  <SiteHeader lang={lang} />
+  <main class="wrap relations-page">{status === 200 ? <><Breadcrumbs lang={lang} structured={true} items={[{ label: pl ? 'Biblioteka' : 'Library', href: `/library?lang=${lang}` }, { label: book.title, href: `/books/${encodeURIComponent(slug || '')}?lang=${lang}` }, { label: pl ? 'Powiązania' : 'Connections' }]} /><div class="relations-heading"><div><p class="eyebrow">✦ {pl ? 'POŁĄCZENIA W HISTORII' : 'THE THREADS BETWEEN CHARACTERS'}</p><h1>{pl ? 'Historie łączą' : 'Stories connect'}<br /><em>{pl ? 'bohaterów.' : 'characters.'}</em></h1><p>{pl ? 'Poznaj powiązania na początku' : 'Explore the connections at the beginning of'} <strong>{book.title}</strong>.</p></div><div class="relations-symbol" aria-hidden="true"><span>✳</span><span>✳</span><i></i></div></div><p class="relations-scope">✦ {pl ? 'Informacje do' : 'Details through'} {pl ? 'tomu' : 'volume'} {progress.volume}, {pl ? 'rozdziału' : 'chapter'} {progress.chapter}.</p><section aria-labelledby="relations-list-title"><div class="collection-bar"><h2 id="relations-list-title">{pl ? 'Pierwsze powiązania' : 'The first connections'}</h2><span>{String(connections.length).padStart(2, '0')}</span></div><ol class="relations-list">{connections.map((relation, index) => <li><span class="relations-number">{String(index + 1).padStart(2, '0')}</span><div class="relations-pair"><a href={`/books/${encodeURIComponent(slug || '')}/characters/${encodeURIComponent(relation.fromCharacter.slug)}?lang=${lang}`}><strong>{relation.fromCharacter.name}</strong><span>{relation.fromCharacter.descriptions.at(-1)?.text}</span></a><p class="relations-direction"><a href={`/books/${encodeURIComponent(slug || "")}/relations/${encodeURIComponent(relation.id)}?lang=${lang}`}>{relation.label} <span aria-hidden="true">→</span></a></p><a href={`/books/${encodeURIComponent(slug || '')}/characters/${encodeURIComponent(relation.toCharacter.slug)}?lang=${lang}`}><strong>{relation.toCharacter.name}</strong><span>{relation.toCharacter.descriptions.at(-1)?.text}</span></a></div></li>)}</ol></section><div class="opening-next"><p>{pl ? 'Czytasz dalej? Zobacz, jak rozwija się mapa.' : 'Reading on? Watch the map grow with the story.'}</p><a class="primary-button" href={`/books/${encodeURIComponent(slug || '')}/map?lang=${lang}`}>{pl ? 'Otwórz mapę' : 'Open the map'} ↗</a></div></> : <h1>{status === 503 ? (pl ? 'Historia jest chwilowo niedostępna' : 'Story temporarily unavailable') : (pl ? 'Nie znaleziono powiązań' : 'Connections not found')}</h1>}</main>
+  <footer class="wrap footer"><a class="brand" href={`/?lang=${lang}`}>✳ castellation<span class="brand-dot">.</span></a><p>{pl ? 'Historie są lepsze, gdy widzisz ich powiązania.' : 'Stories are better when you see the connections.'}</p><span>© {new Date().getFullYear()} CASTELLATION</span></footer>
+</Layout>

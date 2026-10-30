@@ -1,0 +1,30 @@
+---
+import Breadcrumbs from '../../../../components/Breadcrumbs.astro';
+import SiteHeader from '../../../../components/SiteHeader.astro';
+import Layout from '../../../../layouts/Layout.astro';
+import { env } from 'cloudflare:workers';
+
+const { slug } = Astro.params;
+const lang = Astro.url.searchParams.get('lang') === 'pl' ? 'pl' : 'en';
+const pl = lang === 'pl';
+let book, characters = [];
+let status = 200;
+try {
+  const api = import.meta.env.PUBLIC_API_URL || Astro.url.origin;
+  const url = `${api}/api/books/${encodeURIComponent(slug || '')}`;
+  const response = import.meta.env.PUBLIC_API_URL ? await fetch(url) : await env.API.fetch(new Request(url));
+  if (!response.ok) status = response.status === 404 ? 404 : 503;
+  else { const data = await response.json(); book = data.book; characters = data.story.characters; }
+} catch { status = 503; }
+Astro.response.status = status;
+const pageTitle = book ? (pl ? `Bohaterowie ${book.title} - Castellation` : `${book.title} characters - Castellation`) : (pl ? 'Bohaterowie - Castellation' : 'Characters - Castellation');
+const description = book ? (pl ? `Poznaj bohaterów ${book.title} i odkryj ich powiązania bez spoilerów.` : `Meet the characters of ${book.title} and explore their connections without spoilers.`) : '';
+---
+<Layout lang={lang} title={pageTitle} description={description} noindex={!book}>
+  <SiteHeader lang={lang} />
+  <main class="wrap cast-page">
+    {book ? <><Breadcrumbs lang={lang} structured={true} items={[{ label: pl ? 'Biblioteka' : 'Library', href: `/library?lang=${lang}` }, { label: book.title, href: `/books/${encodeURIComponent(slug || '')}?lang=${lang}` }, { label: pl ? 'Bohaterowie' : 'Characters' }]} /><div class="cast-heading"><div><p class="eyebrow">✦ {pl ? 'POZNAJ BOHATERÓW' : 'MEET THE CHARACTERS'}</p><h1>{pl ? 'Twarze historii' : 'The faces of'}<br /><em>{pl ? book.title : book.title}</em></h1></div><div><p>{pl ? 'Zacznij od bohaterów poznanych na początku książki. Odkrywaj kolejne postacie wraz ze swoim postępem na mapie.' : 'Start with the characters introduced at the beginning. Discover more as you update your reading progress on the map.'}</p><a class="cast-map-link" href={`/books/${encodeURIComponent(slug || '')}/map?lang=${lang}`}>{pl ? 'Otwórz mapę historii' : 'Open the story map'} ↗</a></div></div>
+    <section aria-labelledby="cast-list-title"><div class="collection-bar"><h2 id="cast-list-title">{pl ? 'Początek historii' : 'At the beginning'}</h2><span>{String(characters.length).padStart(2, '0')}</span></div><div class="cast-grid">{characters.map((character, index) => <a class="cast-card" href={`/books/${encodeURIComponent(slug || '')}/characters/${encodeURIComponent(character.slug)}?lang=${lang}`}><span class="cast-card-top"><span>{String(index + 1).padStart(2, '0')}</span><span>↗</span></span><span class="cast-initial" aria-hidden="true">{character.name.slice(0, 1)}</span><span class="cast-card-body"><strong>{character.name}</strong><span>{character.descriptions.at(-1)?.text}</span></span></a>)}</div>{!characters.length && <p class="empty-state">{pl ? 'Bohaterowie nie są jeszcze dostępni.' : 'Characters are not available yet.'}</p>}</section></> : <h1>{status === 404 ? (pl ? 'Nie znaleziono książki' : 'Book not found') : (pl ? 'Książka jest chwilowo niedostępna' : 'Book temporarily unavailable')}</h1>}
+  </main>
+  <footer class="wrap footer"><a class="brand" href={`/?lang=${lang}`}>✳ castellation<span class="brand-dot">.</span></a><p>{pl ? 'Historie są lepsze, gdy widzisz ich powiązania.' : 'Stories are better when you see the connections.'}</p><span>© {new Date().getFullYear()} CASTELLATION</span></footer>
+</Layout>

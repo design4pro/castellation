@@ -1,0 +1,12 @@
+---
+const { lang } = Astro.props;
+const pl = lang === 'pl';
+const url = new URL(Astro.url);
+url.searchParams.set('lang', pl ? 'en' : 'pl');
+---
+<div class="locale-switch" role="group" aria-label={pl ? 'Język strony' : 'Page language'}>
+  {pl ? <><span aria-current="true" aria-label="Polski" lang="pl">PL</span><a href={`${url.pathname}${url.search}`} hreflang="en" lang="en" aria-label="English">EN</a></> : <><a href={`${url.pathname}${url.search}`} hreflang="pl" lang="pl" aria-label="Polski">PL</a><span aria-current="true" aria-label="English" lang="en">EN</span></>}
+</div>
+<style>
+.locale-switch{display:inline-flex;align-items:center;gap:4px;padding:3px;border:1px solid #b8c5b7;border-radius:3px;font-size:11px;font-weight:700;letter-spacing:.04em}.locale-switch a,.locale-switch span{display:grid;place-items:center;min-width:34px;min-height:34px;padding:0 4px}.locale-switch span{background:#334b3d;color:#fff}.locale-switch a{color:#405448}.locale-switch a:hover{text-decoration:underline;text-underline-offset:3px}
+</style>

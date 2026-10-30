@@ -1,0 +1,62 @@
+---
+import SiteHeader from '../components/SiteHeader.astro';
+import Layout from '../layouts/Layout.astro';
+import { env } from 'cloudflare:workers';
+
+const lang = Astro.url.searchParams.get('lang') === 'pl' ? 'pl' : 'en';
+const pl = lang === 'pl';
+type Book = { slug: string; title: string; author: string };
+let books: Book[] = [];
+let unavailable = false;
+try {
+  const api = import.meta.env.PUBLIC_API_URL;
+  const response = api ? await fetch(`${api}/api/books`) : await env.API.fetch(new Request(`${Astro.url.origin}/api/books`));
+  if (!response.ok) throw new Error('Catalog unavailable');
+  books = (await response.json()).books;
+} catch {
+  unavailable = true;
+  Astro.response.status = 503;
+}
+const authors = [...new Set(books.map((book) => book.author).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+---
+<Layout lang={lang} title={pl ? 'Biblioteka książek i map bohaterów - Castellation' : 'Book library and character maps - Castellation'} description={pl ? 'Przeglądaj książki i odkrywaj mapy bohaterów oraz ich relacje we własnym tempie.' : 'Browse books and explore character maps and relationships at your own reading pace.'}>
+  <SiteHeader lang={lang} />
+  <main class="wrap collection">
+    <div class="collection-heading"><div><p class="eyebrow">✦ {pl ? 'BIBLIOTEKA CASTELLATION' : 'THE CASTELLATION LIBRARY'}</p><h1>{pl ? 'Wybierz świat,' : 'Choose a world,'}<br /><em>{pl ? 'wejdź do historii.' : 'enter the story.'}</em></h1></div><div class="collection-intro"><p>{pl ? 'Odkrywaj książki poprzez ich bohaterów. Wybierz historię, aby zobaczyć powiązania odkrywane wraz z czytaniem.' : 'Discover books through the characters who bring them to life. Choose a story to explore connections as you read.'}</p><span>✳ {pl ? 'BEZ SPOILERÓW' : 'SPOILER AWARE'}</span></div></div>
+    {books.length > 1 && <div id="library-finder" class="library-finder" data-lang={lang} hidden><div><p class="eyebrow">✦ {pl ? 'ZNAJDŹ SWOJĄ HISTORIĘ' : 'FIND YOUR STORY'}</p><label for="library-query">{pl ? 'Szukaj tytułu lub autora' : 'Search by title or author'}</label><p>{pl ? 'Wpisz kilka liter, aby zawęzić bibliotekę.' : 'Type a few letters to narrow the library.'}</p></div><div class="library-finder-controls"><div><input id="library-query" type="search" autocomplete="off" placeholder={pl ? 'Tytuł lub autor' : 'Title or author'} /><button id="library-clear" type="button">{pl ? 'Wyczyść' : 'Clear'}</button></div><p id="library-search-status" role="status" aria-live="polite"></p></div></div>}
+    <section aria-labelledby="collection-title"><div class="collection-bar"><h2 id="collection-title">{pl ? 'Wszystkie historie' : 'All stories'}</h2><span>{String(books.length).padStart(2, '0')}</span></div>
+      {unavailable ? <p class="empty-state">{pl ? 'Biblioteka jest chwilowo niedostępna. Spróbuj ponownie później.' : 'The library is temporarily unavailable. Please try again later.'}</p> : books.length ? <ol class="collection-list" id="library-books">{books.map((book, index) => <li data-search={`${book.title} ${book.author}`}><a class="collection-item" href={`/books/${encodeURIComponent(book.slug)}?lang=${lang}`}><span class="collection-number">{String(index + 1).padStart(2, '0')}</span><span class="collection-emblem" aria-hidden="true">✳</span><span class="collection-book"><strong>{book.title}</strong><span>{book.author}</span></span><span class="collection-link">{pl ? 'Odkryj historię' : 'Explore story'} <span aria-hidden="true">↗</span></span></a></li>)}</ol> : <p class="empty-state">{pl ? 'Biblioteka jest przygotowywana. Wróć wkrótce.' : 'The library is being prepared. Please come back soon.'}</p>}
+      {books.length > 1 && <p id="library-no-results" class="library-no-results" hidden>{pl ? 'Nie znaleziono książki. Spróbuj innego tytułu lub nazwiska.' : 'No books found. Try another title or author.'}</p>}
+    </section>
+    {books.length > 0 && <aside class="library-people"><div><p class="eyebrow">✦ {pl ? 'ZACZNIJ OD POSTACI' : 'START WITH A CHARACTER'}</p><h2>{pl ? 'Kogo chcesz poznać?' : 'Who will you meet?'}</h2><p>{pl ? 'Odkrywaj bohaterów z początków różnych historii w jednym miejscu.' : 'Discover characters from the beginnings of different stories in one place.'}</p></div><a class="primary-button" href={`/characters?lang=${lang}`}>{pl ? 'Poznaj bohaterów' : 'Meet the characters'} ↗</a></aside>}
+    {authors.length > 0 && <section class="library-authors" aria-labelledby="authors-title"><div><p class="eyebrow">✦ {pl ? 'INNY SPOSÓB ODKRYWANIA' : 'ANOTHER WAY TO DISCOVER'}</p><h2 id="authors-title">{pl ? 'Podążaj za autorem.' : 'Follow the author.'}</h2><p>{pl ? 'Zobacz historie dostępne w bibliotece, zebrane według autorów.' : 'Find the stories in our library, gathered by author.'}</p></div><ul>{authors.map((author) => <li><a href={`/authors/${encodeURIComponent(author)}?lang=${lang}`}><span aria-hidden="true">✳</span><strong>{author}</strong><span aria-hidden="true">↗</span></a></li>)}</ul></section>}
+  </main>
+  <footer class="wrap footer"><a class="brand" href={`/?lang=${lang}`}>✳ castellation<span class="brand-dot">.</span></a><p>{pl ? 'Historie są lepsze, gdy widzisz ich powiązania.' : 'Stories are better when you see the connections.'}</p><span>© {new Date().getFullYear()} CASTELLATION</span></footer>
+<script>
+  const finder = document.querySelector<HTMLElement>('#library-finder');
+  const query = document.querySelector<HTMLInputElement>('#library-query');
+  const clear = document.querySelector<HTMLButtonElement>('#library-clear');
+  const status = document.querySelector<HTMLElement>('#library-search-status');
+  const noResults = document.querySelector<HTMLElement>('#library-no-results');
+  const items = [...document.querySelectorAll<HTMLElement>('#library-books > li')];
+  if (finder && query && clear && status && noResults) {
+    const pl = finder.dataset.lang === 'pl';
+    const normalize = (value: string) => value.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().trim();
+    const update = () => {
+      const terms = normalize(query.value).split(/\s+/).filter(Boolean);
+      let count = 0;
+      items.forEach((item) => { const text = normalize(item.dataset.search || ''); const matches = terms.every((term) => text.includes(term)); item.hidden = !matches; if (matches) count++; });
+      noResults.hidden = count !== 0;
+      status.textContent = pl ? `Wyniki: ${count} z ${items.length}` : `Results: ${count} of ${items.length}`;
+    };
+    query.addEventListener('input', update);
+    clear.addEventListener('click', () => { query.value = ''; update(); query.focus(); });
+    finder.hidden = false; update();
+  }
+</script>
+</Layout>
+<style>
+.library-finder[hidden],.library-no-results[hidden],.collection-list li[hidden]{display:none}.library-finder{display:grid;grid-template-columns:1fr 1.2fr;align-items:center;gap:45px;background:#e1e8dc;padding:34px 38px;margin-bottom:60px}.library-finder label{display:block;font:500 clamp(25px,2.5vw,34px) 'Playfair Display',serif;margin:12px 0}.library-finder>div>p:not(.eyebrow){font-size:13px;line-height:1.6;color:#405448}.library-finder-controls>div{display:flex;align-items:stretch;border-bottom:2px solid #536d5b}.library-finder input{min-width:0;flex:1;border:0;background:transparent;padding:16px 10px;font:16px 'DM Sans',sans-serif;color:#27352f}.library-finder input:focus-visible{outline:2px solid #a35e3e;outline-offset:2px}.library-finder button{border:0;background:#334b3d;color:white;padding:0 20px;font-weight:700;cursor:pointer}.library-finder button:hover{background:#496653}.library-finder button:focus-visible{outline:3px solid #a35e3e;outline-offset:3px}.library-finder-controls>p{font-size:12px;color:#405448;min-height:1.5em}.library-no-results{padding:26px 0;color:#405448;line-height:1.6}@media(max-width:760px){.library-finder{grid-template-columns:minmax(0,1fr);gap:15px;padding:25px;margin-bottom:40px}.library-finder>div{min-width:0}}
+</style>
+
+<style>.library-people{display:flex;align-items:end;justify-content:space-between;gap:30px;background:#e1e8dc;padding:40px;margin-top:70px}.library-people h2{font:500 clamp(30px,3vw,42px) 'Playfair Display',serif;margin:15px 0}.library-people p:not(.eyebrow){color:#405448;line-height:1.7;max-width:430px}@media(max-width:760px){.library-people{display:block;padding:25px;margin-top:45px}.library-people .primary-button{margin-top:15px}}</style>

@@ -1,17 +1,40 @@
 ---
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SharePanel from '../../components/SharePanel.astro';
 import Layout from '../../layouts/Layout.astro';
+import { env } from 'cloudflare:workers';
 const slug = Astro.params.slug;
 const api = import.meta.env.PUBLIC_API_URL || Astro.url.origin;
 const lang = Astro.url.searchParams.get('lang') === 'pl' ? 'pl' : 'en';
-let title = 'Book';
-if (api && slug) {
-  try { const response = await fetch(`${api}/api/books/${encodeURIComponent(slug)}`); if (response.ok) title = (await response.json()).book.title; } catch { /* The page still renders when the API is unavailable. */ }
-}
+let book, story;
+let status = 200;
+try {
+  const url = `${api}/api/books/${encodeURIComponent(slug || '')}`;
+  const response = import.meta.env.PUBLIC_API_URL ? await fetch(url) : await env.API.fetch(new Request(url));
+  if (!response.ok) status = response.status === 404 ? 404 : 503;
+  else { const data = await response.json(); book = data.book; story = data.story; }
+} catch { status = 503; }
+Astro.response.status = status;
+const title = book?.title || 'Book';
 const pl = lang === 'pl';
+const chapterPages = book ? (await Promise.all(book.positions.slice(1).map(async (position) => {
+  try {
+    const url = `${api}/api/books/${encodeURIComponent(slug || '')}?volume=${position.volume}&chapter=${position.chapter}`;
+    const response = import.meta.env.PUBLIC_API_URL ? await fetch(url) : await env.API.fetch(new Request(url));
+    if (!response.ok) return null;
+    const data = await response.json();
+    return data.story.events.some((event) => event.volume === position.volume && event.chapter === position.chapter) ? position : null;
+  } catch { return null; }
+}))).filter(Boolean) : [];
+
 ---
-<Layout title={`${title} - Castellation`} lang={lang}>
-  <header class="site-header wrap"><a class="brand" href={`/?lang=${lang}`}>✳ castellation<span class="brand-dot">.</span></a><nav><a href={`/account?lang=${lang}`}>{pl ? "Konto" : "Account"}</a><a href={`/?lang=${lang}#library`}>{pl ? 'Biblioteka' : 'Library'}</a></nav></header>
-  <main class="wrap book-page"><a class="back" href={`/?lang=${lang}#library`}>← {pl ? 'Wróć do biblioteki' : 'Back to the library'}</a><p class="eyebrow">{pl ? 'TWOJA MAPA OPOWIEŚCI' : 'YOUR STORY MAP'}</p><h1 id="book-title">{title}</h1><p id="book-author" class="muted"></p><div class="book-toolbar"><div><h2>{pl ? 'Powiązania bohaterów' : 'Character connections'}</h2><p class="muted">{pl ? 'Przeciągnij, aby przesunąć. Zsuń palce, aby przybliżyć.' : 'Drag to move. Pinch to zoom.'}</p></div><label for="progress">{pl ? 'Przeczytano do' : 'Read up to'} <select id="progress"></select></label></div>
-  <div id="story-app" data-api={api} data-slug={slug} data-lang={lang}><div class="graph" id="graph" aria-label={pl ? 'Interaktywny graf powiązań' : 'Interactive relationship graph'}><svg id="graph-svg" viewBox="0 0 800 520" role="img" aria-label={pl ? 'Mapa bohaterów' : 'Character map'}></svg><div class="graph-hint">✳ {pl ? 'DOTKNIJ POSTACI' : 'TAP A CHARACTER'}</div><div class="zoom-controls"><button id="zoom-in" aria-label={pl ? "Powiększ" : "Zoom in"}>+</button><button id="zoom-out" aria-label={pl ? "Pomniejsz" : "Zoom out"}>−</button><button id="zoom-reset" aria-label={pl ? "Przywróć widok" : "Reset zoom"}>⌂</button></div></div><p id="status" role="status"></p><section class="story-columns"><div><h2>{pl ? 'Bohaterowie i relacje' : 'Characters & connections'}</h2><div id="character-list"></div></div><div><h2>{pl ? 'Oś wydarzeń' : 'Story timeline'}</h2><div id="event-list"></div></div></section></div></main>
-  <script src="../../scripts/story.js"></script>
+<Layout title={`${title} - Castellation`} lang={lang} description={book ? (pl ? `Odkryj bohaterów i relacje w ${title} - ${book.author}. Przeglądaj mapę historii we własnym tempie.` : `Explore the characters and connections in ${title} by ${book.author}, at your own reading pace.`) : ''} noindex={!book || Astro.url.searchParams.has('volume') || Astro.url.searchParams.has('chapter')}>
+  <SiteHeader lang={lang} />
+  <main class="wrap book-page"><Breadcrumbs lang={lang} structured={!!book && !Astro.url.searchParams.has('volume') && !Astro.url.searchParams.has('chapter')} items={[{ label: pl ? 'Biblioteka' : 'Library', href: `/library?lang=${lang}` }, { label: title }]} />{book ? <><section class="book-opening"><div class="book-opening-copy"><p class="eyebrow">✦ {pl ? 'WEJDŹ DO HISTORII' : 'STEP INSIDE THE STORY'}</p><h1 id="book-title">{title}</h1><p class="book-byline"><a class="author-link" href={`/authors/${encodeURIComponent(book.author)}?lang=${lang}`} id="book-author">{book.author}</a></p><p class="book-opening-intro">{pl ? 'Poznaj bohaterów i odkrywaj ich powiązania wraz z lekturą.' : 'Meet the characters and follow their connections as you read.'}</p><p><a class="guide-inline-link" href={`/how-it-works?lang=${lang}`}>{pl ? 'Jak to działa?' : 'How does it work?'} ↗</a></p><div class="book-opening-actions"><a class="primary-button" id="story-map" href={`/books/${encodeURIComponent(slug || '')}/map?lang=${lang}`}>{pl ? 'Odkryj mapę' : 'Explore the map'} <span aria-hidden="true">↗</span></a><a class="cast-directory-link" href={`/books/${encodeURIComponent(slug || '')}/characters?lang=${lang}`}>{pl ? 'Poznaj bohaterów' : 'Meet the characters'} <span aria-hidden="true">↗</span></a>{story.relations.length > 0 && <a class="cast-directory-link" href={`/books/${encodeURIComponent(slug || '')}/connections?lang=${lang}`}>{pl ? 'Poznaj relacje' : 'Explore connections'} <span aria-hidden="true">↗</span></a>}</div></div><div class="book-opening-art">{book.slug === 'alices-adventures-in-wonderland' ? <><img class="story-illustration" src="/images/alice-rabbit-hole.webp" alt="" width="768" height="1152" /><span class="story-illustration-shade" aria-hidden="true"></span></> : <span class="book-opening-mark" aria-hidden="true">✳</span>}<span class="book-opening-label">{pl ? 'NA POCZĄTKU HISTORII' : 'AT THE BEGINNING'}</span>{story.events[0] && <><strong>{story.events[0].title}</strong><p>{story.events[0].description}</p>{book.chapters.some((item) => item.volume === book.positions[0]?.volume && item.chapter === book.positions[0]?.chapter) && <a class="opening-link" href={`/books/${encodeURIComponent(slug || '')}/opening?lang=${lang}`}>{pl ? 'Odkryj początek historii' : 'Explore the beginning'} ↗</a>}</>}</div></section>{story.characters.length > 0 && <section class="book-cast-preview" aria-labelledby="book-cast-preview-title"><div class="book-cast-preview-head"><div><p class="eyebrow">✦ {pl ? 'POZNAJ BOHATERÓW' : 'MEET THE CHARACTERS'}</p><h2 id="book-cast-preview-title">{pl ? 'Pierwsze spotkania' : 'First encounters'}</h2></div><p>{pl ? 'Informacje do tomu' : 'Details through volume'} {book.positions[0].volume}, {pl ? 'rozdziału' : 'chapter'} {book.positions[0].chapter}.</p></div><div class="book-cast-preview-list">{story.characters.slice(0, 2).map((character) => <a href={`/books/${encodeURIComponent(slug || '')}/characters/${encodeURIComponent(character.slug)}?lang=${lang}`}><span class="book-cast-preview-initial" aria-hidden="true">{character.name.slice(0, 1)}</span><span class="book-cast-preview-copy"><strong>{character.name}</strong><span>{character.descriptions.at(-1)?.text}</span></span><span aria-hidden="true">↗</span></a>)}</div><p><a class="book-cast-preview-all" href={`/books/${encodeURIComponent(slug || '')}/reading-sheet?lang=${lang}`}>{pl ? 'Karta bohaterów do druku' : 'Printable character sheet'} ↗</a></p><a class="book-cast-preview-all" href={`/books/${encodeURIComponent(slug || '')}/characters?lang=${lang}`}>{pl ? 'Zobacz wszystkich dostępnych bohaterów' : 'See all available characters'} ↗</a></section>}{chapterPages.length > 0 && <section class="chapter-shelf" aria-labelledby="chapter-shelf-heading"><div><p class="eyebrow">✦ {pl ? 'CZYTAJ WE WŁASNYM TEMPIE' : 'READ AT YOUR OWN PACE'}</p><h2 id="chapter-shelf-heading">{pl ? 'Wybierz rozdział.' : 'Choose a chapter.'}</h2><p>{pl ? 'Strony rozdziałów zawierają informacje o ich wydarzeniach.' : 'Chapter pages contain details about their events.'}</p></div><ol>{chapterPages.map((item) => <li><a href={`/books/${encodeURIComponent(slug || '')}/chapters/${item.volume}-${item.chapter}?lang=${lang}`}><span>{pl ? 'Tom' : 'Volume'} {item.volume}</span><strong>{pl ? 'Rozdział' : 'Chapter'} {item.chapter}</strong><span aria-hidden="true">↗</span></a></li>)}</ol></section>}<SharePanel lang={lang} url={new URL(`/books/${encodeURIComponent(slug || '')}?lang=${lang}`, Astro.url.origin).href} /></> : <h1>{status === 404 ? (pl ? 'Nie znaleziono książki' : 'Book not found') : (pl ? 'Książka jest chwilowo niedostępna' : 'Book temporarily unavailable')}</h1>}</main>
+  <script>
+    if (location.hash === '#story-map') location.replace(`${location.pathname.replace(/\/$/, '')}/map${location.search}`);
+  </script>
 </Layout>
+
+<style>.chapter-shelf{display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:40px;background:#e9e5d9;margin-bottom:70px}.chapter-shelf h2{font:500 clamp(32px,3vw,42px) 'Playfair Display',serif;margin:14px 0}.chapter-shelf p:not(.eyebrow){color:#53675a;line-height:1.7}.chapter-shelf ol{list-style:none;padding:0;margin:0}.chapter-shelf a{display:grid;grid-template-columns:1fr 1.4fr auto;gap:15px;align-items:center;padding:20px 0;border-bottom:1px solid #bdbfb4}.chapter-shelf a span:first-child{font-size:11px;color:#53675a}.chapter-shelf a strong{font:500 22px 'Playfair Display',serif}.chapter-shelf a:hover strong{text-decoration:underline;text-underline-offset:4px}@media(max-width:760px){.chapter-shelf{grid-template-columns:1fr;gap:10px;padding:25px;margin-bottom:45px}}</style>
