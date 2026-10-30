@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+const lang = Astro.url.searchParams.get('lang') === 'pl' ? 'pl' : 'en';
+const pl = lang === 'pl';
+const api = import.meta.env.PUBLIC_API_URL || Astro.url.origin;
+---
+<Layout title={pl ? 'Konto - Castellation' : 'Account - Castellation'} lang={lang} noindex={true}>
+<header class="site-header wrap"><a class="brand" href={`/?lang=${lang}`}>✳ castellation<span class="brand-dot">.</span></a><nav><a href={`/?lang=${lang}`}>{pl ? 'Biblioteka' : 'Library'}</a></nav></header>
+<main class="wrap account-page" data-api={api} data-lang={lang}>
+  <p class="eyebrow">CASTELLATION</p><h1>{pl ? 'Twoje konto' : 'Your account'}</h1>
+  <p class="muted">{pl ? 'Zaloguj się, aby synchronizować postęp czytania.' : 'Sign in to synchronize your reading progress.'}</p>
+  <div id="signed-in" hidden><p id="account-email"></p><button id="sign-out" class="primary-button" type="button">{pl ? 'Wyloguj' : 'Sign out'}</button></div>
+  <form id="account-form"><label for="account-name">{pl ? 'Imię' : 'Name'}</label><input id="account-name" name="name" autocomplete="name" maxlength="100" /><label for="account-email-input">E-mail</label><input id="account-email-input" name="email" type="email" autocomplete="email" required maxlength="254" /><label for="account-password">{pl ? 'Hasło - co najmniej 12 znaków' : 'Password - at least 12 characters'}</label><input id="account-password" name="password" type="password" autocomplete="current-password" required minlength="12" maxlength="128" /><div class="account-actions"><button class="primary-button" type="submit" name="action" value="signin">{pl ? 'Zaloguj' : 'Sign in'}</button><button class="secondary-button" type="submit" name="action" value="signup">{pl ? 'Utwórz konto' : 'Create account'}</button></div><button id="forgot-password" class="secondary-button" type="button">{pl ? "Nie pamiętam hasła" : "Forgot password"}</button></form>
+  <p id="account-status" role="status"></p>
+</main>
+<script>
+import { createAuthClient } from 'better-auth/client';
+const root=document.querySelector<HTMLElement>('.account-page')!;
+const api=root.dataset.api!, pl=root.dataset.lang==='pl';
+const status=document.querySelector<HTMLElement>('#account-status')!;
+const form=document.querySelector<HTMLFormElement>('#account-form')!;
+const signed=document.querySelector<HTMLElement>('#signed-in')!;
+const auth=createAuthClient({baseURL:api,fetchOptions:{credentials:'include'}});
+async function refresh(){try{const result=await auth.getSession();if(result.data?.user){form.hidden=true;signed.hidden=false;document.querySelector('#account-email')!.textContent=result.data.user.email;}else{form.hidden=false;signed.hidden=true;}}catch{status.textContent=pl?'Nie udało się sprawdzić sesji.':'Unable to check your session.';}}
+form.addEventListener('submit',async(event)=>{event.preventDefault();const action=(event as SubmitEvent).submitter as HTMLButtonElement;const values=new FormData(form);const email=String(values.get('email')||'').trim();const password=String(values.get('password')||'');const name=String(values.get('name')||'').trim();if(action?.value==='signup'&&!name){status.textContent=pl?'Podaj imię.':'Enter your name.';return;}status.textContent=pl?'Proszę czekać...':'Please wait...';try{const result=action?.value==='signup'?await auth.signUp.email({email,password,name}):await auth.signIn.email({email,password});if(result.error)throw Error();form.reset();if(action?.value==='signup'){status.textContent=pl?'Sprawdź e-mail i potwierdź adres przed zalogowaniem.':'Check your email and verify your address before signing in.';}else{status.textContent='';}await refresh();}catch{status.textContent=pl?'Nie udało się zalogować lub utworzyć konta.':'Unable to sign in or create an account.';}});
+document.querySelector('#forgot-password')!.addEventListener('click',async()=>{const email=(document.querySelector<HTMLInputElement>('#account-email-input')?.value||'').trim();if(!email){status.textContent=pl?'Podaj adres e-mail.':'Enter your email address.';return;}try{await auth.requestPasswordReset({email,redirectTo:`${location.origin}/reset-password?lang=${pl?'pl':'en'}`});status.textContent=pl?'Jeśli konto istnieje, otrzymasz wiadomość z linkiem.':'If the account exists, a reset link will be sent.';}catch{status.textContent=pl?'Nie udało się wysłać prośby.':'Unable to request a reset.';}});
+document.querySelector('#sign-out')!.addEventListener('click',async()=>{try{const result=await auth.signOut();if(result.error)throw Error();status.textContent='';await refresh();}catch{status.textContent=pl?'Nie udało się wylogować.':'Unable to sign out.';}});
+if(api)refresh();else status.textContent=pl?'Brak skonfigurowanego API.':'The API is not configured.';
+</script>
+</Layout>

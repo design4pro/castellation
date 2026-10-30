@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+const lang = Astro.url.searchParams.get('lang') === 'pl' ? 'pl' : 'en';
+const t = lang === 'pl' ? {
+  nav: 'Biblioteka', explore: 'Odkryj książki', eyebrow: 'KAŻDA HISTORIA MA SWOJĄ KONSTELACJĘ',
+  title1: 'Zobacz historie', title2: 'w nowym świetle.', intro: 'Poznaj bohaterów, odkryj ich powiązania i podążaj za opowieścią we własnym tempie. Bez spoilerów.',
+  button: 'Odkryj bibliotekę', note: 'Twój towarzysz w świecie książek', section: 'WYBIERZ SWOJĄ HISTORIĘ', heading: 'Wkrocz do innego świata', desc: 'Odkryj historie i postacie, które w nich żyją.', loading: 'Ładowanie biblioteki...', empty: 'Biblioteka jest przygotowywana. Wróć wkrótce.', footer: 'Historie są lepsze, gdy widzisz ich powiązania.', switch: 'English', ticker1:'KAŻDY BOHATER', ticker2:'KAŻDA RELACJA', ticker3:'JEDNA HISTORIA NARAZ', manifestoEyebrow:'ODROBINA MAGII', manifestoTitle:'Każda strona to', manifestoEm:'nowe połączenie.', manifestoText:'Odkrywaj powiązania między bohaterami, rozdział po rozdziale.'
+} : {
+  nav: 'Library', explore: 'Explore books', eyebrow: 'EVERY STORY HAS A CONSTELLATION',
+  title1: 'See stories in', title2: 'a different light.', intro: 'Meet the characters, discover their connections, and follow the story at your own pace. No spoilers.',
+  button: 'Explore the library', note: 'Your companion between the pages', section: 'CHOOSE YOUR STORY', heading: 'Step into another world', desc: 'Discover stories and the characters who live in them.', loading: 'Loading the library...', empty: 'The library is being prepared. Please come back soon.', footer: 'Stories are better when you see the connections.', switch: 'Polski', ticker1:'EVERY CHARACTER', ticker2:'EVERY CONNECTION', ticker3:'ONE STORY AT A TIME', manifestoEyebrow:'A LITTLE MORE WONDER', manifestoTitle:'Every page is a', manifestoEm:'new connection.', manifestoText:'Follow the threads between characters as their stories unfold, chapter by chapter.'
+};
+const api = import.meta.env.PUBLIC_API_URL || Astro.url.origin;
+---
+<Layout lang={lang}>
+  <header class="site-header wrap"><a class="brand" href={`/?lang=${lang}`} aria-label="Castellation home"><span class="brand-mark">✳</span> castellation<span class="brand-dot">.</span></a><nav aria-label="Main navigation"><a href={`/account?lang=${lang}`}>{lang === "pl" ? "Konto" : "Account"}</a><a href="#library">{t.nav}</a><a class="language" href={`/?lang=${lang === 'en' ? 'pl' : 'en'}`}>{t.switch}</a><a class="header-cta" href="#library">{t.explore}<span>↗</span></a></nav></header>
+  <main>
+    <section class="hero wrap"><div class="hero-copy"><p class="eyebrow"><span>✦</span> {t.eyebrow}</p><h1>{t.title1}<br /><em>{t.title2}</em></h1><p class="hero-intro">{t.intro}</p><a class="primary-button" href="#library">{t.button}<span>↗</span></a><p class="hero-note"><span>✦</span> {t.note}</p></div><div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="art-center"><span class="art-spark">✳</span><span class="art-caption">A WORLD OF STORIES<br />CONNECTED</span></div><div class="star s1">✦</div><div class="star s2">✦</div><div class="star s3">✧</div><div class="star s4">✦</div><div class="art-label label-one">CHARACTERS <span>01</span></div><div class="art-label label-two">CONNECTIONS <span>02</span></div><div class="art-label label-three">YOUR JOURNEY <span>03</span></div></div></section>
+    <div class="ticker" aria-hidden="true"><span>{t.ticker1}</span><i>✳</i><span>{t.ticker2}</span><i>✳</i><span>{t.ticker3}</span><i>✳</i><span>{t.ticker1}</span><i>✳</i><span>{t.ticker2}</span></div>
+    <section class="library wrap" id="library"><div class="section-heading"><div><p class="eyebrow">{t.section}</p><h2>{t.heading}</h2></div><p>{t.desc}</p></div><div id="books" class="book-grid" data-api={api} data-lang={lang} data-empty={t.empty}><p class="empty-state">{t.loading}</p></div></section>
+    <section class="manifesto"><div class="wrap manifesto-inner"><span class="manifesto-star">✳</span><div><p class="eyebrow">{t.manifestoEyebrow}</p><h2>{t.manifestoTitle}<br /><em>{t.manifestoEm}</em></h2></div><p>{t.manifestoText}</p></div></section>
+  </main><footer class="wrap footer"><a class="brand" href="/">✳ castellation<span class="brand-dot">.</span></a><p>{t.footer}</p><span>© {new Date().getFullYear()} CASTELLATION</span></footer>
+  <script>
+    const container = document.querySelector<HTMLElement>('#books');
+    if (container) {
+      const { api, lang, empty } = container.dataset;
+      if (!api) container.textContent = empty ?? '';
+      else fetch(`${api}/api/books`).then((response) => { if (!response.ok) throw new Error('Unable to load books'); return response.json(); }).then(({books}) => {
+        container.replaceChildren();
+        if (!books.length) { container.textContent = empty ?? ''; return; }
+        books.forEach((book: {slug: string; title: string; author: string}, index: number) => {
+          const link = document.createElement('a'); link.className = 'book-card'; link.href = `/books/${encodeURIComponent(book.slug)}?lang=${lang}`;
+          const art = document.createElement('div'); art.className = `book-art tone-${index % 3}`; art.setAttribute('aria-hidden', 'true'); art.textContent = '✳';
+          const title = document.createElement('h3'); title.textContent = book.title;
+          const author = document.createElement('p'); author.textContent = book.author;
+          link.append(art, title, author); container.append(link);
+        });
+      }).catch(() => { container.textContent = empty ?? ''; });
+    }
+  </script>
+</Layout>

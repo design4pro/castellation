@@ -1,0 +1,45 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "castellation-api-dev",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-29",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "castellation-dev",
+      "database_id": "f74aed4d-a417-46fa-8062-8f5abccbf767",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "castellation-dev-media"
+    }
+  ],
+  "ai": {
+    "binding": "AI"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "workflows": [
+    {
+      "binding": "BOOK_WORKFLOW",
+      "name": "castellation-book-workflow-dev",
+      "class_name": "BookWorkflow"
+    }
+  ],
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "send_email": [
+    {
+      "name": "EMAIL"
+    }
+  ],
+  "vars": {
+    "BETTER_AUTH_URL": "https://castellation-web-dev.design4pro.workers.dev",
+    "WEB_ORIGIN": "https://castellation-web-dev.design4pro.workers.dev"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "castellation",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/web",
+    "apps/mobile",
+    "packages/cms-plugin"
+  ],
+  "scripts": {
+    "test": "node --test packages/domain/test/*.test.js apps/api/test/*.test.js packages/cms-plugin/*.test.js",
+    "build:web": "npm run build -w @castellation/web",
+    "dev:web": "npm run dev -w @castellation/web",
+    "dev:mobile": "npm run start -w @castellation/mobile",
+    "dev:api": "node apps/api/dev/server.js",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1"
+  },
+  "overrides": {
+    "zod@4.5.4": "4.6.7"
+  },
+  "dependencies": {
+    "@better-auth/expo": "^1.7.14",
+    "better-auth": "^1.7.14",
+    "better-auth-cloudflare": "^0.4.1",
+    "drizzle-orm": "^0.45.4",
+    "zod": "4.6.7"
+  }
+}

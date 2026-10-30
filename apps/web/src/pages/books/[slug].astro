@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+const slug = Astro.params.slug;
+const api = import.meta.env.PUBLIC_API_URL || Astro.url.origin;
+const lang = Astro.url.searchParams.get('lang') === 'pl' ? 'pl' : 'en';
+let title = 'Book';
+if (api && slug) {
+  try { const response = await fetch(`${api}/api/books/${encodeURIComponent(slug)}`); if (response.ok) title = (await response.json()).book.title; } catch { /* The page still renders when the API is unavailable. */ }
+}
+const pl = lang === 'pl';
+---
+<Layout title={`${title} - Castellation`} lang={lang}>
+  <header class="site-header wrap"><a class="brand" href={`/?lang=${lang}`}>✳ castellation<span class="brand-dot">.</span></a><nav><a href={`/account?lang=${lang}`}>{pl ? "Konto" : "Account"}</a><a href={`/?lang=${lang}#library`}>{pl ? 'Biblioteka' : 'Library'}</a></nav></header>
+  <main class="wrap book-page"><a class="back" href={`/?lang=${lang}#library`}>← {pl ? 'Wróć do biblioteki' : 'Back to the library'}</a><p class="eyebrow">{pl ? 'TWOJA MAPA OPOWIEŚCI' : 'YOUR STORY MAP'}</p><h1 id="book-title">{title}</h1><p id="book-author" class="muted"></p><div class="book-toolbar"><div><h2>{pl ? 'Powiązania bohaterów' : 'Character connections'}</h2><p class="muted">{pl ? 'Przeciągnij, aby przesunąć. Zsuń palce, aby przybliżyć.' : 'Drag to move. Pinch to zoom.'}</p></div><label for="progress">{pl ? 'Przeczytano do' : 'Read up to'} <select id="progress"></select></label></div>
+  <div id="story-app" data-api={api} data-slug={slug} data-lang={lang}><div class="graph" id="graph" aria-label={pl ? 'Interaktywny graf powiązań' : 'Interactive relationship graph'}><svg id="graph-svg" viewBox="0 0 800 520" role="img" aria-label={pl ? 'Mapa bohaterów' : 'Character map'}></svg><div class="graph-hint">✳ {pl ? 'DOTKNIJ POSTACI' : 'TAP A CHARACTER'}</div><div class="zoom-controls"><button id="zoom-in" aria-label={pl ? "Powiększ" : "Zoom in"}>+</button><button id="zoom-out" aria-label={pl ? "Pomniejsz" : "Zoom out"}>−</button><button id="zoom-reset" aria-label={pl ? "Przywróć widok" : "Reset zoom"}>⌂</button></div></div><p id="status" role="status"></p><section class="story-columns"><div><h2>{pl ? 'Bohaterowie i relacje' : 'Characters & connections'}</h2><div id="character-list"></div></div><div><h2>{pl ? 'Oś wydarzeń' : 'Story timeline'}</h2><div id="event-list"></div></div></section></div></main>
+  <script src="../../scripts/story.js"></script>
+</Layout>

@@ -1,0 +1,4 @@
+BETTER_AUTH_URL="http://localhost:8787"
+WEB_ORIGIN="http://localhost:4321"
+BETTER_AUTH_SECRET="replace-with-a-unique-random-secret-at-least-32-characters"
+EMAIL_FROM="replace-with-a-sender-on-a-verified-domain"

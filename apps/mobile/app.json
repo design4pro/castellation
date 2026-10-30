@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "Castellation",
+    "slug": "castellation",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "app.castellation.mobile"
+    },
+    "scheme": "castellation"
+  }
+}

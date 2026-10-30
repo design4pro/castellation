@@ -1,0 +1,45 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "castellation-web-dev",
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "compatibility_date": "2026-10-29",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist"
+  },
+  "d1_databases": [
+    {
+      "binding": "CMS_DB",
+      "database_name": "castellation-cms-dev",
+      "database_id": "c5338be6-2fff-4168-a622-30524a56e1ac"
+    },
+    {
+      "binding": "CATALOG_DB",
+      "database_name": "castellation-dev",
+      "database_id": "f74aed4d-a417-46fa-8062-8f5abccbf767"
+    }
+  ],
+  "services": [
+    {
+      "binding": "READER_INVITATIONS",
+      "service": "castellation-api-dev",
+      "entrypoint": "ReaderInvitations"
+    },
+    {
+      "binding": "API",
+      "service": "castellation-api-dev"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "CMS_MEDIA",
+      "bucket_name": "castellation-dev-cms-media"
+    }
+  ],
+  "vars": {
+    "DEV_LOCK_CMS": "1"
+  }
+}

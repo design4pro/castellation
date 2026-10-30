@@ -1,0 +1,1 @@
+{"name":"@castellation/cms-plugin","version":"0.1.0","type":"module","exports":"./index.js","peerDependencies":{"emdash":"^1.4.0"}}

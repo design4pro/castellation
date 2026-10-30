@@ -1,0 +1,35 @@
+import { test, expect } from '@playwright/test';
+
+test('administrator creates, edits, blocks and deletes a reader in EmDash', async ({page}) => {
+  await page.goto('/_emdash/api/setup/dev-bypass?redirect=/_emdash/admin');
+  await page.getByRole('button',{name:'Get Started'}).click();
+  await page.goto('/_emdash/admin/plugins/castellation-sources/readers');
+  await page.getByRole('button',{name:'Next',exact:true}).click();
+  await expect(page.getByText('seed0@example.test')).toBeVisible();
+  await page.getByRole('button',{name:'Previous',exact:true}).click();
+  await page.getByLabel('Search by name or email').fill('seed2@example.test');
+  await page.getByRole('button',{name:'Search',exact:true}).click();
+  await expect(page.getByRole('row').filter({hasText:'seed2@example.test'})).toBeVisible();
+  await expect(page.getByRole('row').filter({hasText:'seed3@example.test'})).toHaveCount(0);
+  await page.getByLabel('Search by name or email').fill('');
+  await page.getByRole('button',{name:'Search',exact:true}).click();
+  await page.getByRole('button',{name:'Create account'}).click();
+  await page.getByLabel('Name',{exact:true}).fill('Test Reader');
+  await page.getByLabel('Email',{exact:true}).fill('admin-reader@example.test');
+  await page.getByRole('button',{name:'Create',exact:true}).click();
+  await expect(page.getByText('admin-reader@example.test')).toBeVisible();
+  await expect(page.getByText('Account created and invitation sent.')).toBeVisible();
+  const row=page.getByRole('row').filter({hasText:'admin-reader@example.test'});
+  await row.getByRole('button',{name:'Edit'}).click();
+  await page.getByLabel('Name',{exact:true}).fill('Updated Reader');
+  await page.getByRole('button',{name:'Save',exact:true}).click();
+  await expect(row).toContainText('Updated Reader');
+  await row.getByRole('button',{name:'Block',exact:true}).click();
+  await page.getByRole('dialog').getByRole('button',{name:'Block',exact:true}).click();
+  await expect(row).toContainText('Blocked');
+  await row.getByRole('button',{name:'Unblock'}).click();
+  await expect(row).toContainText('Active');
+  await row.getByRole('button',{name:'Delete'}).click();
+  await page.getByRole('dialog').getByRole('button',{name:'Delete',exact:true}).click();
+  await expect(page.getByText('admin-reader@example.test')).toHaveCount(0);
+});

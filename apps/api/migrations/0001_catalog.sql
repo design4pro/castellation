@@ -1,0 +1,9 @@
+PRAGMA foreign_keys = ON;
+CREATE TABLE IF NOT EXISTS books (id TEXT PRIMARY KEY, slug TEXT UNIQUE NOT NULL, title TEXT NOT NULL, author TEXT NOT NULL, published INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE IF NOT EXISTS chapters (book_id TEXT NOT NULL REFERENCES books(id), volume INTEGER NOT NULL, chapter INTEGER NOT NULL, title TEXT NOT NULL, PRIMARY KEY (book_id, volume, chapter));
+CREATE TABLE IF NOT EXISTS characters (id TEXT PRIMARY KEY, book_id TEXT NOT NULL REFERENCES books(id), slug TEXT NOT NULL, name TEXT NOT NULL, volume INTEGER NOT NULL, chapter INTEGER NOT NULL, UNIQUE(book_id, slug));
+CREATE TABLE IF NOT EXISTS descriptions (id TEXT PRIMARY KEY, character_id TEXT NOT NULL REFERENCES characters(id), volume INTEGER NOT NULL, chapter INTEGER NOT NULL, text TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS portraits (id TEXT PRIMARY KEY, character_id TEXT NOT NULL REFERENCES characters(id), volume INTEGER NOT NULL, chapter INTEGER NOT NULL, url TEXT NOT NULL);
+CREATE TRIGGER IF NOT EXISTS portrait_limit BEFORE INSERT ON portraits WHEN (SELECT count(*) FROM portraits WHERE character_id = NEW.character_id) >= 10 BEGIN SELECT RAISE(ABORT, 'portrait limit exceeded'); END;
+CREATE TABLE IF NOT EXISTS relations (id TEXT PRIMARY KEY, book_id TEXT NOT NULL REFERENCES books(id), source_id TEXT NOT NULL REFERENCES characters(id), target_id TEXT NOT NULL REFERENCES characters(id), volume INTEGER NOT NULL, chapter INTEGER NOT NULL, label TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS events (id TEXT PRIMARY KEY, book_id TEXT NOT NULL REFERENCES books(id), volume INTEGER NOT NULL, chapter INTEGER NOT NULL, title TEXT NOT NULL, description TEXT NOT NULL);

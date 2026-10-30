@@ -1,0 +1,7 @@
+{
+  "name": "castellation-api",
+  "main": "invitation-worker.js",
+  "compatibility_date": "2026-10-29",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [{"binding":"DB","database_name":"castellation","database_id":"replace-with-d1-database-id"}]
+}

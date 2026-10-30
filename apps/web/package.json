@@ -1,0 +1,21 @@
+{
+  "name": "@castellation/web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^14.4.3",
+    "@astrojs/react": "^7.1.2",
+    "@castellation/cms-plugin": "*",
+    "@emdash-cms/cloudflare": "^1.4.0",
+    "astro": "^7.4.4",
+    "emdash": "^1.4.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "wrangler": "^4.99.0"
+  }
+}
