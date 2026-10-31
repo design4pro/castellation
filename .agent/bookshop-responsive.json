@@ -1,0 +1,900 @@
+{
+  "results": [
+    {
+      "route": "/",
+      "width": 1440,
+      "documentWidth": 1440,
+      "targets": [
+        {
+          "iteration": 1,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/01-1440.png"
+        },
+        {
+          "iteration": 2,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/02-1440.png"
+        },
+        {
+          "iteration": 3,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/03-1440.png"
+        },
+        {
+          "iteration": 4,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/04-1440.png"
+        },
+        {
+          "iteration": 5,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/05-1440.png"
+        },
+        {
+          "iteration": 6,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/06-1440.png"
+        },
+        {
+          "iteration": 7,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/07-1440.png"
+        },
+        {
+          "iteration": 8,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/08-1440.png"
+        },
+        {
+          "iteration": 9,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/09-1440.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/",
+      "width": 390,
+      "documentWidth": 390,
+      "targets": [
+        {
+          "iteration": 1,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/01-390.png"
+        },
+        {
+          "iteration": 2,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/02-390.png"
+        },
+        {
+          "iteration": 3,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/03-390.png"
+        },
+        {
+          "iteration": 4,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/04-390.png"
+        },
+        {
+          "iteration": 5,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/05-390.png"
+        },
+        {
+          "iteration": 6,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/06-390.png"
+        },
+        {
+          "iteration": 7,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/07-390.png"
+        },
+        {
+          "iteration": 8,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/08-390.png"
+        },
+        {
+          "iteration": 9,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/09-390.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/",
+      "width": 320,
+      "documentWidth": 320,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/",
+      "width": 768,
+      "documentWidth": 768,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/library",
+      "width": 1440,
+      "documentWidth": 1440,
+      "targets": [
+        {
+          "iteration": 10,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/10-1440.png"
+        },
+        {
+          "iteration": 11,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/11-1440.png"
+        },
+        {
+          "iteration": 12,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/12-1440.png"
+        },
+        {
+          "iteration": 13,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/13-1440.png"
+        },
+        {
+          "iteration": 14,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/14-1440.png"
+        },
+        {
+          "iteration": 15,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/15-1440.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/library",
+      "width": 390,
+      "documentWidth": 390,
+      "targets": [
+        {
+          "iteration": 10,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/10-390.png"
+        },
+        {
+          "iteration": 11,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/11-390.png"
+        },
+        {
+          "iteration": 12,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/12-390.png"
+        },
+        {
+          "iteration": 13,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/13-390.png"
+        },
+        {
+          "iteration": 14,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/14-390.png"
+        },
+        {
+          "iteration": 15,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/15-390.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/library",
+      "width": 320,
+      "documentWidth": 320,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/library",
+      "width": 768,
+      "documentWidth": 768,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/characters",
+      "width": 1440,
+      "documentWidth": 1440,
+      "targets": [
+        {
+          "iteration": 16,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/16-1440.png"
+        },
+        {
+          "iteration": 17,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/17-1440.png"
+        },
+        {
+          "iteration": 18,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/18-1440.png"
+        },
+        {
+          "iteration": 19,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/19-1440.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/characters",
+      "width": 390,
+      "documentWidth": 390,
+      "targets": [
+        {
+          "iteration": 16,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/16-390.png"
+        },
+        {
+          "iteration": 17,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/17-390.png"
+        },
+        {
+          "iteration": 18,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/18-390.png"
+        },
+        {
+          "iteration": 19,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/19-390.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/characters",
+      "width": 320,
+      "documentWidth": 320,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/characters",
+      "width": 768,
+      "documentWidth": 768,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland",
+      "width": 1440,
+      "documentWidth": 1440,
+      "targets": [
+        {
+          "iteration": 20,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/20-1440.png"
+        },
+        {
+          "iteration": 21,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/21-1440.png"
+        },
+        {
+          "iteration": 22,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/22-1440.png"
+        },
+        {
+          "iteration": 23,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/23-1440.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland",
+      "width": 390,
+      "documentWidth": 390,
+      "targets": [
+        {
+          "iteration": 20,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/20-390.png"
+        },
+        {
+          "iteration": 21,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/21-390.png"
+        },
+        {
+          "iteration": 22,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/22-390.png"
+        },
+        {
+          "iteration": 23,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/23-390.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland",
+      "width": 320,
+      "documentWidth": 320,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland",
+      "width": 768,
+      "documentWidth": 768,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/map",
+      "width": 1440,
+      "documentWidth": 1440,
+      "targets": [
+        {
+          "iteration": 24,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/24-1440.png"
+        },
+        {
+          "iteration": 25,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/25-1440.png"
+        },
+        {
+          "iteration": 26,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/26-1440.png"
+        },
+        {
+          "iteration": 27,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/27-1440.png"
+        },
+        {
+          "iteration": 28,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/28-1440.png"
+        },
+        {
+          "iteration": 29,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/29-1440.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/map",
+      "width": 390,
+      "documentWidth": 390,
+      "targets": [
+        {
+          "iteration": 24,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/24-390.png"
+        },
+        {
+          "iteration": 25,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/25-390.png"
+        },
+        {
+          "iteration": 26,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/26-390.png"
+        },
+        {
+          "iteration": 27,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/27-390.png"
+        },
+        {
+          "iteration": 28,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/28-390.png"
+        },
+        {
+          "iteration": 29,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/29-390.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/map",
+      "width": 320,
+      "documentWidth": 320,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/map",
+      "width": 768,
+      "documentWidth": 768,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters/alice",
+      "width": 1440,
+      "documentWidth": 1440,
+      "targets": [
+        {
+          "iteration": 30,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/30-1440.png"
+        },
+        {
+          "iteration": 31,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/31-1440.png"
+        },
+        {
+          "iteration": 32,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/32-1440.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters/alice",
+      "width": 390,
+      "documentWidth": 390,
+      "targets": [
+        {
+          "iteration": 30,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/30-390.png"
+        },
+        {
+          "iteration": 31,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/31-390.png"
+        },
+        {
+          "iteration": 32,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/32-390.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters/alice",
+      "width": 320,
+      "documentWidth": 320,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters/alice",
+      "width": 768,
+      "documentWidth": 768,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters",
+      "width": 1440,
+      "documentWidth": 1440,
+      "targets": [
+        {
+          "iteration": 33,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/33-1440.png"
+        },
+        {
+          "iteration": 34,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/34-1440.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters",
+      "width": 390,
+      "documentWidth": 390,
+      "targets": [
+        {
+          "iteration": 33,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/33-390.png"
+        },
+        {
+          "iteration": 34,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/34-390.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters",
+      "width": 320,
+      "documentWidth": 320,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters",
+      "width": 768,
+      "documentWidth": 768,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/connections",
+      "width": 1440,
+      "documentWidth": 1440,
+      "targets": [
+        {
+          "iteration": 35,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/35-1440.png"
+        },
+        {
+          "iteration": 36,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/36-1440.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/connections",
+      "width": 390,
+      "documentWidth": 390,
+      "targets": [
+        {
+          "iteration": 35,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/35-390.png"
+        },
+        {
+          "iteration": 36,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/36-390.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/connections",
+      "width": 320,
+      "documentWidth": 320,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/connections",
+      "width": 768,
+      "documentWidth": 768,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/relations/alice-rabbit",
+      "width": 1440,
+      "documentWidth": 1440,
+      "targets": [
+        {
+          "iteration": 37,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/37-1440.png"
+        },
+        {
+          "iteration": 38,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/38-1440.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/relations/alice-rabbit",
+      "width": 390,
+      "documentWidth": 390,
+      "targets": [
+        {
+          "iteration": 37,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/37-390.png"
+        },
+        {
+          "iteration": 38,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/38-390.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/relations/alice-rabbit",
+      "width": 320,
+      "documentWidth": 320,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/relations/alice-rabbit",
+      "width": 768,
+      "documentWidth": 768,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/opening",
+      "width": 1440,
+      "documentWidth": 1440,
+      "targets": [
+        {
+          "iteration": 39,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/39-1440.png"
+        },
+        {
+          "iteration": 40,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/40-1440.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/opening",
+      "width": 390,
+      "documentWidth": 390,
+      "targets": [
+        {
+          "iteration": 39,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/39-390.png"
+        },
+        {
+          "iteration": 40,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/40-390.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/opening",
+      "width": 320,
+      "documentWidth": 320,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/opening",
+      "width": 768,
+      "documentWidth": 768,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/chapters/1-2",
+      "width": 1440,
+      "documentWidth": 1440,
+      "targets": [
+        {
+          "iteration": 41,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/41-1440.png"
+        },
+        {
+          "iteration": 42,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/42-1440.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/chapters/1-2",
+      "width": 390,
+      "documentWidth": 390,
+      "targets": [
+        {
+          "iteration": 41,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/41-390.png"
+        },
+        {
+          "iteration": 42,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/42-390.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/chapters/1-2",
+      "width": 320,
+      "documentWidth": 320,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/chapters/1-2",
+      "width": 768,
+      "documentWidth": 768,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/guides",
+      "width": 1440,
+      "documentWidth": 1440,
+      "targets": [
+        {
+          "iteration": 43,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/43-1440.png"
+        },
+        {
+          "iteration": 44,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/44-1440.png"
+        },
+        {
+          "iteration": 45,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/45-1440.png"
+        },
+        {
+          "iteration": 46,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/46-1440.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/guides",
+      "width": 390,
+      "documentWidth": 390,
+      "targets": [
+        {
+          "iteration": 43,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/43-390.png"
+        },
+        {
+          "iteration": 44,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/44-390.png"
+        },
+        {
+          "iteration": 45,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/45-390.png"
+        },
+        {
+          "iteration": 46,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/46-390.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/guides",
+      "width": 320,
+      "documentWidth": 320,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/guides",
+      "width": 768,
+      "documentWidth": 768,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/how-it-works",
+      "width": 1440,
+      "documentWidth": 1440,
+      "targets": [
+        {
+          "iteration": 47,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/47-1440.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/how-it-works",
+      "width": 390,
+      "documentWidth": 390,
+      "targets": [
+        {
+          "iteration": 47,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/47-390.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/how-it-works",
+      "width": 320,
+      "documentWidth": 320,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/how-it-works",
+      "width": 768,
+      "documentWidth": 768,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/our-method",
+      "width": 1440,
+      "documentWidth": 1440,
+      "targets": [
+        {
+          "iteration": 48,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/48-1440.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/our-method",
+      "width": 390,
+      "documentWidth": 390,
+      "targets": [
+        {
+          "iteration": 48,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/48-390.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/our-method",
+      "width": 320,
+      "documentWidth": 320,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/our-method",
+      "width": 768,
+      "documentWidth": 768,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/help",
+      "width": 1440,
+      "documentWidth": 1440,
+      "targets": [
+        {
+          "iteration": 49,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/49-1440.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/help",
+      "width": 390,
+      "documentWidth": 390,
+      "targets": [
+        {
+          "iteration": 49,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/49-390.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/help",
+      "width": 320,
+      "documentWidth": 320,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/help",
+      "width": 768,
+      "documentWidth": 769,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/account",
+      "width": 1440,
+      "documentWidth": 1440,
+      "targets": [
+        {
+          "iteration": 50,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/50-1440.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/account",
+      "width": 390,
+      "documentWidth": 390,
+      "targets": [
+        {
+          "iteration": 50,
+          "screenshot": "/Users/rafalwolak/dev/cloudflare/books/apps/web/.impeccable/review/bookshop-final/50-390.png"
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "route": "/account",
+      "width": 320,
+      "documentWidth": 320,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/account",
+      "width": 768,
+      "documentWidth": 768,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/?lang=pl",
+      "width": 1440,
+      "documentWidth": 1440,
+      "localizedLinks": true,
+      "targets": [],
+      "contrast": []
+    },
+    {
+      "route": "/?lang=pl",
+      "width": 390,
+      "documentWidth": 390,
+      "localizedLinks": true,
+      "targets": [],
+      "contrast": []
+    }
+  ]
+}

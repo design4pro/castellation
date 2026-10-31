@@ -9,7 +9,7 @@ export const GET: APIRoute = async ({ url }) => {
     const catalog = await request('/api/books');
     if (!catalog.ok) throw new Error('Catalog unavailable');
     const { books } = await catalog.json() as { books: Book[] };
-    const paths = new Set(['/', '/library', '/how-it-works', '/help', '/our-method', '/guides', '/guides/track-characters', '/guides/lewis-carroll-and-alice', '/guides/alice-down-the-rabbit-hole', '/guides/book-club-questions', '/guides/two-unexpected-beginnings']);
+    const paths = new Set(['/', '/library', '/how-it-works', '/help', '/our-method', '/guides', '/reading-paths', '/guides/track-characters', '/guides/lewis-carroll-and-alice', '/guides/alice-down-the-rabbit-hole', '/guides/book-club-questions', '/guides/two-unexpected-beginnings', '/guides/alice-and-the-white-rabbit', '/guides/reading-character-connections', '/guides/choose-your-next-classic']);
     const details = await Promise.all(books.map(async (book) => {
       const path = `/books/${encodeURIComponent(book.slug)}`;
       const response = await request(`/api/books/${encodeURIComponent(book.slug)}`);

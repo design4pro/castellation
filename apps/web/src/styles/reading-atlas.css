@@ -1,0 +1,942 @@
+/* Reading atlas: editorial compositions built on the existing Castellation palette. */
+#page {
+  --atlas-paper: #f6f4ed;
+  --atlas-ink: #27352f;
+  --atlas-forest: #263e33;
+  --atlas-rust: #87452c;
+  --atlas-peach: #f0c3a5;
+  --atlas-sage: #e1e9dd;
+  --atlas-parchment: #eee4d9;
+  --atlas-muted: #405448;
+  --atlas-rule: #9cad9e;
+  --atlas-dark-rule: #789181;
+  --atlas-iteration: 50;
+}
+#page ::selection { background: #f0c3a5; color: #27352f; }
+#page :is(input, textarea) { caret-color: #87452c; }
+#page :is(h1,h2,h3) { text-wrap: balance; }
+@media (prefers-reduced-motion: reduce) {
+  html:root { scroll-behavior: auto; }
+}
+
+/* 1. A panoramic story entrance */
+@media screen {
+#page {
+
+.hero { width:100%; max-width:1600px; min-height:720px; margin:auto; padding:0; gap:0; grid-template-columns:1.05fr 1fr; align-items:stretch; background:var(--atlas-forest); }
+.hero-copy { z-index:1; padding:clamp(36px,5vw,80px); background:var(--atlas-paper); margin-block:40px; margin-right:-42px; align-self:center; }
+.hero-copy>.eyebrow { display:none; }
+.hero h1 { font-size:clamp(58px,6.6vw,96px); letter-spacing:-.04em; line-height:1.02; margin:0 0 28px; }
+.hero-intro { color:var(--atlas-muted); max-width:36ch; font-size:17px; line-height:1.7; }
+.hero-map { min-height:720px; height:100%; }
+.hero-map>img { object-position:52% 38%; }
+.hero-map-content { padding:40px 40px 40px 72px; }
+.hero-map-title { font-size:clamp(28px,3vw,44px); }
+@media(max-width:760px) { .hero { grid-template-columns:1fr; min-height:0; } .hero-copy { margin:0; padding:38px 24px 32px; } .hero h1 { font-size:clamp(46px,11vw,70px); } .hero-map { min-height:440px; } .hero-map-content { padding:28px 24px; } }
+
+}
+}
+
+/* 2. An inset reading instruction */
+@media screen {
+#page {
+
+.hero-how { display:grid; grid-template-columns:1fr 1fr; gap:20px; padding:24px; background:var(--atlas-sage); border:0; margin-top:28px; max-width:none; }
+.hero-how>span { display:none; }
+.hero-how div { border-top:1px solid #879b89; padding-top:12px; gap:10px; }
+.hero-how div span { font:500 28px/1 'Playfair Display',serif; letter-spacing:0; }
+.hero-how strong { font-size:21px; }
+.hero-how>a { padding-top:12px; margin:0; border-top:1px solid #b2c0af; min-height:44px; display:flex; align-items:center; }
+@media(max-width:760px) { .hero-how { padding:20px; gap:16px; } .hero-how strong { font-size:19px; } }
+
+}
+}
+
+/* 3. Character dossiers instead of grouped tiles */
+@media screen {
+#page {
+
+.home-cast { grid-template-columns:minmax(0,.65fr) minmax(0,1.35fr); gap:7%; padding-block:100px; }
+.home-cast-intro>.eyebrow { display:none; }
+.home-cast-intro h2 { margin-top:0; font-size:clamp(42px,4.8vw,66px); }
+.home-cast-story { background:transparent; margin-bottom:34px; padding:0; }
+.home-cast-story:nth-child(even) { background:transparent; }
+.home-cast-book { padding-block:14px; border-block:1px solid var(--atlas-rule); }
+.home-cast-story a { grid-template-columns:74px minmax(0,1fr) auto; padding:22px 12px; gap:22px; }
+.home-cast-initial { border-radius:0; height:88px; width:74px; font-size:52px; background:var(--atlas-sage); color:var(--atlas-forest); }
+.home-cast-story:nth-child(even) .home-cast-initial { background:var(--atlas-parchment); }
+.home-cast-story a:hover { background:var(--atlas-sage); }
+@media(max-width:760px) { .home-cast { grid-template-columns:1fr; padding-block:60px; gap:32px; } .home-cast-story a { grid-template-columns:58px minmax(0,1fr) auto; gap:14px; padding-inline:0; } .home-cast-initial { width:58px; height:72px; font-size:38px; } }
+
+}
+}
+
+/* 4. A cinematic first encounter spread */
+@media screen {
+#page {
+
+.first-scene { width:100%; max-width:1600px; grid-template-columns:1fr 1fr; margin-block:0; }
+.first-scene>div:first-child { padding:clamp(32px,6vw,90px); }
+.first-scene>div:first-child>p:first-child { display:none; }
+.first-scene>div:first-child>a { color:var(--atlas-forest); background:var(--atlas-paper); }
+.first-scene h2 { font-size:clamp(44px,6.2vw,86px); line-height:1.03; }
+.first-scene-art { min-height:640px; }
+.first-scene-art img { object-position:50% 30%; }
+.first-scene-thread { inset:auto 32px 36px; gap:16px; padding-top:24px; border-top:1px solid var(--atlas-rule); font-size:13px; letter-spacing:.03em; }
+@media(max-width:760px) { .first-scene { grid-template-columns:1fr; } .first-scene-art { min-height:420px; } .first-scene h2 { font-size:50px; } .first-scene-thread { inset:auto 24px 24px; font-size:11px; gap:12px; } }
+
+}
+}
+
+/* 5. A reading index with oversized chapter entries */
+@media screen {
+#page {
+
+.reading-index { padding-block:90px; }
+.reading-index>div { grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr); border:0; gap:7%; }
+.reading-index>div>div:first-child>p:first-child { display:none; }
+.reading-index h2 { margin-top:0; font-size:clamp(38px,4.4vw,60px); }
+.reading-index-list>a { grid-template-columns:60px minmax(0,1fr) auto; padding:30px 18px; }
+.reading-index-list strong { font-size:clamp(28px,3.6vw,48px); max-width:18ch; }
+.reading-index-number { font-size:48px; line-height:1; }
+.reading-index-list a:hover { background:var(--atlas-sage); }
+@media(max-width:760px) { .reading-index { padding-block:60px; } .reading-index>div { grid-template-columns:1fr; gap:28px; } .reading-index-list>a { grid-template-columns:36px minmax(0,1fr) auto; padding-inline:0; gap:12px; } .reading-index-number { font-size:30px; } }
+
+}
+}
+
+/* 6. Two illustrated doors at the final decision */
+@media screen {
+#page {
+
+.next-step { background:var(--atlas-paper); color:var(--atlas-ink); padding-block:70px 100px; }
+.next-step-inner { grid-template-columns:1fr; gap:36px; }
+.next-step-heading>.eyebrow { display:none; }
+.next-step-heading { max-width:760px; }
+.next-step-heading h2 { margin:0 0 24px; font-size:clamp(48px,6vw,82px); }
+.next-step-heading h2 em { display:inline; color:var(--atlas-rust); }
+.next-step-heading>p:last-child { max-width:50ch; color:var(--atlas-muted); }
+.next-step-options { display:grid; grid-template-columns:1fr 1fr; gap:24px; border:0; }
+.next-step-options a { min-height:330px; justify-content:flex-end; padding:32px; background:var(--atlas-sage); border:0; }
+.next-step-options a:first-child { background:linear-gradient(0deg,#172c22 0%,#172c22cc 45%,#172c2240 100%),url('/images/alice-rabbit-hole.webp') center 35%/cover; color:white; }
+.next-step-options a:first-child :is(.next-step-number,span:not(.next-step-number)),.next-step-options a:first-child::after { color:var(--atlas-peach); }
+.next-step-options a:last-child .next-step-number,.next-step-options a:last-child::after { color:var(--atlas-rust); }
+.next-step-options a:last-child>span:not(.next-step-number) { color:var(--atlas-muted); }
+.next-step-options a::after { top:26px; right:30px; }
+@media(max-width:760px) { .next-step { padding-block:50px 60px; } .next-step-options { grid-template-columns:1fr; } .next-step-options a { min-height:270px; padding:26px; } }
+
+}
+}
+
+/* 7. A return ticket for saved reading */
+@media screen {
+#page {
+
+.resume-shelf:not([hidden]) { display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:40px; background:var(--atlas-forest); color:var(--atlas-paper); padding:40px; margin-block:50px; }
+.resume-heading { display:block; }
+.resume-heading .eyebrow { color:var(--atlas-peach); }
+.resume-heading h2 { font:500 38px/1.1 'Playfair Display',serif; margin:14px 0; }
+.resume-heading>p { color:var(--atlas-sage); font-size:14px; line-height:1.7; }
+.resume-list { display:flex; flex-direction:column; gap:0; }
+.resume-item:not([hidden]) { display:grid; grid-template-columns:minmax(0,1fr) auto; padding:24px 0; border-block:1px solid var(--atlas-dark-rule); background:transparent; color:var(--atlas-paper); }
+.resume-item>span:first-child { display:none; }
+.resume-item strong { font:500 26px/1.15 'Playfair Display',serif; }
+.resume-position { display:block; padding-top:10px; color:var(--atlas-peach); }
+@media(max-width:760px) { .resume-shelf:not([hidden]) { grid-template-columns:1fr; gap:20px; padding:26px; } .resume-item:not([hidden]) { grid-template-columns:1fr; gap:18px; } }
+
+}
+}
+
+/* 8. A masthead with book-tab navigation */
+@media screen {
+#page {
+
+.site-header { min-height:100px; height:auto; padding-block:18px; gap:24px; }
+.site-header .brand { font-size:32px; letter-spacing:-.04em; }
+.site-header .site-nav-desktop { align-self:stretch; gap:30px; }
+.site-nav-desktop>a { display:flex; align-items:center; min-height:48px; padding-inline:3px; border-bottom:2px solid transparent; }
+.site-nav-desktop>a:first-child { background:var(--atlas-forest); color:var(--atlas-paper); padding:14px 22px; border:0; }
+.site-nav-desktop>a:first-child[aria-current="page"] { color:var(--atlas-paper); }
+.site-nav-desktop>a:first-child:hover { background:#405d49; color:var(--atlas-paper); }
+.site-nav-desktop>a:hover,.site-nav-desktop>a[aria-current='page'] { border-color:var(--atlas-rust); color:var(--atlas-rust); }
+@media(max-width:760px) { .site-header { padding-block:0; min-height:120px; gap:0; } .site-header .brand { font-size:27px; } .site-header .site-nav-quick { border-color:var(--atlas-rule); } .site-header .site-nav-quick a[aria-current='page'] { background:var(--atlas-sage); text-decoration:none; border-bottom:2px solid #87452c; } }
+
+}
+}
+
+/* 9. An editorial colophon and oversized closing wordmark */
+@media screen {
+#page {
+
+.site-footer-inner { grid-template-columns:1fr 1fr; gap:45px; padding-block:65px 28px; }
+.site-footer-intro .brand { font-size:clamp(34px,5vw,68px); line-height:1.05; letter-spacing:-.04em; }
+.site-footer-intro>p { font-size:25px; max-width:27ch; line-height:1.4; margin-top:26px; }
+.site-footer nav { border-top:1px solid var(--atlas-dark-rule); padding-top:25px; }
+.site-footer nav a { min-height:36px; display:flex; align-items:center; }
+.site-footer nav div { gap:6px; }
+.site-footer-bottom { padding-top:26px; margin-top:15px; font-variant-numeric:tabular-nums; }
+@media(max-width:760px) { .site-footer-inner { grid-template-columns:1fr; gap:30px; padding-block:45px 25px; } .site-footer-intro .brand { font-size:clamp(30px,9vw,48px); } .site-footer nav { gap:16px; } }
+
+}
+}
+
+/* 10. The library as a title-page composition */
+@media screen {
+#page {
+
+.collection-heading { grid-template-columns:minmax(0,1.6fr) minmax(0,.7fr); align-items:end; gap:8%; padding-block:25px 60px; border-bottom:1px solid var(--atlas-rule); margin-bottom:45px; }
+.collection-heading .eyebrow { display:none; }
+.collection-heading h1 { font-size:clamp(56px,7.4vw,96px); line-height:1.02; letter-spacing:-.04em; margin:0; }
+.collection-intro { padding-bottom:8px; }
+.collection-intro>p { font-size:17px; line-height:1.7; color:var(--atlas-muted); }
+.collection-intro>span { display:block; padding-top:20px; margin-top:24px; border-top:1px solid var(--atlas-rule); color:var(--atlas-rust); }
+@media(max-width:760px) { .collection-heading { grid-template-columns:1fr; gap:24px; padding-block:0 35px; margin-bottom:30px; } .collection-heading h1 { font-size:clamp(46px,12vw,66px); } }
+
+}
+}
+
+/* 11. A search desk for the library */
+@media screen {
+#page {
+
+.library-finder:not([hidden]) { display:block; background:var(--atlas-forest); color:var(--atlas-paper); padding:clamp(26px,4vw,50px); margin-bottom:55px; }
+.library-finder .eyebrow { display:none; }
+.library-finder label { font:500 clamp(28px,4vw,46px)/1.1 'Playfair Display',serif; margin:0 0 16px; }
+.library-finder>div>p:not(.eyebrow),.library-finder-controls>p { color:var(--atlas-sage); }
+.library-finder-controls { margin-top:26px; }
+.library-finder-controls>div { border:0; background:var(--atlas-paper); }
+.library-finder input { padding:22px; font-size:20px; color:var(--atlas-ink); }
+.library-finder button { background:var(--atlas-peach); color:var(--atlas-forest); padding-inline:28px; }
+@media(max-width:760px) { .library-finder input { padding:18px 12px; font-size:16px; } .library-finder button { padding-inline:16px; } }
+
+}
+}
+
+/* 12. A full-width illustrated bookshelf */
+@media screen {
+#page {
+
+.collection-list { display:flex; flex-direction:column; gap:32px; }
+.collection-item { display:grid; grid-template-columns:40% minmax(0,1fr) auto; grid-template-rows:auto 1fr auto; gap:16px 40px; min-height:380px; padding:0 32px 0 0; background:var(--atlas-sage); overflow:hidden; }
+.collection-list li:nth-child(even) .collection-item { background:var(--atlas-parchment); }
+.collection-visual { grid-column:1; grid-row:1/4; width:100%; min-height:380px; height:100%; border-radius:0; margin:0; }
+.collection-visual img { width:100%; height:100%; object-fit:cover; object-position:center 38%; }
+.collection-number { grid-column:2/4; align-self:start; padding-top:30px; }
+.collection-book { grid-column:2/4; grid-row:2; align-self:center; padding:0; }
+.collection-book strong { font-size:clamp(32px,4.4vw,58px); line-height:1.08; max-width:18ch; }
+.collection-description { max-width:42ch; line-height:1.7; }
+.collection-link { grid-column:2/4; grid-row:3; border-top:1px solid var(--atlas-rule); padding-block:20px 28px; justify-content:space-between; }
+@media(max-width:760px) { .collection-item { grid-template-columns:1fr; grid-template-rows:240px auto auto auto; gap:18px; padding:0 24px; } .collection-visual { grid-column:1; grid-row:1; min-height:240px; width:calc(100% + 48px); margin-inline:-24px; } .collection-number { grid-column:1; grid-row:2; padding-top:8px; } .collection-book { grid-column:1; grid-row:3; } .collection-link { grid-column:1; grid-row:4; margin-top:6px; } .collection-book strong { font-size:34px; } }
+
+}
+}
+
+/* 13. A quiet editorial recommendation between shelves */
+@media screen {
+#page {
+
+.shelf-note { display:grid; grid-template-columns:1fr; background:transparent; padding:55px 0; border-block:1px solid var(--atlas-rule); text-align:center; margin-top:65px; }
+.shelf-note>span,.shelf-note .eyebrow { display:none; }
+.shelf-note h2 { max-width:20ch; margin:0 auto 26px; font:500 clamp(36px,5vw,64px)/1.08 'Playfair Display',serif; letter-spacing:-.035em; }
+.shelf-note a { display:inline-flex; min-height:48px; align-items:center; padding:12px 24px; background:var(--atlas-forest); color:var(--atlas-paper); font-weight:700; font-size:14px; text-decoration:none; }
+.shelf-note a:hover { background:#405d49; }
+
+}
+}
+
+/* 14. A character discovery counterpoint */
+@media screen {
+#page {
+
+.library-people { background:var(--atlas-parchment); padding:clamp(28px,5vw,65px); align-items:center; gap:50px; }
+.library-people .eyebrow { display:none; }
+.library-people h2 { font-size:clamp(38px,5.5vw,72px); max-width:12ch; margin:0 0 20px; line-height:1.06; letter-spacing:-.035em; }
+.library-people p:not(.eyebrow) { max-width:44ch; margin-bottom:0; font-size:16px; }
+.library-people .primary-button { flex-shrink:0; min-height:70px; border-radius:0; padding-inline:30px; }
+@media(max-width:760px) { .library-people { display:block; } .library-people .primary-button { min-height:56px; margin-top:26px; } }
+
+}
+}
+
+/* 15. An author directory set like a book index */
+@media screen {
+#page {
+
+.library-authors { display:grid; grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr); gap:8%; align-items:start; padding-block:80px 30px; }
+.library-authors .eyebrow { display:none; }
+.library-authors h2 { font:500 clamp(36px,4.5vw,60px)/1.1 'Playfair Display',serif; margin:0 0 24px; letter-spacing:-.035em; }
+.library-authors ul { display:block; margin:0; padding:0; list-style:none; }
+.library-authors li { border-top:1px solid var(--atlas-rule); }
+.library-authors li:last-child { border-bottom:1px solid var(--atlas-rule); }
+.library-authors li a { display:flex; justify-content:space-between; align-items:center; gap:20px; padding:26px 10px; background:transparent; }
+.library-authors li a>span:first-child { display:none; }
+.library-authors strong { font:500 clamp(28px,3vw,42px)/1.15 'Playfair Display',serif; }
+@media(max-width:760px) { .library-authors { grid-template-columns:1fr; gap:24px; padding-top:55px; } }
+
+}
+}
+
+/* 16. A cast directory with a theatrical title */
+@media screen {
+#page {
+
+.directory-heading { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,.65fr); gap:8%; align-items:end; padding-bottom:55px; }
+.directory-heading .eyebrow { display:none; }
+.directory-heading h1 { font-size:clamp(58px,7.8vw,96px); line-height:1.02; margin:0; letter-spacing:-.04em; }
+.directory-heading>div:last-child { border-top:1px solid var(--atlas-rule); padding-top:20px; }
+.directory-heading>div:last-child p { color:var(--atlas-muted); font-size:16px; }
+.directory-heading>div:last-child a { display:inline-flex; align-items:center; min-height:44px; }
+@media(max-width:760px) { .directory-heading { grid-template-columns:1fr; gap:28px; } .directory-heading h1 { font-size:clamp(46px,12vw,68px); } }
+
+}
+}
+
+/* 17. An illustrated story selector in the cast directory */
+@media screen {
+#page {
+
+.story-index { grid-template-columns:1fr; background:var(--atlas-forest); margin-bottom:60px; }
+.story-index-intro { padding:30px 32px 10px; }
+.story-index-intro>.eyebrow { display:none; }
+.story-index-intro>p:last-child { font:500 30px/1.15 'Playfair Display',serif; max-width:none; margin:0; }
+.story-index-links { grid-template-columns:1fr 1fr; gap:0; }
+.story-index-links a { min-height:200px; border-left:0; padding:32px; align-content:end; background:linear-gradient(0deg,#172c22f0,#172c2255),url('/images/christmas-carol-opening.webp') center 45%/cover; }
+.story-index-links a:nth-child(2) { background-image:linear-gradient(0deg,#172c22f0,#172c2255),url('/images/alice-rabbit-hole.webp'); }
+.story-index-links strong { font-size:clamp(26px,3vw,40px); }
+.story-index-number { display:none; }
+.story-index-links a { grid-template-columns:1fr auto; }
+@media(max-width:760px) { .story-index-links { grid-template-columns:1fr; } .story-index-links a { padding:26px; min-height:190px; } }
+
+}
+}
+
+/* 18. A typographic cast roll with tall initials */
+@media screen {
+#page {
+
+.directory-people { grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 36px; margin-top:25px; }
+.directory-people a { grid-template-columns:74px minmax(0,1fr) auto; min-height:178px; padding:24px 0; background:transparent; border-top:1px solid #aab8a8; gap:22px; }
+.directory-people li:nth-child(even) a { background:transparent; }
+.directory-initial { border-radius:0; height:100px; font-size:58px; background:var(--atlas-sage); color:var(--atlas-forest); }
+.directory-person strong { font-size:clamp(26px,3vw,38px); }
+.directory-person>span { font-size:14px; line-height:1.6; }
+.directory-people a:hover { background:var(--atlas-sage); }
+@media(max-width:760px) { .directory-people { grid-template-columns:1fr; } .directory-people a { grid-template-columns:60px minmax(0,1fr) auto; gap:16px; min-height:0; } .directory-initial { height:80px; font-size:42px; } }
+
+}
+}
+
+/* 19. A broad map invitation after the cast roll */
+@media screen {
+#page {
+
+.directory-next { background:var(--atlas-forest); color:var(--atlas-paper); padding:clamp(30px,5vw,70px); align-items:center; gap:40px; }
+.directory-next .eyebrow { display:none; }
+.directory-next h2 { font-size:clamp(36px,5vw,66px); line-height:1.08; max-width:16ch; margin:0 0 22px; letter-spacing:-.035em; }
+.directory-next p:not(.eyebrow) { color:var(--atlas-sage); max-width:45ch; }
+.directory-next .primary-button { background:var(--atlas-peach); color:var(--atlas-forest); padding:24px 30px; flex-shrink:0; border-radius:0; }
+@media(max-width:760px) { .directory-next { display:block; } .directory-next .primary-button { margin-top:20px; padding:18px 22px; } }
+
+}
+}
+
+/* 20. A book opening presented as an illustrated dust jacket */
+@media screen {
+#page {
+
+.book-opening { grid-template-columns:minmax(0,1fr) minmax(0,.85fr); gap:0; align-items:stretch; background:var(--atlas-sage); margin-top:25px; }
+.book-opening-copy { padding:clamp(28px,4vw,58px); align-self:center; }
+.book-opening-copy>.eyebrow { display:none; }
+.book-opening h1 { font-size:clamp(44px,5.7vw,78px); line-height:1.04; letter-spacing:-.04em; margin:0 0 24px; }
+.book-opening-intro { color:var(--atlas-muted); line-height:1.75; }
+.book-opening-art { min-height:650px; border-radius:0; padding:36px; justify-content:flex-end; }
+.book-opening-art>strong { font-size:clamp(27px,3.2vw,42px); line-height:1.12; }
+.book-opening-art .story-illustration { object-position:50% 30%; }
+.book-opening-actions { align-items:start; gap:16px; }
+@media(max-width:760px) { .book-opening { grid-template-columns:1fr; } .book-opening-art { min-height:420px; padding:28px; } .book-opening h1 { font-size:clamp(40px,10.5vw,60px); } }
+
+}
+}
+
+/* 21. A chapter selection desk with paper tabs */
+@media screen {
+#page {
+
+.reading-entry { grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:0; background:var(--atlas-forest); color:var(--atlas-paper); padding:0; margin-block:70px; align-items:stretch; }
+.reading-entry-copy { padding:clamp(28px,4vw,50px); }
+.reading-entry-copy>.eyebrow,.reading-entry-symbol { display:none; }
+.reading-entry-copy h2 { margin:0 0 24px; font-size:clamp(40px,4.8vw,64px); line-height:1.06; }
+.reading-entry-copy h2 em { color:var(--atlas-peach); }
+.reading-entry-copy>p { color:var(--atlas-sage); font-size:15px; line-height:1.75; }
+.reading-entry-action { background:var(--atlas-sage); padding:clamp(26px,4vw,50px); color:var(--atlas-ink); }
+.reading-entry-choices>div { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.reading-entry-choice { background:var(--atlas-paper); min-width:0; }
+.reading-entry-choice:has(input:checked) { background:#263e33; color:var(--atlas-paper); outline:2px solid #263e33; }
+.reading-entry-choice:has(input:checked) small { color:var(--atlas-peach); }
+.reading-entry-submit { margin-top:24px; min-height:60px; }
+@media(max-width:760px) { .reading-entry { grid-template-columns:1fr; margin-block:45px; } .reading-entry-choices>div { grid-template-columns:1fr; } }
+
+}
+}
+
+/* 22. A cast preview arranged like marginal portraits */
+@media screen {
+#page {
+
+.book-cast-preview { padding:40px; display:grid; grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr); gap:7%; padding-block:50px; border-top:1px solid var(--atlas-rule); }
+.book-cast-preview-head { display:block; }
+.book-cast-preview-head .eyebrow { display:none; }
+.book-cast-preview-head h2 { font:500 clamp(36px,4.4vw,58px)/1.08 'Playfair Display',serif; margin:0 0 24px; }
+.book-cast-preview-list { display:block; margin:0; }
+.book-cast-preview-list a { display:grid; grid-template-columns:68px minmax(0,1fr) auto; gap:20px; background:transparent; border-top:1px solid #aab8a8; padding:24px 0; min-height:130px; }
+.book-cast-preview-initial { width:68px; height:84px; border-radius:0; background:var(--atlas-parchment); color:var(--atlas-forest); font-size:44px; }
+.book-cast-preview-copy { min-width:0; overflow-wrap:anywhere; }
+.book-cast-preview-copy strong { font-size:30px; }
+.book-cast-preview>p { grid-column:2; margin:0; }
+.book-cast-preview-all { grid-column:2; display:inline-flex; min-height:48px; align-items:center; }
+@media(max-width:760px) { .book-cast-preview { grid-template-columns:1fr; gap:24px; padding:24px; } .book-cast-preview-list a { grid-template-columns:48px minmax(0,1fr) auto; gap:12px; } .book-cast-preview-initial { width:48px; height:64px; font-size:34px; } .book-cast-preview>p,.book-cast-preview-all { grid-column:1; } }
+
+}
+}
+
+/* 23. A chapter contents table with a reading spine */
+@media screen {
+#page {
+
+.chapter-shelf { display:block; color:var(--atlas-ink); padding:clamp(26px,4vw,50px); background:var(--atlas-parchment); margin-block:45px 70px; }
+.chapter-shelf .eyebrow { display:none; }
+.chapter-shelf>div { margin-bottom:30px; }
+.chapter-shelf p:not(.eyebrow) { color:var(--atlas-muted); max-width:60ch; }
+.chapter-shelf h2 { font:500 clamp(34px,4.5vw,60px)/1.1 'Playfair Display',serif; margin:0 0 30px; }
+.chapter-shelf ol { display:block; padding:0; list-style:none; }
+.chapter-shelf a { display:grid; grid-template-columns:110px minmax(0,1fr) auto; align-items:center; gap:22px; background:transparent; padding:26px 0; border-top:1px solid #a59b8d; }
+.chapter-shelf-number { grid-column:1; grid-row:1; font:700 11px/1.6 'DM Sans',sans-serif; color:var(--atlas-rust); }
+.chapter-shelf a strong { grid-column:2; grid-row:1; font:500 clamp(25px,3vw,40px)/1.15 'Playfair Display',serif; }
+.chapter-shelf-action { grid-column:3; grid-row:1; }
+.chapter-shelf a:focus-visible { outline-color:var(--atlas-rust); }
+.chapter-shelf a:hover { background:#e6d9c9; }
+@media(max-width:760px) { .chapter-shelf a { grid-template-columns:1fr; gap:14px; } .chapter-shelf-number { grid-column:1; grid-row:1; } .chapter-shelf a strong { grid-column:1; grid-row:2; } .chapter-shelf-action { grid-column:1; grid-row:3; } .chapter-shelf-number { font-size:10px; } }
+
+}
+}
+
+/* 24. A compact atlas title above the interactive map */
+@media screen {
+#page {
+
+.map-page-intro { display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,.7fr); gap:14px 7%; align-items:end; padding:30px 0 40px; border-bottom:1px solid var(--atlas-rule); margin-bottom:30px; }
+.map-page-intro>.eyebrow { display:none; }
+.map-page-intro h1 { grid-column:1; font-size:clamp(42px,5vw,66px); letter-spacing:-.035em; line-height:1.08; margin:0; }
+.map-page-intro #book-author { grid-column:1; grid-row:2; font-size:16px; margin:0; color:var(--atlas-rust); }
+.map-page-intro>p:last-child { grid-column:2; grid-row:1/3; max-width:38ch; line-height:1.7; color:var(--atlas-muted); margin:0; }
+@media(max-width:760px) { .map-page-intro { grid-template-columns:1fr; gap:18px; } .map-page-intro>p:last-child { grid-column:1; grid-row:3; } .map-page-intro h1 { font-size:40px; } }
+
+}
+}
+
+/* 25. A reading boundary console before the graph */
+@media screen {
+#page {
+
+.map-page .book-toolbar { display:grid; grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr); gap:30px; background:var(--atlas-forest); color:var(--atlas-paper); padding:30px; align-items:center; margin-bottom:0; }
+.map-page .book-toolbar h2 { font:500 34px/1.1 'Playfair Display',serif; margin:0 0 14px; }
+.map-page .book-toolbar .muted { color:var(--atlas-sage); font-size:13px; line-height:1.6; }
+.map-boundary { background:transparent; padding:0; border:0; }
+.map-boundary-copy>span { display:none; }
+.map-boundary-copy strong { color:var(--atlas-peach); font-size:16px; }
+.map-boundary-copy p { color:var(--atlas-sage); }
+.map-boundary label { display:flex; flex-direction:column; align-items:stretch; gap:10px; color:var(--atlas-paper); }
+.map-boundary select { width:100%; min-height:54px; background:var(--atlas-paper); color:var(--atlas-ink); font-size:16px; padding-inline:14px; }
+@media(max-width:760px) { .map-page .book-toolbar { grid-template-columns:1fr; padding:24px; gap:22px; } }
+
+}
+}
+
+/* 26. An atlas workspace with a permanent inspection rail */
+@media screen {
+#page {
+
+.map-stage { grid-template-columns:minmax(0,1fr) 290px; gap:0; border:1px solid var(--atlas-rule); border-top:0; margin-bottom:40px; }
+.map-stage .graph { background:var(--atlas-sage); min-height:490px; }
+.map-stage .graph svg { height:100%; min-height:490px; }
+.map-stage-rail { background:var(--atlas-parchment); padding:18px; gap:18px; }
+.map-stage .map-detail-prompt { background:transparent; padding:10px 0 24px; border-bottom:1px solid #b8aa98; }
+.map-stage .map-detail-prompt strong { font-size:31px; }
+.map-stage .chapter-controls { background:var(--atlas-paper); color:var(--atlas-ink); padding:20px; }
+.map-stage .chapter-controls button { color:var(--atlas-forest); border-color:var(--atlas-rule); }
+.map-stage .chapter-position .eyebrow { color:var(--atlas-rust); }
+.map-stage .chapter-controls button:hover[aria-disabled="false"] { background:var(--atlas-forest); color:var(--atlas-paper); }
+.map-stage .progress-memory { background:transparent; padding:16px 0; border:0; }
+.map-stage .zoom-controls { bottom:20px; right:20px; gap:6px; }
+.map-stage .zoom-controls button { border-radius:0; background:var(--atlas-paper); border:1px solid #879b89; box-shadow:none; }
+@media(max-width:760px) { .map-stage { grid-template-columns:1fr; } .map-stage .graph,.map-stage .graph svg { min-height:300px; } .map-stage-rail { padding:16px; } }
+
+}
+}
+
+/* 27. A chapter discovery ledger */
+@media screen {
+#page {
+
+.chapter-discoveries { grid-template-columns:1fr; gap:25px; background:transparent; padding:38px 0; border:0; border-block:1px solid var(--atlas-rule); margin-bottom:45px; }
+.chapter-discoveries-intro { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:16px; }
+.chapter-discoveries-intro>.eyebrow { display:none; }
+.chapter-discoveries-intro h2 { font-size:clamp(34px,4vw,50px); margin:0; }
+.chapter-discoveries-intro>p:last-child { font-size:14px; margin:0; color:var(--atlas-rust); }
+.chapter-discoveries-list { gap:28px; }
+.chapter-discoveries-group { padding:24px; background:var(--atlas-sage); border:0; }
+.chapter-discoveries-group:nth-child(even) { background:var(--atlas-parchment); }
+.chapter-discoveries-group h3 { font-size:12px; margin-bottom:20px; }
+.chapter-discoveries-group li { font-size:15px; margin-bottom:16px; }
+@media(max-width:760px) { .chapter-discoveries-list { grid-template-columns:1fr; gap:14px; } }
+
+}
+}
+
+/* 28. Relationships rendered as an annotated index */
+@media screen {
+#page {
+
+.map-connections { background:var(--atlas-forest); color:var(--atlas-paper); padding:clamp(26px,4vw,50px); margin-block:50px; }
+.map-connections-head { display:grid; grid-template-columns:1fr 1fr; gap:30px; align-items:end; padding-bottom:28px; }
+.map-connections-head .eyebrow { display:none; }
+.map-connections-head h2 { font-size:clamp(34px,4vw,52px); line-height:1.08; margin:0; }
+.map-connections-head p { color:var(--atlas-sage); }
+.map-connections-list { display:block; padding:0; margin:0; }
+.map-connections-list li { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); gap:24px; padding:26px 0; border-top:1px solid var(--atlas-dark-rule); }
+.map-connections-list a { display:inline; font:500 clamp(24px,3vw,36px)/1.15 'Playfair Display',serif; color:var(--atlas-paper); background:transparent; border:0; padding:0; }
+.map-connections-list a strong { font:500 26px/1.15 'Playfair Display',serif; }
+.map-connections-list a span { color:var(--atlas-peach); }
+.map-connections a:focus-visible { outline-color:var(--atlas-peach); }
+@media(max-width:760px) { .map-connections-head { grid-template-columns:1fr; gap:15px; } .map-connections-list li { grid-template-columns:1fr; gap:12px; } }
+
+}
+}
+
+/* 29. A two-column reading register beneath the map */
+@media screen {
+#page {
+
+.map-page .story-columns { grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:6%; padding-block:20px 60px; }
+.story-columns>div>h2 { font:500 clamp(32px,4vw,50px)/1.1 'Playfair Display',serif; margin:0 0 30px; padding-bottom:20px; border-bottom:1px solid var(--atlas-rule); }
+.story-columns #character-list .list-item { background:transparent; border:0; border-bottom:1px solid #b8c5b5; border-radius:0; box-shadow:none; padding:22px 0; }
+.story-columns #character-list .list-item h3 { font:500 28px/1.15 'Playfair Display',serif; }
+.story-columns #event-list .list-item { border:0; border-top:1px solid #b8c5b5; margin:0; padding:24px; background:var(--atlas-parchment); }
+.story-columns #event-list .list-item+.event { margin-top:16px; }
+@media(max-width:760px) { .map-page .story-columns { grid-template-columns:1fr; gap:45px; } }
+
+}
+}
+
+/* 30. A character profile as a literary portrait */
+@media screen {
+#page {
+
+.character-hero { grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr); gap:0; align-items:stretch; background:var(--atlas-sage); margin-block:28px 60px; }
+.character-copy { padding:clamp(28px,5vw,65px); align-self:center; }
+.character-copy>.eyebrow { display:none; }
+.character-copy h1 { font-size:clamp(60px,8vw,96px); line-height:1; letter-spacing:-.04em; margin:0 0 24px; }
+.character-description { font:400 clamp(21px,2.4vw,30px)/1.5 'Playfair Display',serif; color:var(--atlas-muted); max-width:35ch; }
+.character-art { border-radius:0; min-height:500px; height:auto; background:var(--atlas-forest); color:var(--atlas-peach); display:flex; align-items:center; justify-content:center; }
+.character-art>span { font-size:clamp(120px,17vw,240px); color:var(--atlas-peach); }
+@media(max-width:760px) { .character-hero { grid-template-columns:1fr; } .character-art { min-height:260px; } .character-copy h1 { font-size:64px; } }
+
+}
+}
+
+/* 31. A character trail with linked reading stations */
+@media screen {
+#page {
+
+.character-trail { background:var(--atlas-parchment); color:var(--atlas-ink); border:0; padding:clamp(24px,3.5vw,46px); margin-block:32px; }
+.character-trail-heading { display:flex; align-items:center; gap:20px; border-bottom:1px solid #b8aa98; padding-bottom:22px; }
+.character-trail-avatar { border-radius:0; width:62px; height:74px; font-size:40px; background:var(--atlas-forest); color:var(--atlas-peach); }
+.character-trail-heading p,.character-trail-pair span:nth-child(2) { color:var(--atlas-rust); }
+.character-trail a:focus-visible { outline-color:var(--atlas-rust); }
+.character-trail-links a:hover,.character-trail-all:hover { color:var(--atlas-rust); }
+.character-trail-context { color:var(--atlas-muted); font-size:14px; line-height:1.6; }
+.character-trail-pair { display:flex; flex-wrap:wrap; gap:14px; margin-block:26px; }
+.character-trail-links { display:flex; flex-wrap:wrap; gap:12px; }
+.character-trail-links a { background:var(--atlas-paper); color:var(--atlas-forest); padding:16px 20px; min-height:52px; border:0; }
+.character-trail-all { min-height:44px; display:inline-flex; align-items:center; margin-top:18px; color:var(--atlas-rust); }
+
+}
+}
+
+/* 32. A profile connection list with a strong reading axis */
+@media screen {
+#page {
+
+.character-connections { display:grid; grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr); gap:8%; padding-block:40px 70px; }
+.character-connections .collection-bar { display:block; border:0; }
+.character-connections .collection-bar h2 { font:500 clamp(34px,4vw,54px)/1.1 'Playfair Display',serif; margin:0 0 20px; }
+.character-connections .connections-intro { grid-column:1; margin:0; color:var(--atlas-muted); line-height:1.7; }
+.character-connections .connection-list { grid-column:2; grid-row:1/3; display:flex; flex-direction:column; gap:0; padding:0; margin:0; }
+.character-connections .connection-list li { display:flex; flex-wrap:wrap; align-items:center; gap:14px; background:transparent; padding:26px 0; border:0; border-top:1px solid var(--atlas-rule); }
+.character-connections .connection-subject { font:500 30px/1.1 'Playfair Display',serif; }
+.character-connections .connection-label { color:var(--atlas-rust); }
+.character-connections .connection-target { font:500 30px/1.1 'Playfair Display',serif; }
+@media(max-width:760px) { .character-connections { grid-template-columns:1fr; gap:24px; } .character-connections .connection-list { grid-column:1; grid-row:auto; } }
+
+}
+}
+
+/* 33. A cast boundary presented as a chapter bookmark */
+@media screen {
+#page {
+
+.cast-heading { grid-template-columns:minmax(0,1.4fr) minmax(0,.7fr); gap:7%; padding-block:20px 45px; }
+.cast-heading>.eyebrow,.cast-heading .eyebrow { display:none; }
+.cast-heading h1 { font-size:clamp(44px,6.2vw,82px); line-height:1.06; letter-spacing:-.04em; margin:0; }
+.cast-boundary { background:var(--atlas-parchment); color:var(--atlas-ink); grid-template-columns:minmax(0,1fr) minmax(0,.8fr); gap:50px; padding:40px; }
+.cast-boundary .eyebrow { display:none; }
+.cast-boundary h2 { margin:0 0 18px; font-size:40px; }
+.cast-boundary p:not(.eyebrow) { color:var(--atlas-muted); }
+.cast-boundary select { border-bottom:2px solid #879b89; }
+.cast-boundary button { background:var(--atlas-forest); color:var(--atlas-paper); min-height:54px; }
+.cast-boundary button:hover { background:#405d49; color:var(--atlas-paper); }
+.cast-boundary :is(select,button):focus-visible { outline-color:var(--atlas-rust); }
+@media(max-width:760px) { .cast-heading,.cast-boundary { grid-template-columns:1fr; gap:24px; } .cast-boundary { padding:26px; } }
+
+}
+}
+
+/* 34. A cast gallery of large typographic portraits */
+@media screen {
+#page {
+
+.cast-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+.cast-card { display:grid; grid-template-columns:90px minmax(0,1fr); grid-template-rows:auto 1fr; min-height:280px; gap:24px; padding:30px; background:var(--atlas-sage); border:0; border-radius:0; }
+.cast-card:nth-child(even) { background:var(--atlas-parchment); }
+.cast-card-top { grid-column:1/-1; display:flex; justify-content:space-between; border-bottom:1px solid var(--atlas-rule); padding-bottom:16px; }
+.cast-initial { grid-column:1; grid-row:2; width:90px; height:120px; border-radius:0; background:var(--atlas-forest); color:var(--atlas-peach); font-size:72px; }
+.cast-card-body { grid-column:2; grid-row:2; align-self:center; min-width:0; overflow-wrap:anywhere; }
+.cast-card-body strong { font:500 clamp(28px,3vw,40px)/1.1 'Playfair Display',serif; }
+.cast-card-body>span { font-size:14px; line-height:1.65; }
+@media(max-width:760px) { .cast-grid { grid-template-columns:1fr; } .cast-card { grid-template-columns:66px minmax(0,1fr); min-height:230px; padding:24px; gap:20px; } .cast-initial { width:66px; height:90px; font-size:50px; } }
+
+}
+}
+
+/* 35. A relationship feature with a bookend composition */
+@media screen {
+#page {
+
+.relations-heading { display:block; }
+.relations-heading .eyebrow { display:none; }
+.relations-heading>div { max-width:900px; }
+.relations-feature { margin-top:40px; background:var(--atlas-forest); color:var(--atlas-paper); min-height:360px; padding:clamp(28px,5vw,65px); display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); gap:22px; align-items:center; }
+.relations-feature-kicker { display:none; }
+.relations-feature-from,.relations-feature-to { font:500 clamp(35px,4.8vw,66px)/1.08 'Playfair Display',serif; max-width:14ch; }
+.relations-feature-direction { color:var(--atlas-peach); font-size:16px; text-align:center; border-block:1px solid var(--atlas-dark-rule); padding-block:16px; }
+.relations-feature-action { grid-column:1/-1; justify-self:start; display:inline-flex; align-items:center; min-height:48px; padding:12px 22px; background:var(--atlas-paper); color:var(--atlas-forest); font-weight:700; }
+@media(max-width:760px) { .relations-feature { grid-template-columns:1fr; gap:22px; } .relations-feature-direction { text-align:left; max-width:220px; } }
+
+}
+}
+
+/* 36. A relationship chronology structured as a ledger */
+@media screen {
+#page {
+
+.relations-chronology { display:flex; flex-direction:column; gap:40px; padding-block:25px 60px; }
+.relations-chapter { display:grid; grid-template-columns:1fr; gap:24px; border-top:1px solid var(--atlas-rule); padding-top:30px; background:transparent; }
+.relations-chapter-heading { flex-direction:row; justify-content:space-between; align-items:baseline; flex-wrap:wrap; background:transparent; color:var(--atlas-ink); padding:0 0 20px; border-bottom:1px solid var(--atlas-rule); }
+.relations-chapter-heading h3 { font:500 32px/1.1 'Playfair Display',serif; margin:0 0 16px; }
+.relations-list { margin:0; padding:0; list-style:none; }
+.relations-list>li { display:grid; grid-template-columns:46px minmax(0,1fr); gap:20px; padding:24px; background:var(--atlas-sage); border:0; margin-bottom:12px; }
+.relations-list>li:nth-child(even) { background:var(--atlas-parchment); }
+.relations-number { font:400 28px/1 'Playfair Display',serif; color:var(--atlas-rust); }
+.relations-pair { grid-template-columns:minmax(0,1fr) 140px minmax(0,1fr); font:500 28px/1.25 'Playfair Display',serif; }
+@media(max-width:760px) { .relations-chapter { grid-template-columns:1fr; gap:20px; } .relations-list>li { grid-template-columns:28px minmax(0,1fr); padding:20px; gap:12px; } .relations-pair { grid-template-columns:minmax(0,1fr); gap:20px; } }
+
+}
+}
+
+/* 37. A relationship detail as an open two-person spread */
+@media screen {
+#page {
+
+.relation-spread { display:grid; grid-template-columns:minmax(0,1fr) 160px minmax(0,1fr); gap:0; background:var(--atlas-parchment); margin-block:40px; }
+.relation-spread .relation-person { color:var(--atlas-ink); padding:clamp(26px,3vw,45px); background:transparent; min-height:360px; border:0; border-radius:0; }
+.relation-spread .relation-person-to { background:var(--atlas-sage); }
+.relation-spread .relation-person-copy>span { color:var(--atlas-muted); }
+.relation-role { font-size:12px; color:var(--atlas-rust); }
+.relation-spread .relation-initial { position:static; opacity:1; margin-block:20px; border-radius:0; background:var(--atlas-forest); color:var(--atlas-peach); width:76px; height:96px; font-size:56px; }
+.relation-person-copy strong { font-size:clamp(30px,3.5vw,46px); line-height:1.1; }
+.relation-bridge { display:flex; flex-direction:column; justify-content:center; align-items:center; padding:24px 14px; background:var(--atlas-forest); color:var(--atlas-peach); text-align:center; }
+@media(max-width:760px) { .relation-spread { grid-template-columns:1fr; } .relation-spread .relation-person { min-height:280px; } .relation-bridge { min-height:110px; } }
+
+}
+}
+
+/* 38. Context and return actions as a reading footnote */
+@media screen {
+#page {
+
+.relation-context { display:grid; grid-template-columns:minmax(0,.65fr) minmax(0,1.35fr); gap:8%; padding-block:45px; border-top:1px solid var(--atlas-rule); }
+.relation-context-intro { min-width:0; padding-inline:0; }
+.relation-context-intro .eyebrow { display:none; }
+.relation-context-intro h2 { font:500 clamp(34px,4.5vw,58px)/1.1 'Playfair Display',serif; margin:0 0 20px; }
+.relation-context-chapter { padding:32px; background:var(--atlas-parchment); }
+.relation-context-chapter h3 { font:500 32px/1.15 'Playfair Display',serif; margin-top:0; }
+.relation-return { grid-column:1/-1; display:flex; flex-wrap:wrap; align-items:center; gap:20px; padding-top:26px; border-top:1px solid var(--atlas-rule); }
+@media(max-width:760px) { .relation-context { grid-template-columns:1fr; gap:24px; } .relation-context-chapter { padding:26px; } }
+
+}
+}
+
+/* 39. An opening chapter with a panoramic frontispiece */
+@media screen {
+#page {
+
+.opening-page>section:first-of-type { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr); gap:7%; margin-block:30px 45px; align-items:stretch; }
+.opening-intro { display:block; min-width:0; align-self:center; padding-block:30px; }
+.opening-intro>.eyebrow { display:none; }
+.opening-intro h1 { font-size:clamp(48px,6.5vw,86px); line-height:1.04; letter-spacing:-.04em; margin:20px 0; }
+.opening-visual { border-radius:0; min-width:0; aspect-ratio:auto; min-height:500px; height:100%; grid-column:2; grid-row:1; }
+.opening-visual img { object-position:center 35%; }
+.opening-map-link { display:inline-flex; align-items:center; min-height:54px; padding:16px 24px; background:var(--atlas-forest); color:var(--atlas-paper); justify-self:start; }
+@media(max-width:760px) { .opening-page>section:first-of-type { grid-template-columns:minmax(0,1fr); gap:20px; } .opening-visual { grid-column:1; grid-row:auto; min-height:330px; } .opening-intro h1 { font-size:46px; } }
+
+}
+}
+
+/* 40. A chapter briefing with an editorial cast margin */
+@media screen {
+#page {
+
+.chapter-briefing { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:7%; padding:40px 0; border-block:1px solid var(--atlas-rule); background:transparent; }
+.chapter-briefing-head { display:block; }
+.chapter-briefing-head .eyebrow { display:none; }
+.chapter-briefing-head h2 { font:500 clamp(34px,4vw,52px)/1.1 'Playfair Display',serif; margin:0 0 22px; }
+.opening-events { margin:0; padding:30px; }
+.opening-events ol { list-style:none; padding:0; }
+.opening-events li { font-size:16px; line-height:1.75; padding:0 0 24px 16px; }
+.opening-cast { padding:30px; background:var(--atlas-sage); margin:0; }
+.opening-cast-list { display:grid; grid-template-columns:1fr; gap:20px; }
+.opening-cast-list a { background:var(--atlas-paper); padding:24px; border:0; }
+@media(max-width:760px) { .chapter-briefing,.opening-cast-list { grid-template-columns:1fr; } .chapter-briefing { gap:24px; } .opening-cast { padding:26px; } }
+
+}
+}
+
+/* 41. A chapter guide with a typographic folio */
+@media screen {
+#page {
+
+.chapter-page-hero { display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,.6fr); gap:50px; padding:45px 0; align-items:center; }
+.chapter-page-hero .eyebrow { display:none; }
+.chapter-page-hero h1 { font-size:clamp(48px,6.5vw,86px); line-height:1.04; letter-spacing:-.04em; margin:20px 0; }
+.chapter-page-book { color:var(--atlas-rust); font-size:14px; }
+.chapter-page-art { border-radius:0; background:var(--atlas-forest); color:var(--atlas-peach); min-height:330px; aspect-ratio:auto; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.chapter-page-art>span { font:400 clamp(100px,12vw,170px)/1 'Playfair Display',serif; }
+.chapter-page-art small { margin-top:30px; color:var(--atlas-sage); }
+.chapter-page-notice { padding:22px 26px; background:var(--atlas-parchment); color:var(--atlas-muted); line-height:1.7; }
+@media(max-width:760px) { .chapter-page-hero { grid-template-columns:1fr; gap:24px; } .chapter-page-art { min-height:220px; } .chapter-page-hero h1 { font-size:46px; } }
+
+}
+}
+
+/* 42. A page-turn navigation with current-chapter emphasis */
+@media screen {
+#page {
+
+.chapter-turn { display:block; background:transparent; color:var(--atlas-ink); padding:40px 0; border-block:1px solid var(--atlas-rule); margin-block:40px; }
+.chapter-turn-intro { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:20px; margin-bottom:30px; }
+.chapter-turn-intro>p { display:none; }
+.chapter-turn-intro h2 { font:500 clamp(34px,4vw,52px)/1.1 'Playfair Display',serif; margin:0; }
+.chapter-turn-intro>span { max-width:40ch; line-height:1.6; color:var(--atlas-muted); }
+.chapter-turn-pages { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0; }
+.chapter-turn-pages a,.chapter-turn-current { min-height:180px; padding:26px; background:var(--atlas-parchment); border:0; }
+.chapter-turn-pages a { color:var(--atlas-ink); }
+.chapter-turn-pages a small { color:var(--atlas-rust); }
+.chapter-turn-pages a>span { color:var(--atlas-muted); }
+.chapter-turn-pages a:hover { background:var(--atlas-sage); color:var(--atlas-ink); }
+.chapter-turn-pages a:focus-visible { outline-color:var(--atlas-rust); }
+.chapter-turn-current { background:var(--atlas-forest); color:var(--atlas-paper); }
+.chapter-turn-current small,.chapter-turn-current>span { color:var(--atlas-peach); }
+.chapter-turn-pages strong { font:500 clamp(24px,3vw,40px)/1.15 'Playfair Display',serif; }
+@media(max-width:760px) { .chapter-turn-pages { grid-template-columns:1fr; gap:12px; } .chapter-turn-pages a,.chapter-turn-current { min-height:120px; } .chapter-turn-empty { display:none; } }
+
+}
+}
+
+/* 43. A journal masthead for reading guides */
+@media screen {
+#page {
+
+.journal-heading { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,.7fr); gap:7%; align-items:end; border-bottom:2px solid #263e33; padding-block:20px 45px; margin-bottom:45px; }
+.journal-heading .eyebrow { display:none; }
+.journal-heading h1 { font-size:clamp(62px,8.5vw,96px); line-height:1; letter-spacing:-.04em; margin:0; }
+.journal-heading>p { font-size:17px; line-height:1.7; color:var(--atlas-muted); padding-bottom:8px; max-width:35ch; }
+@media(max-width:760px) { .journal-heading { grid-template-columns:1fr; gap:24px; padding-top:0; } .journal-heading h1 { font-size:clamp(54px,14vw,74px); } }
+
+}
+}
+
+/* 44. Reading intentions as an editorial contents list */
+@media screen {
+#page {
+
+.journal .guide-choices { display:grid; grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr); gap:7%; padding:40px; background:var(--atlas-forest); color:var(--atlas-paper); }
+.guide-choices-heading { display:block; }
+.guide-choices-heading .eyebrow { display:none; }
+.guide-choices-heading h2 { font:500 clamp(32px,4vw,50px)/1.1 'Playfair Display',serif; margin:0 0 24px; }
+.guide-choices-all { display:inline-flex; align-items:center; min-height:44px; color:var(--atlas-peach); }
+.guide-choices-list { display:block; }
+.guide-choices-list a { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:20px; padding:24px 0; background:transparent; color:var(--atlas-paper); border:0; border-top:1px solid var(--atlas-dark-rule); }
+.guide-choice-number { display:none; }
+.guide-choices-list strong { font-size:29px; line-height:1.15; }
+.guide-choices-list small { display:block; color:var(--atlas-sage); margin-top:12px; font-size:14px; }
+@media(max-width:760px) { .journal .guide-choices { grid-template-columns:1fr; gap:24px; padding:26px; } }
+
+}
+}
+
+/* 45. A magazine spread led by an illustrated feature */
+@media screen {
+#page {
+
+.journal-grid { display:grid; grid-template-columns:1.2fr 1fr; gap:0 40px; }
+.journal-feature { grid-column:1; grid-row:1/5; display:flex; flex-direction:column; background:var(--atlas-parchment); border:0; }
+.journal-art { min-height:360px; background:linear-gradient(0deg,#172c2255,#172c2200),url('/images/alice-rabbit-hole.webp') center 35%/cover; border-radius:0; }
+.journal-art>* { display:none; }
+.journal-feature .journal-copy { padding:34px; }
+.journal-feature h3 { font:500 clamp(32px,4vw,52px)/1.08 'Playfair Display',serif; margin:0 0 24px; }
+.journal-kicker { display:none; }
+.journal-secondary { display:block; min-height:0; padding:28px 0; background:transparent; border:0; border-top:1px solid var(--atlas-rule); }
+.journal-secondary .journal-number { display:none; }
+.journal-secondary .journal-copy { padding:0; }
+.journal-secondary h3 { font:500 clamp(26px,3vw,38px)/1.15 'Playfair Display',serif; margin:0 0 18px; }
+.journal-link { display:inline-flex; align-items:center; min-height:44px; }
+@media(max-width:760px) { .journal-grid { grid-template-columns:1fr; gap:26px; } .journal-feature { grid-column:1; grid-row:auto; } .journal-art { min-height:300px; } .journal-feature .journal-copy { padding:26px; } }
+
+}
+}
+
+/* 46. A reading edition with feature and footnotes */
+@media screen {
+#page {
+
+.reading-edition { display:grid; grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr); gap:7%; padding-block:55px; border-top:2px solid #263e33; background:transparent; }
+.edition-intro { padding:0; }
+.edition-intro .eyebrow { display:none; }
+.edition-intro h2 { font:500 clamp(36px,4.5vw,60px)/1.1 'Playfair Display',serif; margin:0 0 24px; }
+.edition-links { display:block; }
+.edition-feature { background:var(--atlas-sage); padding:32px; margin-bottom:0; border:0; }
+.edition-feature strong { font:500 36px/1.1 'Playfair Display',serif; }
+.edition-index { color:var(--atlas-rust); }
+.edition-row { padding:24px 0; border-bottom:1px solid var(--atlas-rule); background:transparent; }
+.edition-row strong { font:500 28px/1.2 'Playfair Display',serif; }
+@media(max-width:760px) { .reading-edition { grid-template-columns:1fr; gap:30px; } .edition-feature { padding:26px; } }
+
+}
+}
+
+/* 47. An interactive reading demonstration as the hero centerpiece */
+@media screen {
+#page {
+
+.guide-hero { background:var(--atlas-paper); color:var(--atlas-ink); }
+.guide-hero-inner { grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:6%; padding-block:65px; }
+.guide-hero-copy>.eyebrow { display:none; }
+.guide-hero h1 { font-size:clamp(52px,6.5vw,88px); line-height:1.04; letter-spacing:-.04em; margin-top:0; }
+.guide-hero h1 em { color:var(--atlas-rust); }
+.guide-hero-copy>p:not(.eyebrow),.guide-hero-limit { color:var(--atlas-muted); }
+.reading-demo { background:var(--atlas-forest); color:var(--atlas-paper); border-radius:0; border:0; padding:32px; }
+.reading-demo-intro { color:var(--atlas-sage); }
+.reading-demo-intro>.eyebrow { display:none; }
+.reading-demo-intro>p:not(.eyebrow) { color:var(--atlas-sage); }
+.reading-demo-intro h2 em { color:var(--atlas-peach); }
+.reading-demo-panel { background:var(--atlas-paper); color:var(--atlas-ink); padding:26px; }
+.reading-demo #demo-status { color:var(--atlas-muted); }
+.reading-demo-top span:last-child { color:var(--atlas-rust); }
+.reading-demo-panel :is(a,button,select):focus-visible { outline-color:var(--atlas-rust); }
+.reading-demo-top { border-bottom:1px solid var(--atlas-rule); padding-bottom:20px; }
+.demo-characters { gap:18px; }
+@media(max-width:760px) { .guide-hero-inner { grid-template-columns:1fr; gap:32px; padding-block:45px; } .guide-hero h1 { font-size:48px; } .reading-demo { padding:22px; } }
+
+}
+}
+
+/* 48. An evidence-led method page with a source spread */
+@media screen {
+#page {
+
+.method-hero { background:var(--atlas-parchment); color:var(--atlas-ink); }
+.method-hero-inner { display:block; padding-block:70px; }
+.method-kicker,.method-illustration { display:none; }
+.method-hero h1 { font-size:clamp(52px,7.5vw,96px); line-height:1.04; letter-spacing:-.04em; max-width:16ch; margin:0 0 30px; }
+.method-hero h1 em { color:var(--atlas-rust); }
+.method-hero p:not(.method-kicker) { color:var(--atlas-muted); max-width:56ch; font-size:18px; line-height:1.75; }
+.source-spread { background:var(--atlas-forest); color:var(--atlas-paper); padding:32px; }
+.source-spread-label { color:var(--atlas-rust); }
+.source-spread-panels { gap:20px; }
+.source-spread-panels>div { background:var(--atlas-paper); color:var(--atlas-ink); padding:26px; }
+.source-spread-panels p { color:var(--atlas-muted); }
+.source-spread-panels a:focus-visible { outline-color:var(--atlas-rust); }
+@media(max-width:760px) { .method-hero-inner { padding-block:45px; } .method-hero h1 { font-size:48px; } .source-spread { padding:24px; } }
+
+}
+}
+
+/* 49. A help desk with prominent reading destinations */
+@media screen {
+#page {
+
+.help-hero { background:var(--atlas-forest); color:var(--atlas-paper); }
+.help-hero-inner { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:8%; padding-block:70px; align-items:center; }
+.help-kicker { display:none; }
+.help-hero h1 { font-size:clamp(56px,7vw,92px); line-height:1.04; letter-spacing:-.04em; margin:0 0 26px; }
+.help-hero h1 em { color:var(--atlas-peach); }
+.help-hero p:not(.help-kicker) { color:var(--atlas-sage); line-height:1.75; font-size:17px; }
+.help-quick { display:flex; flex-direction:column; gap:0; background:transparent; }
+.help-quick>p,.help-quick a>span:first-child { display:none; }
+.help-quick a strong { grid-column:1; }
+.help-quick a>span:last-child { grid-column:2; grid-row:1/3; color:var(--atlas-peach); }
+.help-quick a small { grid-column:1; grid-row:2; font:400 14px/1.6 'DM Sans',sans-serif; color:var(--atlas-sage); }
+.help-quick a strong { font:500 30px/1.15 'Playfair Display',serif; }
+.help-quick a { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; padding:24px 0; border:0; border-top:1px solid var(--atlas-dark-rule); background:transparent; color:var(--atlas-paper); font:500 30px/1.15 'Playfair Display',serif; }
+.save-compare { background:var(--atlas-parchment); color:var(--atlas-ink); padding:32px; }
+.save-label,.save-options span { color:var(--atlas-rust); }
+.save-intro,.save-options p,.save-note { color:var(--atlas-muted); }
+.save-options a:focus-visible { outline-color:var(--atlas-rust); }
+.save-options { grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); gap:18px; background:transparent; border:0; }
+.save-options>div { background:var(--atlas-paper); border:0; padding:26px; }
+@media(max-width:760px) { .help-hero-inner { grid-template-columns:1fr; padding-block:45px; gap:30px; } .help-hero h1 { font-size:52px; } .save-compare { padding:24px; } }
+
+}
+}
+
+/* 50. A reader account presented as a personal bookplate */
+@media screen {
+#page {
+
+.account-shell { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:0; padding-block:60px 90px; align-items:stretch; }
+.account-story { background:var(--atlas-forest); color:var(--atlas-paper); padding:clamp(28px,4vw,55px); }
+.account-story>.eyebrow { display:none; }
+.account-story h1 { font-size:clamp(48px,5.5vw,74px); line-height:1.05; letter-spacing:-.04em; margin:0 0 26px; }
+.account-story h1 em { color:var(--atlas-peach); }
+.account-story>p:not(.eyebrow),.account-options p { color:var(--atlas-sage); }
+.account-options { margin-top:35px; }
+.account-options>div { grid-template-columns:1fr; padding-block:24px; border-color:var(--atlas-dark-rule); }
+.account-option-number { display:none; }
+.account-options h2 { color:var(--atlas-peach); font-size:26px; }
+.account-guest { color:var(--atlas-paper); min-height:44px; display:inline-flex; align-items:center; }
+.account-shell>.account-page { width:100%; max-width:none; padding:clamp(28px,4vw,55px); margin:0; background:var(--atlas-sage); border:0; border-radius:0; }
+.account-page>.eyebrow { display:none; }
+.account-page h2 { font:500 clamp(36px,4vw,52px)/1.1 'Playfair Display',serif; margin-top:0; }
+.account-page input { border-radius:0; background:var(--atlas-paper); min-height:52px; }
+@media(max-width:760px) { .account-shell { grid-template-columns:1fr; padding-block:35px 60px; } .account-story h1 { font-size:50px; } }
+
+}
+}
+
+@media screen {
+  #page :is(.library-finder,.book-toolbar,.directory-next,.map-connections,.account-story,.reading-demo-intro,.source-spread-heading,.help-quick) :is(a,button,input,select):focus-visible { outline-color:var(--atlas-peach); }
+  #page .hero-map:focus-visible { outline-color:var(--atlas-peach); }
+  #page .account-shell>* { min-width:0; }
+  #page .account-page :is(form,.account-password-field) { min-width:0; }
+  #page .account-page input { min-width:0; }
+}

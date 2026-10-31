@@ -7,6 +7,7 @@ import { d1Repository } from '../src/repository.js';
 
 const db = new DatabaseSync(':memory:');
 for (const path of ['../migrations/0001_catalog.sql', '../migrations/0002_sources.sql', '../migrations/0003_evidence.sql', '../migrations/0004_withdrawn.sql', '../migrations/0005_accounts.sql', '../migrations/0006_revoke_unverified_sessions.sql', '../migrations/0007_reader_administration.sql', '../migrations/0008_delete_reader_tokens.sql', './seed.sql']) db.exec(readFileSync(new URL(path, import.meta.url), 'utf8'));
+if (process.env.DEV_TEST_OUTBOX === '1') db.exec(readFileSync(new URL('../content/a-christmas-carol-opening.sql', import.meta.url), 'utf8'));
 const d1 = {
   async exec(sql) { db.exec(sql); return {}; },
   async batch(statements) { return Promise.all(statements.map((statement) => statement.all())); },

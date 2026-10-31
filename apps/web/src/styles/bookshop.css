@@ -1,0 +1,672 @@
+/* The Bookshop. Each numbered composition is a separately deployed iteration. */
+
+/* 1. A working mahogany bookcase at the entrance */
+@media screen {
+#page { --shop-walnut:#38271f; --shop-wood:#614332; --shop-brass:#dfbd7f; --shop-paper:#f3ead9; --shop-burgundy:#642e35; }
+#page .hero { max-width:1600px; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); min-height:660px; background:var(--shop-walnut); padding:40px clamp(24px,4vw,64px) 0; gap:5%; align-items:center; }
+#page .hero-copy { margin:0; padding:30px 0 54px; background:transparent; color:var(--shop-paper); }
+#page .hero h1 { font-size:clamp(46px,5.8vw,82px); max-width:12ch; }
+#page .hero h1 em { color:var(--shop-brass); }
+#page .hero-intro { color:var(--shop-paper); max-width:35ch; }
+#page .hero-copy>.primary-button { background:var(--shop-brass); color:var(--shop-walnut); min-height:54px; }
+#page .bookcase { min-width:0; align-self:end; padding-top:30px; color:var(--shop-paper); }
+#page .bookcase-books { display:flex; align-items:end; justify-content:center; gap:18px; padding:18px 12px 0; }
+#page .bound-book { position:relative; flex:1; min-width:0; max-width:270px; display:flex; flex-direction:column; align-items:center; gap:16px; text-align:center; padding:30px 20px 22px 28px; min-height:435px; background:#263e33; color:var(--shop-paper); border-radius:5px 12px 3px 3px; box-shadow:inset 7px 0 9px #0005, 9px 12px 16px #1d130e80; border:1px solid #c19a6255; transform:rotate(-3deg); }
+#page .bound-book:nth-child(even) { background:var(--shop-burgundy); transform:rotate(2deg); min-height:465px; }
+#page .bound-book::before { content:''; position:absolute; inset:12px; border:1px solid #dfbd7f66; border-radius:2px 6px 0 0; pointer-events:none; }
+#page .bound-book-author { font-size:11px; line-height:1.5; letter-spacing:.06em; text-transform:uppercase; color:var(--shop-brass); }
+#page .bound-book strong { font:500 clamp(24px,2.6vw,37px)/1.12 'Playfair Display',serif; text-wrap:balance; }
+#page .bound-book img { width:100%; height:145px; object-fit:cover; margin-top:auto; filter:sepia(.25); }
+#page .bound-book-action { display:flex; gap:10px; justify-content:space-between; align-items:center; width:100%; border-top:1px solid #dfbd7f77; padding-top:14px; font-size:12px; }
+#page .bound-book:hover strong { text-decoration:underline; text-underline-offset:5px; }
+#page .bound-book:focus-visible { outline:3px solid var(--shop-brass); outline-offset:6px; }
+#page .bookcase-ledge { position:relative; display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; padding:20px 24px; margin:8px -16px 0; background:var(--shop-wood); box-shadow:0 14px 20px #1d130e80; border-top:4px solid #8c664a; color:var(--shop-brass); font-size:11px; }
+#page .bookcase-ledge>span:first-child { font-family:'Playfair Display',serif; font-size:18px; }
+@media(max-width:760px) { #page .hero { grid-template-columns:1fr; gap:0; padding:24px 24px 0; } #page .hero-copy { padding:16px 0 28px; } #page .hero h1 { max-width:14ch; font-size:clamp(43px,10vw,68px); } #page .bookcase { padding-top:0; margin-inline:-8px; } #page .bookcase-books { gap:12px; padding-inline:4px; } #page .bound-book { min-height:350px; padding:26px 14px 20px 20px; gap:12px; } #page .bound-book:nth-child(even) { min-height:380px; } #page .bound-book strong { font-size:clamp(20px,5.4vw,30px); } #page .bound-book img { height:108px; } #page .bound-book-author { font-size:10px; } #page .bookcase-ledge { margin-inline:-8px; padding:16px; } #page .bookcase-ledge>span:last-child { max-width:18ch; text-align:right; } }
+}
+
+/* 2. A storefront fascia instead of navigation tabs */
+@media screen {
+#page .site-header { width:100%; max-width:none; padding-inline:max(24px,calc((100vw - 1320px)/2)); min-height:100px; border-bottom:5px double #a38961; background:var(--shop-paper); }
+#page .site-header .brand { color:var(--shop-walnut); font-size:clamp(27px,3vw,38px); }
+#page .brand-mark { display:none; }
+#page .site-nav-desktop>a { background:transparent; color:var(--shop-walnut); border:0; border-bottom:1px solid transparent; padding:14px 12px; }
+#page .site-nav-desktop>a:hover,#page .site-nav-desktop>a[aria-current=page] { color:#642e35; border-color:#642e35; background:transparent; }
+#page .site-nav-desktop { gap:12px; }
+@media(max-width:760px) { #page .site-header { min-height:120px; padding-inline:20px; } #page .site-header .site-nav-quick { border-top-color:#b5a58d; } #page .site-nav-mobile nav { background:var(--shop-paper); } }
+#page .site-header .site-nav-desktop>a:first-child { background:transparent; color:var(--shop-walnut); border-bottom:1px solid #a38961; }
+}
+
+/* 3. A pocket-sized lending card below the entrance */
+@media screen {
+#page .hero-how { background:var(--shop-paper); color:var(--shop-walnut); padding:18px 22px; grid-template-columns:1fr 1fr; gap:12px 24px; margin-top:26px; border-radius:0 0 14px 0; max-width:460px; }
+#page .hero-how div { display:grid; grid-template-columns:24px 1fr; align-items:center; border-bottom:1px solid #c7b89f; border-top:0; padding:0 0 12px; }
+#page .hero-how div span { font:600 12px 'DM Sans',sans-serif; color:#642e35; }
+#page .hero-how strong { font:500 18px/1.25 'Playfair Display',serif; }
+#page .hero-how>a { min-height:44px; padding:4px 0; border:0; color:#51392b; }
+@media(max-width:420px) { #page .hero-how { padding:16px; column-gap:12px; } #page .hero-how div { grid-template-columns:1fr; gap:6px; } }
+}
+
+/* 4. Character introductions filed as overlapping catalog cards */
+@media screen {
+#page .home-cast { align-items:start; padding-block:90px; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); }
+#page .home-cast-stories { background:var(--shop-wood); padding:24px; box-shadow:inset 0 8px 15px #20140e55; }
+#page .home-cast-story,#page .home-cast-story:nth-child(even) { background:var(--shop-paper); padding:20px; margin:0; }
+#page .home-cast-story+.home-cast-story { margin-top:18px; }
+#page .home-cast-book { border-top:0; border-bottom-color:#bba78a; }
+#page .home-cast-story a { grid-template-columns:48px minmax(0,1fr) auto; gap:16px; padding:20px 0; }
+#page .home-cast-initial,#page .home-cast-story:nth-child(even) .home-cast-initial { width:48px; height:60px; border:1px solid #aa8a64; background:transparent; color:var(--shop-burgundy); font-size:34px; }
+#page .home-cast-person strong { font-size:clamp(22px,2.6vw,32px); }
+@media(max-width:760px) { #page .home-cast { grid-template-columns:1fr; } #page .home-cast-stories { padding:14px; } #page .home-cast-story { padding:16px; } }
+}
+
+/* 5. The first encounter staged as an illustrated reading desk */
+@media screen {
+#page .first-scene { width:min(1320px,calc(100% - 48px)); background:var(--shop-walnut); padding:clamp(20px,4vw,54px); gap:0; align-items:stretch; }
+#page .first-scene>div:first-child { padding:clamp(24px,4vw,52px); background:var(--shop-paper); color:var(--shop-walnut); }
+#page .first-scene h2 { font-size:clamp(40px,5vw,64px); }
+#page .first-scene h2 em { color:var(--shop-burgundy); }
+#page .first-scene>div:first-child>p { color:#51392b; }
+#page .first-scene>div:first-child>a { background:var(--shop-burgundy); color:var(--shop-paper); }
+#page .first-scene-art { min-height:520px; }
+#page .first-scene-thread { background:var(--shop-walnut); padding:16px; inset:auto 20px 20px; border:0; }
+@media(max-width:760px) { #page .first-scene { width:calc(100% - 32px); padding:16px; } #page .first-scene-art { min-height:340px; } }
+}
+
+/* 6. A reading-guide cabinet of folded paper invitations */
+@media screen {
+#page .reading-index-list { border:0; background:var(--shop-wood); padding:20px; display:grid; gap:14px; }
+#page .reading-index-list>a { background:var(--shop-paper); border:0; grid-template-columns:34px minmax(0,1fr) auto; padding:28px 24px; border-radius:0 0 16px 0; }
+#page .reading-index-number { font-size:22px; color:var(--shop-burgundy); }
+#page .reading-index-list strong { font-size:clamp(25px,3vw,38px); }
+#page .reading-index-list small { color:#642e35; }
+#page .reading-index-list>a:hover { background:#fff7e8; }
+@media(max-width:760px) { #page .reading-index-list { padding:14px; } #page .reading-index-list>a { padding:22px 16px; grid-template-columns:24px minmax(0,1fr) auto; gap:12px; } }
+}
+
+/* 7. Two leather bookends at the final reading decision */
+@media screen {
+#page .next-step { background:var(--shop-paper); color:var(--shop-walnut); }
+#page .next-step-heading h2 em { color:var(--shop-burgundy); }
+#page .next-step-heading>p:last-child { color:#51392b; }
+#page .next-step-options { display:grid; grid-template-columns:1fr 1fr; gap:22px; border:0; padding-bottom:16px; border-bottom:8px solid var(--shop-wood); }
+#page .next-step-options a { padding:30px 24px; min-height:340px; background:var(--shop-burgundy); color:var(--shop-paper); justify-content:end; border:1px solid #a98659; box-shadow:inset 9px 0 12px #20140e66; }
+#page .next-step-options a:nth-child(even) { background:#263e33; }
+#page .next-step-options a::after { display:none; }
+#page .next-step-options strong { font-size:clamp(26px,3vw,38px); }
+#page .next-step-options a>span:not(.next-step-number) { color:var(--shop-paper); }
+#page .next-step-options .next-step-number { color:var(--shop-brass); }
+#page .next-step-options b { margin-top:24px; }
+@media(max-width:760px) { #page .next-step-options { gap:14px; } #page .next-step-options a { padding:26px 18px; min-height:330px; } }
+@media(max-width:380px) { #page .next-step-options { grid-template-columns:1fr; } }
+#page .next-step-inner { grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:6%; }
+#page .next-step-options a:first-child { background:var(--shop-burgundy); }
+#page .next-step-options a:is(:first-child,:last-child)>span:not(.next-step-number) { color:var(--shop-paper); }
+#page .next-step-options a:is(:first-child,:last-child) .next-step-number { color:var(--shop-brass); }
+@media(max-width:760px) { #page .next-step-inner { grid-template-columns:1fr; gap:30px; } }
+}
+
+/* 8. Saved reading displayed as a circulation desk receipt */
+@media screen {
+#page .resume-shelf:not([hidden]) { background:var(--shop-walnut); padding:32px; color:var(--shop-paper); }
+#page .resume-heading { border-bottom:1px solid #a18b6f; padding-bottom:22px; }
+#page .resume-heading>p { color:var(--shop-paper); }
+#page .resume-item { background:var(--shop-paper); color:var(--shop-walnut); padding:24px; border-bottom:1px dashed #9d8468; }
+#page .resume-list { gap:12px; }
+#page .resume-action { color:var(--shop-burgundy); }
+#page .resume-item>span:first-child { display:none; }
+@media(max-width:760px) { #page .resume-shelf:not([hidden]) { padding:24px; } #page .resume-item { padding:20px; } }
+}
+
+/* 9. The closing storefront directory on walnut paneling */
+@media screen {
+#page .site-footer { background:var(--shop-walnut); border-top:10px solid var(--shop-wood); color:var(--shop-paper); }
+#page .site-footer-inner { padding-top:60px; grid-template-columns:1.2fr 1fr; }
+#page .site-footer-intro .brand { font-size:clamp(36px,5vw,72px); }
+#page .site-footer nav { border-left:1px solid #8e7457; padding-left:40px; }
+#page .site-footer nav a { border-bottom:1px solid #8e7457; width:100%; min-height:44px; display:flex; align-items:center; }
+#page .site-footer nav p { color:var(--shop-brass); }
+#page .site-footer-bottom { border-color:#8e7457; }
+@media(max-width:760px) { #page .site-footer-inner { grid-template-columns:1fr; } #page .site-footer nav { border-left:0; padding-left:0; } }
+}
+
+/* 10. A hanging bookshop sign for the library entrance */
+@media screen {
+#page .collection-heading { display:grid; grid-template-columns:1.2fr 1fr; gap:6%; background:var(--shop-walnut); color:var(--shop-paper); padding:clamp(28px,5vw,64px); margin-bottom:40px; border:5px double #a48a61; text-align:left; }
+#page .collection-heading h1 { font-size:clamp(42px,5vw,68px); }
+#page .collection-heading h1 em { color:var(--shop-brass); }
+#page .collection-intro { align-self:end; }
+#page .collection-intro p { color:var(--shop-paper); font-size:16px; line-height:1.7; }
+#page .collection-intro>span { display:none; }
+@media(max-width:760px) { #page .collection-heading { grid-template-columns:1fr; gap:20px; padding:28px; } }
+}
+
+/* 11. A card-catalog drawer that houses library search */
+@media screen {
+#page .library-finder:not([hidden]) { display:grid; grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr); background:var(--shop-wood); padding:24px; gap:24px; box-shadow:inset 0 5px 9px #21140e66; }
+#page .library-finder label { border:1px solid #b99561; padding:16px 20px; text-align:center; color:var(--shop-paper); font-family:'Playfair Display',serif; font-size:20px; }
+#page .library-finder-controls { width:100%; background:var(--shop-paper); padding:10px 16px; }
+#page .library-finder-controls>div { border-color:#a38961; }
+#page .library-finder button { background:var(--shop-burgundy); min-height:44px; }
+@media(max-width:760px) { #page .library-finder:not([hidden]) { grid-template-columns:1fr; gap:16px; padding:20px; } }
+}
+
+/* 12. Actual library titles standing as clothbound volumes */
+@media screen {
+#page .collection-list { grid-template-columns:repeat(2,minmax(0,1fr)); background:var(--shop-walnut); padding:36px 32px 0; gap:32px; border-bottom:14px solid var(--shop-wood); box-shadow:0 14px 20px #38271f22; }
+#page .collection-item,#page .collection-list li:nth-child(even) .collection-item { background:#263e33; color:var(--shop-paper); display:flex; flex-direction:column; padding:36px 28px 28px; border-radius:5px 14px 0 0; border:1px solid #b9956177; box-shadow:inset 12px 0 16px #0e1c1666; min-height:540px; }
+#page .collection-list li:nth-child(even) .collection-item { background:var(--shop-burgundy); }
+#page .collection-visual { position:static; width:100%; height:180px; min-height:0; margin:12px 0 24px; overflow:hidden; }
+#page .collection-visual img { width:100%; height:100%; object-fit:cover; }
+#page .collection-number { position:static; writing-mode:horizontal-tb; transform:none; color:var(--shop-brass); }
+#page .collection-book { margin:0 0 24px; padding:0; }
+#page .collection-item .collection-book>span,#page .collection-book .collection-description { color:var(--shop-paper); }
+#page .collection-book strong { font-size:clamp(32px,4vw,52px); }
+#page .collection-item .collection-link,#page .collection-item .collection-link span { color:var(--shop-paper); }
+#page .collection-link { margin-top:auto; border-color:#ba9c73; }
+#page .collection-item:hover { background:#304e40; }
+#page .collection-list li:nth-child(even) .collection-item:hover { background:#783d45; }
+@media(max-width:760px) { #page .collection-list { padding:24px 20px 0; gap:20px; grid-template-columns:1fr; } #page .collection-item { min-height:480px; padding:28px; } #page .collection-visual { height:180px; } }
+}
+
+/* 13. A bookseller recommendation tucked between the shelves */
+@media screen {
+#page .shelf-note { position:relative; width:min(740px,100%); margin:70px auto; background:var(--shop-paper); color:var(--shop-walnut); padding:36px 42px; display:block; border-block:1px solid #9d8468; transform:rotate(-1deg); }
+#page .shelf-note>span { display:none; }
+#page .shelf-note h2 { font-size:clamp(28px,4vw,42px); max-width:22ch; }
+#page .shelf-note a { display:inline-flex; min-height:48px; align-items:center; color:var(--shop-burgundy); }
+@media(max-width:760px) { #page .shelf-note { padding:28px; transform:none; } }
+}
+
+/* 14. A character consultation counter beside the collection */
+@media screen {
+#page .library-people { display:grid; grid-template-columns:1.2fr 1fr; align-items:center; gap:40px; background:var(--shop-walnut); color:var(--shop-paper); padding:44px; border-bottom:8px solid var(--shop-wood); }
+#page .library-people>div { border-left:1px solid #b99561; padding-left:28px; }
+#page .library-people h2 { font-size:clamp(34px,4vw,52px); }
+#page .library-people p:not(.eyebrow) { color:var(--shop-paper); }
+#page .library-people .eyebrow { display:none; }
+#page .library-people .primary-button { justify-self:center; background:var(--shop-paper); color:var(--shop-walnut); }
+@media(max-width:760px) { #page .library-people { grid-template-columns:1fr; padding:28px; gap:24px; } #page .library-people .primary-button { justify-self:start; } }
+}
+
+/* 15. Author names become brass-handled catalog drawers */
+@media screen {
+#page .library-authors { display:grid; grid-template-columns:1fr 1fr; gap:6%; align-items:center; }
+#page .library-authors ul { padding:16px; background:var(--shop-walnut); display:grid; gap:14px; }
+#page .library-authors li { list-style:none; background:var(--shop-wood); }
+#page .library-authors li a { padding:24px; min-height:110px; border:0; display:flex; justify-content:space-between; align-items:center; color:var(--shop-paper); }
+#page .library-authors li a>span:first-child { display:none; }
+#page .library-authors strong { border:1px solid #c4a16a; padding:12px 20px; font:500 clamp(22px,2.6vw,32px)/1.2 'Playfair Display',serif; }
+@media(max-width:760px) { #page .library-authors { grid-template-columns:1fr; gap:26px; } #page .library-authors li a { padding:20px; } }
+}
+
+/* 16. The character directory as a bookshop noticeboard */
+@media screen {
+#page .directory-heading { background:var(--shop-paper); color:var(--shop-walnut); display:grid; grid-template-columns:1.2fr 1fr; gap:8%; padding:40px; border:1px solid #b9a382; margin-bottom:40px; box-shadow:0 10px 22px #38271f12; }
+#page .directory-heading h1 { font-size:clamp(42px,5vw,68px); }
+#page .directory-heading h1 em { color:var(--shop-burgundy); }
+#page .directory-heading>div:last-child { align-self:end; border-top:1px solid #b9a382; padding-top:24px; }
+@media(max-width:760px) { #page .directory-heading { padding:26px; grid-template-columns:1fr; gap:24px; } }
+}
+
+/* 17. Story navigation arranged as labeled shelf compartments */
+@media screen {
+#page .story-index { display:grid; grid-template-columns:.65fr 1.35fr; gap:30px; padding:28px; background:var(--shop-walnut); color:var(--shop-paper); }
+#page .story-index-intro p { color:var(--shop-paper); }
+#page .story-index-links { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+#page .story-index-links a { display:flex; flex-direction:column; align-items:start; gap:20px; min-height:190px; padding:26px; border:1px solid #a5885f; background:var(--shop-wood); color:var(--shop-paper); }
+#page .story-index-number { color:var(--shop-brass); }
+#page .story-index-links small { color:var(--shop-paper); }
+#page .story-index-links strong { font-size:25px; }
+#page .story-index-arrow { align-self:end; }
+@media(max-width:760px) { #page .story-index { grid-template-columns:1fr; padding:20px; } #page .story-index-links { grid-template-columns:1fr; } #page .story-index-links a { min-height:150px; } }
+}
+
+/* 18. Character entries on individual accession slips */
+@media screen {
+#page .directory-people { display:grid; grid-template-columns:1fr 1fr; gap:20px; background:var(--shop-paper); padding:24px; border-block:1px solid #b9a382; }
+#page .directory-people li { border:0; padding:0; }
+#page .directory-people a { height:100%; background:#fffaf0; grid-template-columns:52px minmax(0,1fr) auto; padding:26px 20px; gap:16px; border-top:1px solid #b9a382; }
+#page .directory-initial { width:52px; height:66px; background:transparent; border:1px solid #b9a382; color:var(--shop-burgundy); font-size:36px; }
+#page .directory-person strong { font-size:clamp(24px,3vw,36px); }
+@media(max-width:900px) { #page .directory-people { grid-template-columns:1fr; padding:18px; } }
+}
+
+/* 19. A library-service stamp panel closes the character search */
+@media screen {
+#page .directory-next { display:grid; grid-template-columns:1.3fr 1fr; gap:40px; padding:48px; background:var(--shop-paper); color:var(--shop-walnut); border:5px double #a38961; }
+#page .directory-next h2 { font-size:clamp(34px,4.5vw,56px); }
+#page .directory-next p { color:#51392b; }
+#page .directory-next .eyebrow { display:none; }
+#page .directory-next .primary-button { align-self:center; justify-self:center; border:1px solid var(--shop-burgundy); background:transparent; color:var(--shop-burgundy); padding:24px; }
+@media(max-width:760px) { #page .directory-next { grid-template-columns:1fr; padding:28px; gap:24px; } #page .directory-next .primary-button { justify-self:start; } }
+}
+
+/* 20. A book detail opens inside a clothbound slipcase */
+@media screen {
+#page .book-opening { grid-template-columns:1.15fr .85fr; gap:0; background:var(--shop-walnut); padding:24px; border-radius:6px 16px 6px 6px; }
+#page .book-opening-copy { background:var(--shop-paper); color:var(--shop-walnut); padding:clamp(28px,4vw,60px); border-radius:2px 0 0 2px; box-shadow:inset -10px 0 18px #6c513322; }
+#page .book-opening h1 { font-size:clamp(42px,5vw,68px); }
+#page .book-opening-art { min-height:590px; border:1px solid #ac8e61; }
+#page .book-opening-actions { border-top:1px solid #b7a17e; padding-top:24px; }
+@media(max-width:760px) { #page .book-opening { grid-template-columns:1fr; padding:14px; } #page .book-opening-copy { padding:28px; } #page .book-opening-art { min-height:380px; } }
+}
+
+/* 21. Chapter selection on a circulation form */
+@media screen {
+#page .reading-entry { background:var(--shop-paper); padding:40px; border:1px solid #b7a17e; grid-template-columns:.8fr 1.2fr; gap:40px; }
+#page .reading-entry-action { background:#fffaf0; padding:26px; border-top:4px double #b7a17e; }
+#page .reading-entry-symbol { display:none; }
+#page .reading-entry-choices>div { gap:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+#page .reading-entry-choice { border-radius:0; border:1px solid #b7a17e; padding:16px; background:transparent; }
+#page .reading-entry-choice:has(input:checked) { background:var(--shop-burgundy); color:var(--shop-paper); }
+#page .reading-entry-choice:has(input:checked) small { color:var(--shop-paper); }
+#page .reading-entry-submit { width:100%; margin-top:20px; background:var(--shop-burgundy); color:var(--shop-paper); min-height:56px; }
+@media(max-width:760px) { #page .reading-entry { grid-template-columns:1fr; padding:24px; gap:24px; } #page .reading-entry-action { padding:20px; } }
+}
+
+/* 22. A removable cast address card tucked inside the cover */
+@media screen {
+#page .book-cast-preview { background:var(--shop-walnut); padding:40px; color:var(--shop-paper); }
+#page .book-cast-preview-head>p { color:var(--shop-paper); }
+#page .book-cast-preview-list { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+#page .book-cast-preview-list>a { background:var(--shop-paper); color:var(--shop-walnut); padding:26px; border-radius:0 0 16px 0; border:0; grid-template-columns:48px minmax(0,1fr) auto; }
+#page .book-cast-preview-initial { width:48px; height:64px; background:transparent; color:var(--shop-burgundy); border:1px solid #b7a17e; }
+#page .book-cast-preview-all { color:var(--shop-paper); min-height:44px; display:inline-flex; align-items:center; }
+@media(max-width:900px) { #page .book-cast-preview-list { grid-template-columns:1fr; } }
+@media(max-width:760px) { #page .book-cast-preview { padding:24px; } }
+}
+
+/* 23. The chapter list stacked as unbound paper leaves */
+@media screen {
+#page .chapter-shelf { background:transparent; padding:0; grid-template-columns:.7fr 1.3fr; gap:40px; }
+#page .chapter-shelf ol { background:var(--shop-wood); padding:24px; display:grid; gap:14px; }
+#page .chapter-shelf li { border:0; background:var(--shop-paper); }
+#page .chapter-shelf li a { display:flex; flex-direction:column; align-items:start; padding:28px; gap:14px; border:0; }
+#page .chapter-shelf-number { color:var(--shop-burgundy); }
+#page .chapter-shelf li strong { font-size:clamp(26px,3vw,38px); }
+#page .chapter-shelf-action { width:100%; display:flex; justify-content:space-between; border-top:1px solid #b7a17e; padding-top:14px; }
+@media(max-width:760px) { #page .chapter-shelf { grid-template-columns:1fr; gap:24px; } #page .chapter-shelf ol { padding:16px; } }
+}
+
+/* 24. The map title fixed to a cartographer’s mounting board */
+@media screen {
+#page .map-page-intro { background:var(--shop-walnut); color:var(--shop-paper); padding:30px 36px; margin-bottom:28px; border-bottom:8px solid var(--shop-wood); }
+#page .map-page-intro h1 { color:var(--shop-paper); font-size:clamp(34px,4vw,52px); max-width:28ch; }
+#page .map-page-intro h1 em { color:var(--shop-brass); }
+#page .map-page-intro p { color:var(--shop-paper); }
+#page .map-page-intro .eyebrow { display:none; }
+@media(max-width:760px) { #page .map-page-intro { padding:24px; } }
+}
+
+/* 25. A chapter ruler across the top of the reading map */
+@media screen {
+#page .map-boundary { background:var(--shop-paper); padding:26px; display:grid; grid-template-columns:.8fr 1.2fr; align-items:center; gap:30px; border-block:4px double #a38961; }
+#page .map-boundary .chapter-controls { background:transparent; padding:0; border:0; }
+#page .map-boundary .chapter-position { font:500 22px 'Playfair Display',serif; }
+#page .map-boundary select { background:#fffaf0; border:1px solid #92795b; color:var(--shop-walnut); }
+#page .map-boundary button { background:var(--shop-walnut); color:var(--shop-paper); }
+#page .map-boundary button:disabled { background:#e2d6c1; color:#67523d; }
+@media(max-width:760px) { #page .map-boundary { grid-template-columns:1fr; padding:22px; gap:20px; } }
+}
+
+/* 26. A hinged reading-desk flap for map inspection */
+@media screen {
+#page .map-stage { gap:0; border:12px solid var(--shop-wood); background:var(--shop-paper); }
+#page .map-stage .graph { background:#eee8d9; border:0; border-radius:0; }
+#page .map-stage-rail { background:var(--shop-paper); border-left:1px solid #b9a382; padding:28px 22px; box-shadow:inset 7px 0 14px #61433219; }
+#page .map-detail-prompt { border:1px solid #b9a382; padding:26px 18px; }
+#page .map-detail strong { font-family:'Playfair Display',serif; }
+#page .map-detail-link { background:var(--shop-burgundy); color:var(--shop-paper); padding:15px; }
+@media(max-width:760px) { #page .map-stage { border-width:8px; } #page .map-stage-rail { border-left:0; border-top:1px solid #b9a382; } }
+}
+
+/* 27. Chapter discoveries sorted into a horizontal document tray */
+@media screen {
+#page .chapter-discoveries { background:var(--shop-walnut); color:var(--shop-paper); padding:32px; grid-template-columns:1fr; gap:24px; }
+#page .chapter-discoveries-intro { display:flex; flex-wrap:wrap; gap:20px; justify-content:space-between; align-items:center; }
+#page .chapter-discoveries-intro p { color:var(--shop-paper); max-width:45ch; }
+#page .chapter-discoveries-list { background:var(--shop-paper); color:var(--shop-walnut); padding:24px; display:grid; gap:16px; }
+#page .chapter-discoveries-list>.chapter-discoveries-group { padding:18px 0; border-bottom:1px solid #b9a382; }
+@media(max-width:760px) { #page .chapter-discoveries { padding:22px; } #page .chapter-discoveries-list { padding:18px; } }
+}
+
+/* 28. Relationship references filed on cream index slips */
+@media screen {
+#page .map-connections { padding:32px; background:#e5dac6; border-top:4px double #a38961; }
+#page .map-connections-head { gap:20px; border:0; padding-bottom:22px; }
+#page .map-connections-list { background:transparent; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+#page .map-connections-list>li { background:var(--shop-paper); padding:24px; border:0; border-radius:0 0 12px 0; }
+#page .map-connections-list a { color:var(--shop-burgundy); }
+@media(max-width:900px) { #page .map-connections-list { grid-template-columns:1fr; } }
+@media(max-width:760px) { #page .map-connections { padding:22px; } }
+}
+
+/* 29. Reading events and cast collected in two desk notebooks */
+@media screen {
+#page .story-columns { background:var(--shop-wood); padding:24px; gap:24px; display:grid; grid-template-columns:1fr 1fr; }
+#page .story-columns>section { background:var(--shop-paper); padding:28px; min-width:0; border-radius:0 8px 8px 0; box-shadow:inset 6px 0 12px #61433214; }
+#page .story-columns h2 { border-bottom:1px solid #b9a382; padding-bottom:20px; font-size:30px; }
+#page .story-columns li { border-color:#b9a382; }
+@media(max-width:760px) { #page .story-columns { grid-template-columns:1fr; padding:16px; gap:16px; } #page .story-columns>section { padding:22px; } }
+}
+
+/* 30. The character profile inside an ex-libris bookplate */
+@media screen {
+#page .character-hero { background:var(--shop-walnut); padding:30px; gap:0; grid-template-columns:1.25fr .75fr; }
+#page .character-copy { background:var(--shop-paper); padding:40px; color:var(--shop-walnut); border:4px double #a38961; }
+#page .character-copy h1 { font-size:clamp(50px,6vw,80px); }
+#page .character-description { font-family:'Playfair Display',serif; font-size:22px; line-height:1.6; }
+#page .character-art { background:var(--shop-burgundy); min-height:380px; }
+#page .character-art>span { border:1px solid #b99561; color:var(--shop-brass); padding:30px; }
+@media(max-width:760px) { #page .character-hero { grid-template-columns:1fr; padding:16px; } #page .character-copy { padding:26px; } #page .character-art { min-height:220px; } }
+}
+
+/* 31. A character’s route as a library borrowing register */
+@media screen {
+#page .character-trail { background:var(--shop-paper); padding:36px; border:1px solid #b9a382; }
+#page .character-trail-heading { border-bottom:4px double #a38961; padding-bottom:24px; }
+#page .character-trail-avatar { width:60px; height:74px; background:var(--shop-burgundy); color:var(--shop-paper); border-radius:0; }
+#page .character-trail-pair { border:0; border-bottom:1px solid #b9a382; padding:22px 0; }
+#page .character-trail-links a { display:inline-flex; min-height:44px; align-items:center; text-decoration:underline; text-underline-offset:5px; color:var(--shop-burgundy); }
+@media(max-width:760px) { #page .character-trail { padding:24px; } }
+}
+
+/* 32. An address-book margin for a character’s connections */
+@media screen {
+#page .character-connections { background:var(--shop-wood); padding:32px; color:var(--shop-paper); }
+#page .character-connections .connections-intro { color:var(--shop-paper); }
+#page .character-connections .connection-list { background:var(--shop-paper); color:var(--shop-walnut); padding:12px 26px; }
+#page .character-connections .connection-list li { border-color:#b9a382; padding:26px 0; }
+#page .character-connections .connection-subject,#page .character-connections .connection-target { font-family:'Playfair Display',serif; font-size:clamp(22px,2.6vw,32px); color:var(--shop-burgundy); }
+@media(max-width:760px) { #page .character-connections { padding:20px; } #page .character-connections .connection-list { padding-inline:18px; } }
+}
+
+/* 33. A pull-out reading bookmark above the cast cabinet */
+@media screen {
+#page .cast-boundary { background:var(--shop-burgundy); color:var(--shop-paper); padding:28px 32px; border:0; display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+#page .cast-boundary p,#page .cast-boundary label { color:var(--shop-paper); }
+#page .cast-boundary select { background:var(--shop-paper); color:var(--shop-walnut); border:0; min-height:52px; }
+#page .cast-boundary button { background:var(--shop-paper); color:var(--shop-burgundy); min-height:52px; }
+@media(max-width:760px) { #page .cast-boundary { grid-template-columns:1fr; padding:24px; gap:20px; } }
+}
+
+/* 34. The cast presented as a cabinet of handwritten-name files */
+@media screen {
+#page .cast-grid { background:var(--shop-walnut); padding:24px; display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+#page .cast-card { padding:0; background:var(--shop-paper); border-radius:0 0 12px 0; color:var(--shop-walnut); }
+#page .cast-card-top { background:var(--shop-wood); padding:20px 24px; color:var(--shop-paper); display:flex; align-items:center; gap:20px; }
+#page .cast-initial { background:transparent; border:1px solid #b99561; color:var(--shop-brass); width:52px; height:64px; border-radius:0; }
+#page .cast-card-body { padding:26px; }
+#page .cast-card-body h2 { font-size:32px; }
+@media(max-width:760px) { #page .cast-grid { grid-template-columns:1fr; padding:16px; gap:16px; } }
+}
+
+/* 35. A relationship shown between opposing bound volumes */
+@media screen {
+#page .relations-feature { background:var(--shop-walnut); color:var(--shop-paper); padding:36px; border-bottom:10px solid var(--shop-wood); display:grid; grid-template-columns:1fr auto 1fr; gap:24px; align-items:center; }
+#page .relations-feature-from,#page .relations-feature-to { background:var(--shop-burgundy); color:var(--shop-paper); padding:32px 24px; border:1px solid #b99561; border-radius:3px 12px 0 0; min-height:210px; display:flex; align-items:center; font:500 clamp(28px,4vw,48px)/1.2 'Playfair Display',serif; }
+#page .relations-feature-to { background:#263e33; }
+#page .relations-feature-kicker { display:none; }
+#page .relations-feature-action { grid-column:1/-1; color:var(--shop-paper); border-top:1px solid #b99561; padding-top:20px; }
+#page .relations-feature-direction { color:var(--shop-brass); }
+@media(max-width:760px) { #page .relations-feature { grid-template-columns:1fr; padding:24px; gap:16px; } #page .relations-feature-from,#page .relations-feature-to { min-height:120px; } }
+}
+
+/* 36. A chronology arranged as dated archive folders */
+@media screen {
+#page .relations-chronology { display:grid; gap:24px; }
+#page .relations-chapter { display:grid; grid-template-columns:.7fr 1.3fr; gap:28px; background:var(--shop-paper); border:1px solid #b9a382; padding:28px; }
+#page .relations-chapter-heading { background:var(--shop-walnut); color:var(--shop-paper); padding:26px; align-self:start; border:0; }
+#page .relations-chapter-heading a { color:var(--shop-paper); }
+#page .relations-list { border:0; }
+#page .relations-list li { padding:24px 0; border-color:#b9a382; }
+@media(max-width:760px) { #page .relations-chapter { grid-template-columns:1fr; padding:20px; gap:20px; } }
+}
+
+/* 37. A relationship detail unfolds as a correspondence folder */
+@media screen {
+#page .relation-spread { background:var(--shop-wood); padding:28px; grid-template-columns:1fr; gap:0; }
+#page .relation-spread .relation-person { background:var(--shop-paper); color:var(--shop-walnut); display:grid; grid-template-columns:90px minmax(0,1fr); gap:24px; padding:32px; border:0; }
+#page .relation-initial { position:static; grid-column:1; grid-row:1/4; display:grid; place-items:center; font-size:48px; width:80px; height:100px; background:var(--shop-burgundy); color:var(--shop-paper); border-radius:0; }
+#page .relation-person-copy { min-width:0; }
+#page .relation-person h2 { font-size:clamp(32px,4vw,48px); }
+#page .relation-role { color:var(--shop-burgundy); }
+#page .relation-bridge { background:var(--shop-paper); padding:14px 32px; color:var(--shop-burgundy); border-block:1px dashed #a38961; }
+@media(max-width:760px) { #page .relation-spread { padding:16px; } #page .relation-spread .relation-person { grid-template-columns:52px minmax(0,1fr); padding:24px 20px; gap:16px; } #page .relation-initial { width:52px; height:70px; } }
+}
+
+/* 38. Evidence enclosed in an archival reading envelope */
+@media screen {
+#page .relation-context { border:1px solid #b9a382; border-top:12px solid var(--shop-wood); background:var(--shop-paper); padding:36px; display:grid; grid-template-columns:.8fr 1.2fr; gap:36px; }
+#page .relation-context-intro h2 { font-size:clamp(30px,4vw,46px); }
+#page .relation-context-chapter { background:#fffaf0; border:0; border-bottom:1px dashed #a38961; padding:28px; }
+#page .relation-context-chapter a { color:var(--shop-burgundy); min-height:44px; display:inline-flex; align-items:center; }
+@media(max-width:760px) { #page .relation-context { grid-template-columns:1fr; gap:24px; padding:24px; } }
+}
+
+/* 39. The opening chapter introduced on an engraved title plate */
+@media screen {
+#page .opening-intro { background:var(--shop-walnut); padding:40px; grid-template-columns:1fr 1fr; gap:40px; color:var(--shop-paper); border:5px double #a38961; }
+#page .opening-intro h1 { font-size:clamp(42px,5vw,68px); color:var(--shop-brass); }
+#page .opening-book,#page .opening-chapter,#page .opening-intro p { color:var(--shop-paper); }
+#page .opening-map-link { background:var(--shop-paper); color:var(--shop-walnut); padding:18px 22px; min-height:52px; display:inline-flex; align-items:center; }
+#page .opening-visual { border:1px solid #a38961; min-height:400px; }
+@media(max-width:760px) { #page .opening-intro { grid-template-columns:1fr; padding:24px; gap:24px; } #page .opening-visual { min-height:280px; } }
+}
+
+/* 40. Chapter events pinned into a bookseller’s reference tray */
+@media screen {
+#page .chapter-briefing { background:var(--shop-wood); padding:32px; gap:28px; }
+#page .chapter-briefing>section { background:var(--shop-paper); color:var(--shop-walnut); padding:28px; }
+#page .chapter-briefing-head { border-bottom:4px double #a38961; padding-bottom:18px; }
+#page .opening-events li { border-bottom:1px solid #b9a382; padding-block:22px; }
+#page .opening-cast-list a { background:#fffaf0; border-bottom:1px solid #b9a382; padding:20px; }
+@media(max-width:760px) { #page .chapter-briefing { padding:16px; gap:16px; } #page .chapter-briefing>section { padding:22px; } }
+}
+
+/* 41. Chapter guides presented as a removable jacket band */
+@media screen {
+#page .chapter-page-hero { background:var(--shop-burgundy); color:var(--shop-paper); padding:36px; grid-template-columns:1.15fr .85fr; gap:36px; border-radius:4px 12px 0 0; }
+#page .chapter-page-hero h1 { color:var(--shop-paper); font-size:clamp(40px,5vw,64px); }
+#page .chapter-page-book,#page .chapter-page-hero p { color:var(--shop-paper); }
+#page .chapter-page-art { border:1px solid #b99561; min-height:340px; }
+#page .chapter-page-notice { border-block:1px solid #b99561; padding-block:18px; }
+@media(max-width:760px) { #page .chapter-page-hero { grid-template-columns:1fr; padding:24px; gap:24px; } #page .chapter-page-art { min-height:260px; } }
+}
+
+/* 42. Chapter navigation inside a three-slot sorting tray */
+@media screen {
+#page .chapter-turn { background:var(--shop-walnut); color:var(--shop-paper); padding:28px; }
+#page .chapter-turn-intro { border-bottom:1px solid #a38961; padding-bottom:20px; }
+#page .chapter-turn-pages { gap:16px; padding-top:24px; }
+#page .chapter-turn-pages>a,#page .chapter-turn-current,#page .chapter-turn-empty { background:var(--shop-paper); color:var(--shop-walnut); padding:26px; border:0; border-radius:0 0 12px 0; }
+#page .chapter-turn-current { background:var(--shop-burgundy); color:var(--shop-paper); }
+#page .chapter-turn-current span { color:var(--shop-paper); }
+#page .chapter-turn-pages>a:hover { background:#fffaf0; }
+@media(max-width:760px) { #page .chapter-turn { padding:20px; } }
+}
+
+/* 43. Reading guides displayed on a bookshop periodical rack */
+@media screen {
+#page .journal-heading { background:var(--shop-walnut); color:var(--shop-paper); padding:44px; border-block:5px double #a38961; display:grid; grid-template-columns:1.2fr 1fr; gap:40px; }
+#page .journal-heading h1 { font-size:clamp(44px,6vw,78px); }
+#page .journal-heading h1 em { color:var(--shop-brass); }
+#page .journal-heading p { color:var(--shop-paper); align-self:end; }
+@media(max-width:760px) { #page .journal-heading { grid-template-columns:1fr; padding:28px; gap:20px; } }
+}
+
+/* 44. Reading intentions on a bank of labeled cabinet drawers */
+@media screen {
+#page .guide-choices { display:grid; grid-template-columns:.7fr 1.3fr; gap:32px; background:var(--shop-paper); padding:32px; border:1px solid #b9a382; }
+#page .guide-choices-list { background:var(--shop-walnut); padding:16px; display:grid; gap:14px; }
+#page .guide-choices-list>a { background:var(--shop-wood); color:var(--shop-paper); border:0; padding:26px; grid-template-columns:40px minmax(0,1fr) auto; }
+#page .guide-choice-number { color:var(--shop-brass); }
+#page .guide-choices-list strong { font-size:clamp(24px,3vw,34px); }
+#page .guide-choices-list p,#page .guide-choices-list small { color:var(--shop-paper); }
+@media(max-width:760px) { #page .guide-choices { grid-template-columns:1fr; padding:22px; gap:20px; } }
+}
+
+/* 45. The featured guide mounted as an illustrated hardcover */
+@media screen {
+#page .journal-grid { background:var(--shop-wood); padding:24px; gap:24px; }
+#page .journal-feature { background:var(--shop-paper); color:var(--shop-walnut); padding:18px; border-radius:3px 12px 0 0; box-shadow:inset 7px 0 12px #61433222; }
+#page .journal-art { min-height:340px; }
+#page .journal-copy { background:var(--shop-paper); padding:28px 18px; }
+#page .journal-copy h2 { color:var(--shop-walnut); }
+#page .journal-copy p,#page .journal-link { color:#51392b; }
+#page .journal-secondary { background:var(--shop-paper); color:var(--shop-walnut); padding:26px; border-radius:0 0 12px 0; }
+@media(max-width:760px) { #page .journal-grid { padding:16px; gap:16px; } }
+}
+
+/* 46. The reading edition laid out as a bookshop broadsheet */
+@media screen {
+#page .reading-edition { background:var(--shop-paper); color:var(--shop-walnut); padding:40px; border-block:5px double #a38961; }
+#page .edition-intro { border-bottom:1px solid #b9a382; padding-bottom:24px; }
+#page .edition-links { display:grid; grid-template-columns:1fr 1fr; gap:0; margin-top:26px; }
+#page .edition-feature { background:transparent; color:var(--shop-walnut); padding:24px; border-right:1px solid #b9a382; }
+#page .edition-index { background:transparent; padding:24px; }
+#page .edition-row { border-color:#b9a382; padding-block:20px; }
+#page .edition-action { color:var(--shop-burgundy); }
+@media(max-width:760px) { #page .reading-edition { padding:24px; } #page .edition-links { grid-template-columns:1fr; } #page .edition-feature { border-right:0; border-bottom:1px solid #b9a382; padding:20px 0; } #page .edition-index { padding:20px 0; } }
+}
+
+/* 47. An interactive demonstration on the bookshop reading desk */
+@media screen {
+#page .reading-demo { background:var(--shop-wood); padding:24px; color:var(--shop-paper); border-radius:0; }
+#page .reading-demo-intro { padding:16px 12px 24px; }
+#page .reading-demo-intro h2 { color:var(--shop-paper); }
+#page .reading-demo-intro h2 em { color:var(--shop-brass); }
+#page .reading-demo-intro p { color:var(--shop-paper); }
+#page .reading-demo-panel { background:var(--shop-paper); color:var(--shop-walnut); padding:26px; border-radius:0 0 12px 0; }
+#page .reading-demo-top { border-bottom:4px double #a38961; color:var(--shop-walnut); }
+#page #demo-map { background:var(--shop-burgundy); color:var(--shop-paper); padding:16px; display:flex; min-height:52px; align-items:center; }
+@media(max-width:760px) { #page .reading-demo { padding:16px; } #page .reading-demo-panel { padding:22px; } }
+}
+
+/* 48. Source methodology as a conservation reference cabinet */
+@media screen {
+#page .source-spread { background:var(--shop-walnut); color:var(--shop-paper); padding:32px; }
+#page .source-spread-heading { border-bottom:1px solid #a38961; padding-bottom:22px; }
+#page .source-spread-heading p { color:var(--shop-paper); }
+#page .source-spread-panels { gap:20px; padding-top:24px; }
+#page .source-spread-panels>div { background:var(--shop-paper); color:var(--shop-walnut); padding:26px; border-top:5px solid var(--shop-wood); }
+#page .source-spread-label { color:var(--shop-burgundy); }
+#page .source-spread-note { color:var(--shop-paper); border-color:#a38961; }
+@media(max-width:760px) { #page .source-spread { padding:22px; } }
+}
+
+/* 49. A service counter for the reader’s help destinations */
+@media screen {
+#page .help-quick { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; background:var(--shop-walnut); padding:24px; border-bottom:10px solid var(--shop-wood); }
+#page .help-quick>a { background:var(--shop-paper); color:var(--shop-walnut); padding:26px; border:0; border-radius:0 0 12px 0; display:flex; flex-direction:column; align-items:start; gap:16px; min-height:180px; }
+#page .help-quick strong { font:500 28px/1.2 'Playfair Display',serif; }
+#page .help-quick span { color:#51392b; }
+@media(max-width:760px) { #page .help-quick { grid-template-columns:1fr; padding:18px; } #page .help-quick>a { min-height:140px; } }
+}
+
+/* 50. A personal reading membership folio for the account */
+@media screen {
+#page .account-shell { background:var(--shop-walnut); padding:30px; gap:0; grid-template-columns:1fr 1fr; border-radius:6px 16px 6px 6px; }
+#page .account-story { background:var(--shop-burgundy); color:var(--shop-paper); padding:40px; border:1px solid #a38961; }
+#page .account-story h1 { color:var(--shop-paper); font-size:clamp(42px,5vw,64px); }
+#page .account-story h1 em { color:var(--shop-brass); }
+#page .account-story p,#page .account-story a { color:var(--shop-paper); }
+#page .account-shell>.account-page { background:var(--shop-paper); padding:40px; box-shadow:inset 8px 0 14px #61433222; }
+#page .account-options { border-color:#a38961; }
+#page .account-options>div { border-color:#a38961; }
+#page .account-option-number { color:var(--shop-brass); }
+#page .account-guest { border:1px solid #a38961; padding:20px; }
+@media(max-width:760px) { #page .account-shell { grid-template-columns:1fr; padding:14px; } #page .account-story,#page .account-shell>.account-page { padding:26px; } }
+}
+
+/* Material corrections from the first batched visual inspection. */
+@media screen {
+  #page .resume-item:not([hidden]) { display:flex; flex-wrap:wrap; gap:20px; background:var(--shop-paper); color:var(--shop-walnut); padding:24px; }
+  #page .resume-item:not([hidden])>span:nth-child(2) { flex:1; min-width:0; }
+  #page .resume-item:not([hidden]) strong { color:var(--shop-walnut); }
+  #page .resume-item:not([hidden]) .resume-position { color:#51392b; }
+  #page .resume-item:not([hidden]) .resume-action { color:var(--shop-burgundy); }
+  #page .directory-people li:nth-child(even) a { background:#fffaf0; }
+  #page .story-index-links a:nth-child(2) { background:var(--shop-wood); }
+  @media(max-width:760px) { #page .resume-item:not([hidden]) { flex-direction:column; align-items:start; } }
+  @media(max-width:359px) { #page .bookcase-books { flex-direction:column; align-items:stretch; } #page .bound-book,#page .bound-book:nth-child(even) { max-width:none; min-height:300px; transform:none; } #page .bound-book strong { font-size:28px; } }
+  #page .demo-characters p,#page .demo-characters li a>span,#page .demo-characters li small { color:var(--shop-burgundy); }
+  #page .reading-demo #demo-status { color:var(--shop-walnut); }
+  #page .help-quick small,#page .help-quick a>span:last-child { color:#51392b; }
+  #page .journal .guide-choices { background:var(--shop-paper); color:var(--shop-walnut); }
+  #page .guide-choices-list { grid-template-columns:1fr; }
+  #page .guide-choices-list>a { grid-template-columns:minmax(0,1fr) auto; }
+  #page .guide-choices-all { color:var(--shop-burgundy); }
+  #page .relation-spread .relation-initial { width:80px; height:100px; margin:0; font-size:48px; grid-column:1; grid-row:1/4; }
+  #page .relation-spread :is(.relation-role,.relation-person-copy,.relation-person-action) { grid-column:2; }
+  #page .relation-spread .relation-role { grid-row:1; }
+  #page .relation-spread .relation-person-copy { grid-row:2; }
+  #page .relation-spread .relation-person-action { grid-row:3; }
+  #page .relations-pair { display:flex; flex-direction:column; align-items:stretch; gap:16px; }
+  #page .relations-pair>a { display:flex; flex-direction:column; gap:8px; min-width:0; }
+  #page .relations-pair>.relations-direction { margin:0; align-self:start; }
+  #page .relations-direction a { display:flex; align-items:center; gap:12px; }
+  #page .relations-direction a>span { position:static; transform:rotate(90deg); display:inline-block; flex:none; line-height:1; font-size:22px; width:24px; }
+  @media(max-width:760px) { #page .relation-spread .relation-initial { width:52px; height:70px; font-size:36px; } }
+  #page .opening-events .empty-state { color:var(--shop-walnut); }
+  #page .opening-events li p { color:var(--shop-walnut); }
+  #page .opening-events li>span { color:var(--shop-burgundy); }
+  #page .cast-boundary p:not(.eyebrow) { color:var(--shop-paper); }
+  #page .cast-card:nth-child(even) { background:var(--shop-paper); }
+  #page .cast-card .cast-initial { position:static; font-size:36px; color:var(--shop-burgundy); justify-self:center; align-self:center; display:grid; place-items:center; }
+  #page .relation-bridge :is(strong,span) { color:var(--shop-burgundy); }
+  #page .relations-feature::after { display:none; }
+  #page .relations-feature-action { background:transparent; color:var(--shop-paper); }
+  #page .character-trail-heading p { display:none; }
+  #page .story-columns>div { background:var(--shop-paper); color:var(--shop-walnut); padding:28px; min-width:0; border-radius:0 8px 8px 0; box-shadow:inset 6px 0 12px #61433214; }
+  #page .story-columns h2,#page .story-columns h3 { color:var(--shop-walnut); }
+  #page .map-connections-head h2,#page .map-connections-head p,#page .map-connections-head a { color:var(--shop-walnut); }
+  #page .chapter-discoveries-intro>p:last-child { color:var(--shop-paper); }
+  #page .map-page-intro #book-author { color:var(--shop-brass); }
+  #page .map-page-intro>p:last-child { color:var(--shop-paper); }
+  #page .map-boundary { color:var(--shop-walnut); }
+  #page .map-boundary-copy strong { color:var(--shop-burgundy); }
+  #page .map-boundary-copy p { color:#51392b; }
+  #page .map-boundary label,#page .map-boundary #progress { color:var(--shop-walnut); }
+  #page .reading-entry { color:var(--shop-walnut); }
+  #page .reading-entry-copy { padding:10px 0; }
+  #page .reading-entry-copy h2 em { color:var(--shop-burgundy); }
+  #page .reading-entry-copy>p:last-child { color:#51392b; }
+  #page .reading-entry-choice { padding:0; }
+  #page .reading-entry-choice>span { border:0; background:transparent; padding:18px 14px; }
+  #page .reading-entry-choice:has(input:checked) { outline-color:var(--shop-burgundy); }
+  #page .reading-entry-choice input:checked+span { background:var(--shop-burgundy); border-color:var(--shop-burgundy); }
+  #page .reading-entry-choice input:checked+span small { color:var(--shop-paper); }
+  #page .chapter-shelf { display:grid; }
+  #page .directory-next p:not(.eyebrow) { color:#51392b; }
+  #page .library-authors li a>span:last-child { color:var(--shop-brass); }
+  #page .shelf-note a { background:transparent; color:var(--shop-burgundy); padding-inline:0; }
+  #page .library-finder button { color:var(--shop-paper); }
+  #page .library-finder-controls { margin-top:0; }
+  #page .library-finder-controls>p { color:var(--shop-walnut); }
+  #page .collection-list { display:grid; }
+  #page .collection-visual { position:relative; flex:none; margin-inline:0; }
+  #page .collection-visual img { position:static; }
+  #page .collection-item .collection-number { color:var(--shop-brass) !important; padding:0; }
+}
+
+@media screen { #page .collection-list,#page .relations-feature,#page .help-quick { border-radius:0; } }
+
+/* Final contrast corrections from the four-width computed-style audit. */
+@media screen {
+  #page .book-opening .book-byline,#page .book-opening .author-link { color:#51392b; }
+  #page .character-hero .character-book { color:#51392b; }
+  #page .character-hero .character-book span { color:var(--shop-burgundy); }
+  #page .map-stage .map-detail-content p,#page .story-columns .list-item p { color:#51392b; }
+  #page .story-columns .list-item small { color:var(--shop-burgundy); }
+  #page .character-connections .collection-bar>span { color:var(--shop-brass); }
+  #page .help-quick a small { color:#51392b; }
+  #page .account-page .muted { color:#51392b; }
+}
+
+/* The selected-character inspector retains its forest surface. */
+@media screen {
+  #page .map-stage .map-detail-content p { color:var(--shop-paper); }
+  #page .map-stage .map-detail-content>.eyebrow { display:none; }
+}

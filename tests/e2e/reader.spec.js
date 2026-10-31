@@ -2,7 +2,8 @@ import { test, expect } from '@playwright/test';
 
 test('reader opens a book, explores its graph and visits a character', async ({ page }) => {
   await page.goto('/');
-  await page.locator('.story-choice').filter({ hasText: "Alice's Adventures in Wonderland" }).click();
+  await page.locator('.hero').getByRole('link', { name: /^Explore the library/ }).click();
+  await page.locator('.collection-item').filter({ hasText: "Alice's Adventures in Wonderland" }).click();
   await page.getByRole('link', { name: /Explore the map/ }).click();
   await expect(page.getByRole('heading', { name: "Alice's Adventures in Wonderland" })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Alice', exact: true })).toBeVisible();
@@ -44,7 +45,7 @@ test('account synchronizes reading position across browser sessions', async ({ b
   await page.getByLabel('E-mail').fill(email);
   await page.getByLabel(/Password/).fill('a-secure-password-123');
   await page.getByRole('button',{name:'Create account'}).click();
-  await expect(page.getByRole('status')).toContainText('verify your address');
+  await expect(page.locator('#account-status')).toContainText('verify your address');
   const outbox=await (await page.request.get(`${process.env.DEV_TEST_API_URL || 'http://localhost:8787'}/__dev/outbox`)).json();
   const emailMessage=outbox.find((item)=>item.to===email);
   const verifyLink=emailMessage.text.match(/https?:\/\/\S+/)[0];
@@ -61,7 +62,7 @@ test('account synchronizes reading position across browser sessions', async ({ b
   await other.goto('/');
   await expect(other.locator('#resume-shelf')).toContainText('Progress saved to your account');
   await expect(other.locator('#resume-shelf')).toContainText('Chapter 2');
-  await other.locator('#resume-shelf a').click();
+  await other.locator('#resume-shelf').getByRole('link', { name: /Alice/ }).click();
   await expect(other.getByRole('combobox',{name:'Read up to'})).toHaveValue('1:2');
   await first.close();await second.close();
 });
@@ -69,16 +70,16 @@ test('account synchronizes reading position across browser sessions', async ({ b
 test('reader resets a password using a one-time email link', async ({page}) => {
   const email=`reset-${Date.now()}@example.test`;
   await page.goto('/account?mode=signup');await page.getByLabel('Name').fill('Reader');await page.getByLabel('E-mail').fill(email);await page.getByLabel(/Password/).fill('a-secure-password-123');await page.getByRole('button',{name:'Create account'}).click();
-  await expect(page.getByRole('status')).toContainText('verify your address');
+  await expect(page.locator('#account-status')).toContainText('verify your address');
   let messages=await (await page.request.get(`${process.env.DEV_TEST_API_URL || 'http://localhost:8787'}/__dev/outbox`)).json();
   await page.goto(messages.find((item)=>item.to===email).text.match(/https?:\/\/\S+/)[0]);
   await page.getByLabel('E-mail').fill(email);await page.getByRole('button',{name:'Forgot password'}).click();
-  await expect(page.getByRole('status')).toContainText('If the account exists');
+  await expect(page.locator('#account-status')).toContainText('If the account exists');
   messages=await (await page.request.get(`${process.env.DEV_TEST_API_URL || 'http://localhost:8787'}/__dev/outbox`)).json();
   const reset=messages.find((item)=>item.to===email && item.subject.includes('Reset'));
   await page.goto(reset.text.match(/https?:\/\/\S+/)[0]);
   await page.getByLabel(/New password/).fill('another-secure-password-456');await page.getByRole('button',{name:'Save password'}).click();
-  await expect(page.getByRole('status')).toContainText('Password changed');
+  await expect(page.locator('#reset-status')).toContainText('Password changed');
   await expect(page).not.toHaveURL(/token=/);
   await page.getByRole('link',{name:'Back to sign in'}).click();
   await page.getByLabel('E-mail').fill(email);await page.getByLabel(/Password/).fill('another-secure-password-456');await page.getByRole('button',{name:'Sign in'}).click();
@@ -120,7 +121,7 @@ test('map character details support keyboard exploration and clear on chapter ch
   await expect(page.locator('#map-detail')).toBeVisible();
   await expect(page.locator('#map-detail-name')).toHaveText('Alice');
   await expect(page.locator('#map-detail-link')).toHaveAttribute('href', /volume=1&chapter=1/);
-  await page.getByRole('button', { name: 'Close character details' }).click();
+  await page.getByRole('button', { name: 'Close details' }).click();
   await expect(page.locator('#map-detail')).toBeHidden();
   await expect(alice).toBeFocused();
   await alice.press('Enter');
@@ -170,7 +171,7 @@ test('guest reading progress returns in the same browser and remains separate fr
   await expect(page.locator('#progress')).toHaveValue('1:2');
   await expect(page.locator('#map-summary')).toContainText('chapter 2');
   await page.unroute('**/api/progress/alices-adventures-in-wonderland');
-  await page.route('**/api/progress/alices-adventures-in-wonderland', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ progress: { volume: 1, chapter: 1 } }) }));
+  await page.route('**/api/progress/*', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ progress: { volume: 1, chapter: 1 } }) }));
   await page.reload();
   await expect(page.locator('#progress')).toHaveValue('1:1');
   await expect(page.locator('#progress-memory')).toContainText('Account progress');
@@ -185,10 +186,10 @@ test('home offers a direct return to local or account progress without mixing th
   await page.goto('/');
   await expect(page.locator('#resume-shelf')).toBeVisible();
   await expect(page.locator('#resume-shelf')).toContainText('Chapter 2');
-  await page.locator('#resume-shelf a').click();
+  await page.locator('#resume-shelf').getByRole('link', { name: /Alice/ }).click();
   await expect(page.locator('#map-summary')).toContainText('chapter 2');
   await page.unroute('**/api/progress/alices-adventures-in-wonderland');
-  await page.route('**/api/progress/alices-adventures-in-wonderland', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ progress: { volume: 1, chapter: 1 } }) }));
+  await page.route('**/api/progress/*', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ progress: { volume: 1, chapter: 1 } }) }));
   const check = page.waitForResponse(response => response.url().includes('/api/progress/alices-adventures-in-wonderland') && response.status() === 200);
   await page.goto('/');
   await check;
@@ -213,8 +214,7 @@ test('book page exposes first-chapter characters without JavaScript', async ({ b
 test('sharing a character makes the chapter scope clear and supports manual copying', async ({ page }) => {
   await page.addInitScript(() => Object.defineProperty(navigator, 'clipboard', { value: { writeText: () => Promise.reject(new Error('denied')) } }));
   await page.goto('/books/alices-adventures-in-wonderland/characters/alice?lang=en&volume=1&chapter=2');
-  await page.locator('.share-panel summary').click();
-  await expect(page.locator('.share-panel-body')).toContainText('selected chapter');
+  await expect(page.locator('.share-panel')).toContainText('selected chapter');
   await expect(page.locator('#share-url')).toHaveValue(/volume=1&chapter=2/);
   await page.getByRole('button', { name: 'Copy link' }).click();
   await expect(page.locator('.share-feedback')).toHaveText('Copy the selected address manually.');
@@ -277,10 +277,10 @@ test('a separate device copy remains available when account progress is unavaila
   await page.goto('/');
   await expect(page.locator('#resume-shelf')).toBeVisible();
   await expect(page.locator('#resume-shelf')).toContainText('separate from account progress');
-  await page.locator('#resume-shelf a').click();
+  await page.locator('#resume-shelf').getByRole('link', { name: /Alice/ }).click();
   await expect(page.locator('#map-summary')).toContainText('chapter 2');
   await page.unroute('**/api/progress/alices-adventures-in-wonderland');
-  await page.route('**/api/progress/alices-adventures-in-wonderland', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ progress: { volume: 1, chapter: 1 } }) }));
+  await page.route('**/api/progress/*', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ progress: { volume: 1, chapter: 1 } }) }));
   await page.goto('/books/alices-adventures-in-wonderland/map');
   await expect(page.locator('#progress')).toHaveValue('1:1');
 });
@@ -309,5 +309,8 @@ test('map makes relationship labels and direction visible and keyboard operable'
   await expect(relation.locator('.edge')).toHaveAttribute('marker-end', 'url(#relation-arrow)');
   await relation.focus();
   await page.keyboard.press('Enter');
-  await expect(page.locator('#status')).toContainText('Alice - Follows - The White Rabbit');
+  await expect(relation).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.locator('#map-detail-name')).toHaveText('Alice → The White Rabbit');
+  await expect(page.locator('#map-detail-description')).toHaveText('Follows');
+  await expect(page.locator('#map-detail-link')).toHaveAttribute('href', /relations\/alice-rabbit\?lang=en&volume=1&chapter=1/);
 });

@@ -1,0 +1,25 @@
+---
+type Book = { slug: string; title: string; author: string };
+const {
+  books,
+  lang = 'en',
+  label = 'Choose a book from the shelf',
+  actionLabel = 'Open the story',
+  note = 'Characters. Connections. Chapters.',
+} = Astro.props as { books: Book[]; lang: string; label?: string; actionLabel?: string; note?: string };
+const artwork: Record<string, string> = {
+  'alices-adventures-in-wonderland': '/images/alice-rabbit-hole.webp',
+  'a-christmas-carol': '/images/christmas-carol-opening.webp',
+};
+---
+<nav class="bookcase" aria-label={label}>
+  <div class="bookcase-books">
+    {books.map((book) => <a class="bound-book" href={`/books/${encodeURIComponent(book.slug)}?lang=${lang}`}>
+      <span class="bound-book-author">{book.author}</span>
+      <strong>{book.title}</strong>
+      {artwork[book.slug] && <img src={artwork[book.slug]} width="768" height="1152" alt="" loading="eager" />}
+      <span class="bound-book-action">{actionLabel} <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg></span>
+    </a>)}
+  </div>
+  <div class="bookcase-ledge"><span>Castellation</span><span>{note}</span></div>
+</nav>

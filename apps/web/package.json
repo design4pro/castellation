@@ -12,10 +12,12 @@
     "@astrojs/react": "^7.1.2",
     "@castellation/cms-plugin": "*",
     "@emdash-cms/cloudflare": "^1.4.0",
+    "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.4.4",
     "emdash": "^1.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "tailwindcss": "^4.3.3",
     "wrangler": "^4.99.0"
   }
 }

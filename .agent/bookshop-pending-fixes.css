@@ -1,0 +1,70 @@
+/* Material corrections from the first batched visual inspection. */
+@media screen {
+  #page .resume-item:not([hidden]) { display:flex; flex-wrap:wrap; gap:20px; background:var(--shop-paper); color:var(--shop-walnut); padding:24px; }
+  #page .resume-item:not([hidden])>span:nth-child(2) { flex:1; min-width:0; }
+  #page .resume-item:not([hidden]) strong { color:var(--shop-walnut); }
+  #page .resume-item:not([hidden]) .resume-position { color:#51392b; }
+  #page .resume-item:not([hidden]) .resume-action { color:var(--shop-burgundy); }
+  #page .directory-people li:nth-child(even) a { background:#fffaf0; }
+  #page .story-index-links a:nth-child(2) { background:var(--shop-wood); }
+  @media(max-width:760px) { #page .resume-item:not([hidden]) { flex-direction:column; align-items:start; } }
+  @media(max-width:359px) { #page .bookcase-books { flex-direction:column; align-items:stretch; } #page .bound-book,#page .bound-book:nth-child(even) { max-width:none; min-height:300px; transform:none; } #page .bound-book strong { font-size:28px; } }
+  #page .demo-characters p,#page .demo-characters li a>span,#page .demo-characters li small { color:var(--shop-burgundy); }
+  #page .reading-demo #demo-status { color:var(--shop-walnut); }
+  #page .help-quick small,#page .help-quick a>span:last-child { color:#51392b; }
+  #page .journal .guide-choices { background:var(--shop-paper); color:var(--shop-walnut); }
+  #page .guide-choices-list { grid-template-columns:1fr; }
+  #page .guide-choices-list>a { grid-template-columns:minmax(0,1fr) auto; }
+  #page .guide-choices-all { color:var(--shop-burgundy); }
+  #page .relation-spread .relation-initial { width:80px; height:100px; margin:0; font-size:48px; grid-column:1; grid-row:1/4; }
+  #page .relation-spread :is(.relation-role,.relation-person-copy,.relation-person-action) { grid-column:2; }
+  #page .relation-spread .relation-role { grid-row:1; }
+  #page .relation-spread .relation-person-copy { grid-row:2; }
+  #page .relation-spread .relation-person-action { grid-row:3; }
+  #page .relations-pair { display:flex; flex-direction:column; align-items:stretch; gap:16px; }
+  #page .relations-pair>a { display:flex; flex-direction:column; gap:8px; min-width:0; }
+  #page .relations-pair>.relations-direction { margin:0; align-self:start; }
+  #page .relations-direction a { display:flex; align-items:center; gap:12px; }
+  #page .relations-direction a>span { position:static; transform:rotate(90deg); display:inline-block; flex:none; line-height:1; font-size:22px; width:24px; }
+  @media(max-width:760px) { #page .relation-spread .relation-initial { width:52px; height:70px; font-size:36px; } }
+  #page .opening-events .empty-state { color:var(--shop-walnut); }
+  #page .opening-events li p { color:var(--shop-walnut); }
+  #page .opening-events li>span { color:var(--shop-burgundy); }
+  #page .cast-boundary p:not(.eyebrow) { color:var(--shop-paper); }
+  #page .cast-card:nth-child(even) { background:var(--shop-paper); }
+  #page .cast-card .cast-initial { position:static; font-size:36px; color:var(--shop-burgundy); justify-self:center; align-self:center; display:grid; place-items:center; }
+  #page .relation-bridge :is(strong,span) { color:var(--shop-burgundy); }
+  #page .relations-feature::after { display:none; }
+  #page .relations-feature-action { background:transparent; color:var(--shop-paper); }
+  #page .character-trail-heading p { display:none; }
+  #page .story-columns>div { background:var(--shop-paper); color:var(--shop-walnut); padding:28px; min-width:0; border-radius:0 8px 8px 0; box-shadow:inset 6px 0 12px #61433214; }
+  #page .story-columns h2,#page .story-columns h3 { color:var(--shop-walnut); }
+  #page .map-connections-head h2,#page .map-connections-head p,#page .map-connections-head a { color:var(--shop-walnut); }
+  #page .chapter-discoveries-intro>p:last-child { color:var(--shop-paper); }
+  #page .map-page-intro #book-author { color:var(--shop-brass); }
+  #page .map-page-intro>p:last-child { color:var(--shop-paper); }
+  #page .map-boundary { color:var(--shop-walnut); }
+  #page .map-boundary-copy strong { color:var(--shop-burgundy); }
+  #page .map-boundary-copy p { color:#51392b; }
+  #page .map-boundary label,#page .map-boundary #progress { color:var(--shop-walnut); }
+  #page .reading-entry { color:var(--shop-walnut); }
+  #page .reading-entry-copy { padding:10px 0; }
+  #page .reading-entry-copy h2 em { color:var(--shop-burgundy); }
+  #page .reading-entry-copy>p:last-child { color:#51392b; }
+  #page .reading-entry-choice { padding:0; }
+  #page .reading-entry-choice>span { border:0; background:transparent; padding:18px 14px; }
+  #page .reading-entry-choice:has(input:checked) { outline-color:var(--shop-burgundy); }
+  #page .reading-entry-choice input:checked+span { background:var(--shop-burgundy); border-color:var(--shop-burgundy); }
+  #page .reading-entry-choice input:checked+span small { color:var(--shop-paper); }
+  #page .chapter-shelf { display:grid; }
+  #page .directory-next p:not(.eyebrow) { color:#51392b; }
+  #page .library-authors li a>span:last-child { color:var(--shop-brass); }
+  #page .shelf-note a { background:transparent; color:var(--shop-burgundy); padding-inline:0; }
+  #page .library-finder button { color:var(--shop-paper); }
+  #page .library-finder-controls { margin-top:0; }
+  #page .library-finder-controls>p { color:var(--shop-walnut); }
+  #page .collection-list { display:grid; }
+  #page .collection-visual { position:relative; flex:none; margin-inline:0; }
+  #page .collection-visual img { position:static; }
+  #page .collection-item .collection-number { color:var(--shop-brass) !important; padding:0; }
+}

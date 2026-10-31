@@ -1,4 +1,5 @@
 ---
+import SiteFooter from '../../../../components/SiteFooter.astro';
 import Breadcrumbs from '../../../../components/Breadcrumbs.astro';
 import SiteHeader from '../../../../components/SiteHeader.astro';
 import Layout from '../../../../layouts/Layout.astro';
@@ -7,24 +8,31 @@ import { env } from 'cloudflare:workers';
 const { slug } = Astro.params;
 const lang = Astro.url.searchParams.get('lang') === 'pl' ? 'pl' : 'en';
 const pl = lang === 'pl';
-let book, characters = [];
+const selectedPosition = /^(\d+)-(\d+)$/.exec(Astro.url.searchParams.get('position') || '');
+const volume = selectedPosition?.[1] ?? Astro.url.searchParams.get('volume');
+const chapter = selectedPosition?.[2] ?? Astro.url.searchParams.get('chapter');
+const hasProgress = volume !== null || chapter !== null;
+const query = hasProgress ? `?volume=${encodeURIComponent(volume ?? '')}&chapter=${encodeURIComponent(chapter ?? '')}` : '';
+let book, progress, characters = [];
 let status = 200;
 try {
   const api = import.meta.env.PUBLIC_API_URL || Astro.url.origin;
-  const url = `${api}/api/books/${encodeURIComponent(slug || '')}`;
+  const url = `${api}/api/books/${encodeURIComponent(slug || '')}${query}`;
   const response = import.meta.env.PUBLIC_API_URL ? await fetch(url) : await env.API.fetch(new Request(url));
-  if (!response.ok) status = response.status === 404 ? 404 : 503;
-  else { const data = await response.json(); book = data.book; characters = data.story.characters; }
+  if (!response.ok) status = response.status === 404 || response.status === 400 ? 404 : 503;
+  else { const data = await response.json(); book = data.book; progress = data.progress; characters = data.story.characters; }
 } catch { status = 503; }
 Astro.response.status = status;
 const pageTitle = book ? (pl ? `Bohaterowie ${book.title} - Castellation` : `${book.title} characters - Castellation`) : (pl ? 'Bohaterowie - Castellation' : 'Characters - Castellation');
 const description = book ? (pl ? `Poznaj bohaterów ${book.title} i odkryj ich powiązania bez spoilerów.` : `Meet the characters of ${book.title} and explore their connections without spoilers.`) : '';
 ---
-<Layout lang={lang} title={pageTitle} description={description} noindex={!book}>
+<Layout lang={lang} title={pageTitle} description={description} noindex={!book || hasProgress}>
   <SiteHeader lang={lang} />
   <main class="wrap cast-page">
-    {book ? <><Breadcrumbs lang={lang} structured={true} items={[{ label: pl ? 'Biblioteka' : 'Library', href: `/library?lang=${lang}` }, { label: book.title, href: `/books/${encodeURIComponent(slug || '')}?lang=${lang}` }, { label: pl ? 'Bohaterowie' : 'Characters' }]} /><div class="cast-heading"><div><p class="eyebrow">✦ {pl ? 'POZNAJ BOHATERÓW' : 'MEET THE CHARACTERS'}</p><h1>{pl ? 'Twarze historii' : 'The faces of'}<br /><em>{pl ? book.title : book.title}</em></h1></div><div><p>{pl ? 'Zacznij od bohaterów poznanych na początku książki. Odkrywaj kolejne postacie wraz ze swoim postępem na mapie.' : 'Start with the characters introduced at the beginning. Discover more as you update your reading progress on the map.'}</p><a class="cast-map-link" href={`/books/${encodeURIComponent(slug || '')}/map?lang=${lang}`}>{pl ? 'Otwórz mapę historii' : 'Open the story map'} ↗</a></div></div>
-    <section aria-labelledby="cast-list-title"><div class="collection-bar"><h2 id="cast-list-title">{pl ? 'Początek historii' : 'At the beginning'}</h2><span>{String(characters.length).padStart(2, '0')}</span></div><div class="cast-grid">{characters.map((character, index) => <a class="cast-card" href={`/books/${encodeURIComponent(slug || '')}/characters/${encodeURIComponent(character.slug)}?lang=${lang}`}><span class="cast-card-top"><span>{String(index + 1).padStart(2, '0')}</span><span>↗</span></span><span class="cast-initial" aria-hidden="true">{character.name.slice(0, 1)}</span><span class="cast-card-body"><strong>{character.name}</strong><span>{character.descriptions.at(-1)?.text}</span></span></a>)}</div>{!characters.length && <p class="empty-state">{pl ? 'Bohaterowie nie są jeszcze dostępni.' : 'Characters are not available yet.'}</p>}</section></> : <h1>{status === 404 ? (pl ? 'Nie znaleziono książki' : 'Book not found') : (pl ? 'Książka jest chwilowo niedostępna' : 'Book temporarily unavailable')}</h1>}
+    {book ? <><Breadcrumbs lang={lang} structured={true} items={[{ label: pl ? 'Biblioteka' : 'Library', href: `/library?lang=${lang}` }, { label: book.title, href: `/books/${encodeURIComponent(slug || '')}?lang=${lang}` }, { label: pl ? 'Bohaterowie' : 'Characters' }]} /><div class="cast-heading"><div><p class="eyebrow">✦ {pl ? 'POZNAJ BOHATERÓW' : 'MEET THE CHARACTERS'}</p><h1>{pl ? 'Twarze historii' : 'The faces of'}<br /><em>{pl ? book.title : book.title}</em></h1></div><div><p>{pl ? 'Wybierz przeczytany rozdział, aby zobaczyć dostępnych bohaterów na tym etapie historii.' : 'Choose the chapter you have read to see the characters available at that point in the story.'}</p><a class="cast-map-link" href={`/books/${encodeURIComponent(slug || '')}/map?lang=${lang}&volume=${progress.volume}&chapter=${progress.chapter}`}>{pl ? 'Otwórz mapę historii' : 'Open the story map'} ↗</a></div></div>
+    <form class="cast-boundary" method="get"><div><p class="eyebrow">✦ {pl ? 'TWOJA GRANICA LEKTURY' : 'YOUR READING BOUNDARY'}</p><h2>{pl ? 'Kogo już spotkałeś?' : 'Who have you met?'}</h2><p>{pl ? 'Wybierz ostatni przeczytany rozdział. Numery mogą różnić się między wydaniami.' : 'Choose the last chapter you have read. Numbering can differ between editions.'}</p></div><div class="cast-boundary-controls"><input type="hidden" name="lang" value={lang} /><label for="cast-position">{pl ? 'Przeczytano do' : 'Read up to'}</label><select id="cast-position" name="position">{book.positions.map((item) => <option value={`${item.volume}-${item.chapter}`} selected={item.volume === progress.volume && item.chapter === progress.chapter}>{pl ? 'Tom' : 'Volume'} {item.volume} · {pl ? 'Rozdział' : 'Chapter'} {item.chapter}</option>)}</select><button type="submit">{pl ? 'Pokaż bohaterów' : 'Show characters'} ↗</button></div></form><section aria-labelledby="cast-list-title"><div class="collection-bar"><h2 id="cast-list-title">{pl ? `Bohaterowie do rozdziału ${progress.chapter}` : `Characters through chapter ${progress.chapter}`}</h2><span>{String(characters.length).padStart(2, '0')}</span></div><div class="cast-grid">{characters.map((character, index) => <a class="cast-card" href={`/books/${encodeURIComponent(slug || '')}/characters/${encodeURIComponent(character.slug)}?lang=${lang}&volume=${progress.volume}&chapter=${progress.chapter}`}><span class="cast-card-top"><span>{String(index + 1).padStart(2, '0')}</span><span>↗</span></span><span class="cast-initial" aria-hidden="true">{character.name.slice(0, 1)}</span><span class="cast-card-body"><strong>{character.name}</strong><span>{character.descriptions.at(-1)?.text}</span></span></a>)}</div>{!characters.length && <p class="empty-state">{pl ? 'Bohaterowie nie są jeszcze dostępni.' : 'Characters are not available yet.'}</p>}</section></> : <h1>{status === 404 ? (pl ? 'Nie znaleziono książki' : 'Book not found') : (pl ? 'Książka jest chwilowo niedostępna' : 'Book temporarily unavailable')}</h1>}
   </main>
-  <footer class="wrap footer"><a class="brand" href={`/?lang=${lang}`}>✳ castellation<span class="brand-dot">.</span></a><p>{pl ? 'Historie są lepsze, gdy widzisz ich powiązania.' : 'Stories are better when you see the connections.'}</p><span>© {new Date().getFullYear()} CASTELLATION</span></footer>
+  <SiteFooter lang={lang} />
 </Layout>
+
+<style>.cast-boundary{display:grid;grid-template-columns:1fr minmax(260px,.8fr);gap:35px;align-items:end;background:#334b3d;color:#f6f4ed;padding:clamp(25px,4vw,40px);margin:20px 0 50px}.cast-boundary .eyebrow{color:#f0c3a5}.cast-boundary h2{font:500 clamp(30px,3vw,42px)/1.15 'Playfair Display',serif;margin:15px 0}.cast-boundary p:not(.eyebrow){max-width:45ch;color:#dce5d8;line-height:1.7}.cast-boundary-controls{display:grid;gap:10px}.cast-boundary label{font-size:13px;font-weight:700}.cast-boundary select{background:#f6f4ed;color:#27352f;border:0;padding:14px;font-size:16px}.cast-boundary button{background:#e6b99f;color:#263d32;border:0;padding:15px;font-weight:700;cursor:pointer}.cast-boundary button:hover{background:#f2d3be}.cast-boundary select:focus-visible,.cast-boundary button:focus-visible{outline:3px solid #f0c3a5;outline-offset:4px}@media(max-width:760px){.cast-boundary{grid-template-columns:1fr;gap:15px;margin-bottom:35px}}</style>

@@ -30,6 +30,7 @@ function moveChapter(offset) {
 previousChapter.addEventListener('click', () => moveChapter(-1));
 nextChapter.addEventListener('click', () => moveChapter(1));
 const detail = document.querySelector('#map-detail');
+const detailPrompt = document.querySelector('#map-detail-prompt');
 const retry = document.querySelector('#map-retry');
 let requestedPosition;
 let selectedNode = null;
@@ -65,6 +66,7 @@ function draw() {
   detail.hidden = true; selectedNode = null;
   svg.replaceChildren(); layer = element('g'); svg.append(layer);
   const chars = data.story.characters;
+  detailPrompt.hidden = chars.length === 0;
   const nodes = new Map(chars.map((character, index) => {
     const angle = (2 * Math.PI * index / Math.max(chars.length, 1)) - Math.PI / 2;
     return [character.id, { ...character, x: 400 + 230 * Math.cos(angle), y: 260 + 170 * Math.sin(angle) }];
@@ -76,28 +78,45 @@ function draw() {
     const a = nodes.get(relation.from), b = nodes.get(relation.to); if (!a || !b) return;
     const dx = b.x - a.x, dy = b.y - a.y, distance = Math.hypot(dx, dy);
     const ux = distance ? dx / distance : 0, uy = distance ? dy / distance : 0;
-    const group = element('g', { class:'edge-group', tabindex:'0', role:'button', 'aria-label': `${a.name} - ${relation.label} - ${b.name}` });
+    const group = element('g', { class:'edge-group', tabindex:'0', role:'button', 'aria-label': `${a.name} - ${relation.label} - ${b.name}`, 'aria-controls':'map-detail', 'aria-expanded':'false' });
     const line = distance ? element('line', { x1:a.x + ux * 40, y1:a.y + uy * 40, x2:b.x - ux * 43, y2:b.y - uy * 43, class:'edge', 'marker-end':'url(#relation-arrow)', 'aria-hidden':'true' }) : element('path', { d:`M ${a.x - 27} ${a.y - 30} C ${a.x - 85} ${a.y - 120}, ${a.x + 85} ${a.y - 120}, ${a.x + 27} ${a.y - 30}`, class:'edge', fill:'none', 'marker-end':'url(#relation-arrow)', 'aria-hidden':'true' });
     const label = element('text', { x:distance ? (a.x + b.x) / 2 - uy * 13 : a.x, y:distance ? (a.y + b.y) / 2 + ux * 13 : a.y - 98, 'text-anchor':'middle', class:'edge-label', 'aria-hidden':'true' });
     label.textContent = relation.label.length > 28 ? `${relation.label.slice(0, 27)}…` : relation.label;
-    const open = () => { if (!moved) status.textContent = `${a.name} - ${relation.label} - ${b.name}`; };
+    const open = () => {
+      if (moved) return;
+      if (selectedNode) { selectedNode.classList.remove('is-selected'); selectedNode.setAttribute('aria-expanded', 'false'); }
+      selectedNode = group; group.classList.add('is-selected'); group.setAttribute('aria-expanded', 'true');
+      detailPrompt.hidden = true;
+      document.querySelector('.map-detail-mark').textContent = '↗';
+      document.querySelector('.map-detail-content .eyebrow').textContent = pl ? 'WYBRANE POWIĄZANIE' : 'SELECTED CONNECTION';
+      const heading = document.querySelector('#map-detail-name'); heading.textContent = `${a.name} → ${b.name}`;
+      document.querySelector('#map-detail-description').textContent = relation.label;
+      const link = document.querySelector('#map-detail-link');
+      link.href = `/books/${encodeURIComponent(root.dataset.slug)}/relations/${encodeURIComponent(relation.id)}?lang=${lang}&volume=${data.progress.volume}&chapter=${data.progress.chapter}`;
+      link.textContent = pl ? 'Otwórz szczegóły relacji ↗' : 'Open connection details ↗';
+      detail.hidden = false; heading.focus();
+    };
     group.addEventListener('click', open); group.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); moved = false; open(); } });
     group.append(line, label); layer.append(group);
   });
   nodes.forEach((character) => {
-    const group = element('g', { transform:`translate(${character.x} ${character.y})`, class:'graph-node', tabindex:'0', role:'button', 'aria-label':character.name });
+    const group = element('g', { transform:`translate(${character.x} ${character.y})`, class:'graph-node', tabindex:'0', role:'button', 'aria-label':character.name, 'aria-controls':'map-detail', 'aria-expanded':'false' });
     group.append(element('circle', { r:38, class:'node-ring' }), element('circle', { r:31, class:'node-inner' }));
     const initial = element('text', { y:8, 'text-anchor':'middle', class:'node-initial' }); initial.textContent = character.name.slice(0, 1); group.append(initial);
     const label = element('text', { y:58, 'text-anchor':'middle', class:'node-label' }); label.textContent = character.name; group.append(label);
     const open = () => {
       if (moved) return;
-      if (selectedNode) selectedNode.classList.remove('is-selected');
-      selectedNode = group; group.classList.add('is-selected');
+      if (selectedNode) { selectedNode.classList.remove('is-selected'); selectedNode.setAttribute('aria-expanded', 'false'); }
+      selectedNode = group; group.classList.add('is-selected'); group.setAttribute('aria-expanded', 'true');
+      detailPrompt.hidden = true;
+      document.querySelector('.map-detail-mark').textContent = character.name.slice(0, 1);
+      document.querySelector('.map-detail-content .eyebrow').textContent = pl ? 'WYBRANA POSTAĆ' : 'SELECTED CHARACTER';
+      document.querySelector('#map-detail-link').textContent = pl ? 'Otwórz profil postaci ↗' : 'Open character profile ↗';
       const heading = document.querySelector('#map-detail-name');
       heading.textContent = character.name;
       document.querySelector('#map-detail-description').textContent = character.descriptions.at(-1)?.text || '';
       document.querySelector('#map-detail-link').href = `/books/${encodeURIComponent(root.dataset.slug)}/characters/${encodeURIComponent(character.slug)}?lang=${lang}&volume=${data.progress.volume}&chapter=${data.progress.chapter}`;
-      detail.hidden = false; heading.focus({ preventScroll: true });
+      detail.hidden = false; heading.focus();
     };
     group.addEventListener('click', open); group.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); moved = false; open(); } }); layer.append(group);
   }); transform();
@@ -122,6 +141,15 @@ function draw() {
   const summary = document.querySelector('#map-summary');
   summary.textContent = pl ? `Tom ${data.progress.volume}, rozdział ${data.progress.chapter} · ${chars.length} postaci · ${data.story.relations.length} relacji` : `Volume ${data.progress.volume}, chapter ${data.progress.chapter} · ${chars.length} ${chars.length === 1 ? 'character' : 'characters'} · ${data.story.relations.length} ${data.story.relations.length === 1 ? 'connection' : 'connections'}`;
   const progressQuery = `&volume=${data.progress.volume}&chapter=${data.progress.chapter}`;
+  const share = document.querySelector('#map-share');
+  const shareUrl = new URL(`/books/${encodeURIComponent(root.dataset.slug)}/map`, location.origin);
+  shareUrl.searchParams.set('lang', lang);
+  shareUrl.searchParams.set('volume', String(data.progress.volume));
+  shareUrl.searchParams.set('chapter', String(data.progress.chapter));
+  document.querySelector('#map-share-url').value = shareUrl.href;
+  document.querySelector('#map-share-boundary').textContent = pl ? `Tom ${data.progress.volume} · Rozdział ${data.progress.chapter}` : `Volume ${data.progress.volume} · Chapter ${data.progress.chapter}`;
+  document.querySelector('#map-share-status').textContent = '';
+  share.hidden = false;
   const sheetLink = document.querySelector('#reading-sheet-link');
   sheetLink.href = `/books/${encodeURIComponent(root.dataset.slug)}/reading-sheet?lang=${lang}${progressQuery}`;
   sheetLink.hidden = false;
@@ -138,7 +166,7 @@ function draw() {
 async function load(position) {
   if (!api) { status.textContent = pl ? 'Brak skonfigurowanego API.' : 'The API is not configured.'; return; }
   const currentRequest = ++requestId;
-  requestedPosition = position; root.dataset.state = 'loading'; retry.hidden = true; detail.hidden = true; updateChapterControls(false);
+  requestedPosition = position; root.dataset.state = 'loading'; retry.hidden = true; detail.hidden = true; document.querySelector('#map-share').hidden = true; updateChapterControls(false);
   status.textContent = pl ? 'Aktualizujemy mapę dla wybranego rozdziału...' : 'Updating the map for your selected chapter...';
   try {
     const query = position ? `?volume=${position.volume}&chapter=${position.chapter}` : '';
@@ -148,8 +176,19 @@ async function load(position) {
     draw(); root.dataset.state = 'ready'; updateChapterControls(true); status.textContent = '';
   } catch { if (currentRequest === requestId) { root.dataset.state = 'error'; status.textContent = pl ? 'Nie udało się zaktualizować mapy.' : 'Unable to update the map.'; retry.hidden = false; } }
 }
+document.querySelector('#map-share-copy').addEventListener('click', async () => {
+  const input = document.querySelector('#map-share-url');
+  const feedback = document.querySelector('#map-share-status');
+  try {
+    await navigator.clipboard.writeText(input.value);
+    feedback.textContent = pl ? 'Link skopiowany.' : 'Link copied.';
+  } catch {
+    input.focus(); input.select();
+    feedback.textContent = pl ? 'Skopiuj zaznaczony link ręcznie.' : 'Copy the selected link manually.';
+  }
+});
 retry.addEventListener('click', () => load(requestedPosition));
-document.querySelector('#map-detail-close').addEventListener('click', () => { detail.hidden = true; if (selectedNode) { selectedNode.classList.remove('is-selected'); selectedNode.focus(); selectedNode = null; } });
+document.querySelector('#map-detail-close').addEventListener('click', () => { detail.hidden = true; detailPrompt.hidden = false; if (selectedNode) { selectedNode.classList.remove('is-selected'); selectedNode.setAttribute('aria-expanded', 'false'); selectedNode.focus(); selectedNode = null; } });
 progress.addEventListener('change', () => {
   detail.hidden = true;
   const [volume, chapter] = progress.value.split(':').map(Number);

@@ -1,0 +1,678 @@
+{
+  "checks": 96,
+  "failures": [],
+  "results": [
+    {
+      "route": "/",
+      "lang": "en",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/",
+      "lang": "en",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/",
+      "lang": "en",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/",
+      "lang": "pl",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/",
+      "lang": "pl",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/",
+      "lang": "pl",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/library",
+      "lang": "en",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/library",
+      "lang": "en",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/library",
+      "lang": "en",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/library",
+      "lang": "pl",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/library",
+      "lang": "pl",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/library",
+      "lang": "pl",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/characters",
+      "lang": "en",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/characters",
+      "lang": "en",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/characters",
+      "lang": "en",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/characters",
+      "lang": "pl",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/characters",
+      "lang": "pl",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/characters",
+      "lang": "pl",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland",
+      "lang": "en",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland",
+      "lang": "en",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland",
+      "lang": "en",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland",
+      "lang": "pl",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland",
+      "lang": "pl",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland",
+      "lang": "pl",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/map",
+      "lang": "en",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/map",
+      "lang": "en",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/map",
+      "lang": "en",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/map",
+      "lang": "pl",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/map",
+      "lang": "pl",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/map",
+      "lang": "pl",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters/alice",
+      "lang": "en",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters/alice",
+      "lang": "en",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters/alice",
+      "lang": "en",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters/alice",
+      "lang": "pl",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters/alice",
+      "lang": "pl",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters/alice",
+      "lang": "pl",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters",
+      "lang": "en",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters",
+      "lang": "en",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters",
+      "lang": "en",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters",
+      "lang": "pl",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters",
+      "lang": "pl",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/characters",
+      "lang": "pl",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/connections",
+      "lang": "en",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/connections",
+      "lang": "en",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/connections",
+      "lang": "en",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/connections",
+      "lang": "pl",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/connections",
+      "lang": "pl",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/connections",
+      "lang": "pl",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/relations/alice-rabbit",
+      "lang": "en",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/relations/alice-rabbit",
+      "lang": "en",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/relations/alice-rabbit",
+      "lang": "en",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/relations/alice-rabbit",
+      "lang": "pl",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/relations/alice-rabbit",
+      "lang": "pl",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/relations/alice-rabbit",
+      "lang": "pl",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/opening",
+      "lang": "en",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/opening",
+      "lang": "en",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/opening",
+      "lang": "en",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/opening",
+      "lang": "pl",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/opening",
+      "lang": "pl",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/opening",
+      "lang": "pl",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/chapters/1-2",
+      "lang": "en",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/chapters/1-2",
+      "lang": "en",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/chapters/1-2",
+      "lang": "en",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/chapters/1-2",
+      "lang": "pl",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/chapters/1-2",
+      "lang": "pl",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/books/alices-adventures-in-wonderland/chapters/1-2",
+      "lang": "pl",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/guides",
+      "lang": "en",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/guides",
+      "lang": "en",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/guides",
+      "lang": "en",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/guides",
+      "lang": "pl",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/guides",
+      "lang": "pl",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/guides",
+      "lang": "pl",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/how-it-works",
+      "lang": "en",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/how-it-works",
+      "lang": "en",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/how-it-works",
+      "lang": "en",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/how-it-works",
+      "lang": "pl",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/how-it-works",
+      "lang": "pl",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/how-it-works",
+      "lang": "pl",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/our-method",
+      "lang": "en",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/our-method",
+      "lang": "en",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/our-method",
+      "lang": "en",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/our-method",
+      "lang": "pl",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/our-method",
+      "lang": "pl",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/our-method",
+      "lang": "pl",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/help",
+      "lang": "en",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/help",
+      "lang": "en",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/help",
+      "lang": "en",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/help",
+      "lang": "pl",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/help",
+      "lang": "pl",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/help",
+      "lang": "pl",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/account",
+      "lang": "en",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/account",
+      "lang": "en",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/account",
+      "lang": "en",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "route": "/account",
+      "lang": "pl",
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "route": "/account",
+      "lang": "pl",
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "route": "/account",
+      "lang": "pl",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": []
+    }
+  ]
+}

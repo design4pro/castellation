@@ -1,0 +1,495 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-31T07:21:20.341583+00:00",
+  "title": "Design System: Castellation",
+  "extensions": {
+    "colorMeta": {
+      "atlas-paper": {
+        "role": "neutral",
+        "displayName": "Atlas Paper",
+        "tonalRamp": [
+          "oklch(15% 0.00952 93.57)",
+          "oklch(27% 0.00952 93.57)",
+          "oklch(38% 0.00952 93.57)",
+          "oklch(50% 0.00952 93.57)",
+          "oklch(61% 0.00952 93.57)",
+          "oklch(73% 0.00952 93.57)",
+          "oklch(84% 0.00952 93.57)",
+          "oklch(95% 0.00952 93.57)"
+        ]
+      },
+      "atlas-ink": {
+        "role": "neutral",
+        "displayName": "Atlas Ink",
+        "tonalRamp": [
+          "oklch(15% 0.02152 166.91)",
+          "oklch(27% 0.02152 166.91)",
+          "oklch(38% 0.02152 166.91)",
+          "oklch(50% 0.02152 166.91)",
+          "oklch(61% 0.02152 166.91)",
+          "oklch(73% 0.02152 166.91)",
+          "oklch(84% 0.02152 166.91)",
+          "oklch(95% 0.02152 166.91)"
+        ]
+      },
+      "atlas-forest": {
+        "role": "primary",
+        "displayName": "Atlas Forest",
+        "tonalRamp": [
+          "oklch(15% 0.03584 164.02)",
+          "oklch(27% 0.03584 164.02)",
+          "oklch(38% 0.03584 164.02)",
+          "oklch(50% 0.03584 164.02)",
+          "oklch(61% 0.03584 164.02)",
+          "oklch(73% 0.03584 164.02)",
+          "oklch(84% 0.03584 164.02)",
+          "oklch(95% 0.03584 164.02)"
+        ]
+      },
+      "atlas-rust": {
+        "role": "primary",
+        "displayName": "Atlas Rust",
+        "tonalRamp": [
+          "oklch(15% 0.09778 40.98)",
+          "oklch(27% 0.09778 40.98)",
+          "oklch(38% 0.09778 40.98)",
+          "oklch(50% 0.09778 40.98)",
+          "oklch(61% 0.09778 40.98)",
+          "oklch(73% 0.09778 40.98)",
+          "oklch(84% 0.09778 40.98)",
+          "oklch(95% 0.09778 40.98)"
+        ]
+      },
+      "atlas-peach": {
+        "role": "secondary",
+        "displayName": "Atlas Peach",
+        "tonalRamp": [
+          "oklch(15% 0.06552 55.34)",
+          "oklch(27% 0.06552 55.34)",
+          "oklch(38% 0.06552 55.34)",
+          "oklch(50% 0.06552 55.34)",
+          "oklch(61% 0.06552 55.34)",
+          "oklch(73% 0.06552 55.34)",
+          "oklch(84% 0.06552 55.34)",
+          "oklch(95% 0.06552 55.34)"
+        ]
+      },
+      "atlas-sage": {
+        "role": "secondary",
+        "displayName": "Atlas Sage",
+        "tonalRamp": [
+          "oklch(15% 0.01814 134.92)",
+          "oklch(27% 0.01814 134.92)",
+          "oklch(38% 0.01814 134.92)",
+          "oklch(50% 0.01814 134.92)",
+          "oklch(61% 0.01814 134.92)",
+          "oklch(73% 0.01814 134.92)",
+          "oklch(84% 0.01814 134.92)",
+          "oklch(95% 0.01814 134.92)"
+        ]
+      },
+      "atlas-parchment": {
+        "role": "secondary",
+        "displayName": "Atlas Parchment",
+        "tonalRamp": [
+          "oklch(15% 0.01836 70.23)",
+          "oklch(27% 0.01836 70.23)",
+          "oklch(38% 0.01836 70.23)",
+          "oklch(50% 0.01836 70.23)",
+          "oklch(61% 0.01836 70.23)",
+          "oklch(73% 0.01836 70.23)",
+          "oklch(84% 0.01836 70.23)",
+          "oklch(95% 0.01836 70.23)"
+        ]
+      },
+      "atlas-muted": {
+        "role": "neutral",
+        "displayName": "Atlas Muted",
+        "tonalRamp": [
+          "oklch(15% 0.03171 158.39)",
+          "oklch(27% 0.03171 158.39)",
+          "oklch(38% 0.03171 158.39)",
+          "oklch(50% 0.03171 158.39)",
+          "oklch(61% 0.03171 158.39)",
+          "oklch(73% 0.03171 158.39)",
+          "oklch(84% 0.03171 158.39)",
+          "oklch(95% 0.03171 158.39)"
+        ]
+      },
+      "atlas-rule": {
+        "role": "neutral",
+        "displayName": "Atlas Rule",
+        "tonalRamp": [
+          "oklch(15% 0.02857 148.69)",
+          "oklch(27% 0.02857 148.69)",
+          "oklch(38% 0.02857 148.69)",
+          "oklch(50% 0.02857 148.69)",
+          "oklch(61% 0.02857 148.69)",
+          "oklch(73% 0.02857 148.69)",
+          "oklch(84% 0.02857 148.69)",
+          "oklch(95% 0.02857 148.69)"
+        ]
+      },
+      "atlas-dark-rule": {
+        "role": "neutral",
+        "displayName": "Atlas Dark Rule",
+        "tonalRamp": [
+          "oklch(15% 0.03708 157.10)",
+          "oklch(27% 0.03708 157.10)",
+          "oklch(38% 0.03708 157.10)",
+          "oklch(50% 0.03708 157.10)",
+          "oklch(61% 0.03708 157.10)",
+          "oklch(73% 0.03708 157.10)",
+          "oklch(84% 0.03708 157.10)",
+          "oklch(95% 0.03708 157.10)"
+        ]
+      },
+      "button-forest": {
+        "role": "primary",
+        "displayName": "Button Forest",
+        "tonalRamp": [
+          "oklch(15% 0.03297 164.55)",
+          "oklch(27% 0.03297 164.55)",
+          "oklch(38% 0.03297 164.55)",
+          "oklch(50% 0.03297 164.55)",
+          "oklch(61% 0.03297 164.55)",
+          "oklch(73% 0.03297 164.55)",
+          "oklch(84% 0.03297 164.55)",
+          "oklch(95% 0.03297 164.55)"
+        ]
+      },
+      "button-hover": {
+        "role": "primary",
+        "displayName": "Button Hover",
+        "tonalRamp": [
+          "oklch(15% 0.04456 158.21)",
+          "oklch(27% 0.04456 158.21)",
+          "oklch(38% 0.04456 158.21)",
+          "oklch(50% 0.04456 158.21)",
+          "oklch(61% 0.04456 158.21)",
+          "oklch(73% 0.04456 158.21)",
+          "oklch(84% 0.04456 158.21)",
+          "oklch(95% 0.04456 158.21)"
+        ]
+      },
+      "button-white": {
+        "role": "neutral",
+        "displayName": "Button White",
+        "tonalRamp": [
+          "oklch(15% 0.00000 89.88)",
+          "oklch(27% 0.00000 89.88)",
+          "oklch(38% 0.00000 89.88)",
+          "oklch(50% 0.00000 89.88)",
+          "oklch(61% 0.00000 89.88)",
+          "oklch(73% 0.00000 89.88)",
+          "oklch(84% 0.00000 89.88)",
+          "oklch(95% 0.00000 89.88)"
+        ]
+      },
+      "secondary-ink": {
+        "role": "neutral",
+        "displayName": "Secondary Ink",
+        "tonalRamp": [
+          "oklch(15% 0.03223 159.93)",
+          "oklch(27% 0.03223 159.93)",
+          "oklch(38% 0.03223 159.93)",
+          "oklch(50% 0.03223 159.93)",
+          "oklch(61% 0.03223 159.93)",
+          "oklch(73% 0.03223 159.93)",
+          "oklch(84% 0.03223 159.93)",
+          "oklch(95% 0.03223 159.93)"
+        ]
+      },
+      "field-border": {
+        "role": "neutral",
+        "displayName": "Field Border",
+        "tonalRamp": [
+          "oklch(15% 0.02726 141.74)",
+          "oklch(27% 0.02726 141.74)",
+          "oklch(38% 0.02726 141.74)",
+          "oklch(50% 0.02726 141.74)",
+          "oklch(61% 0.02726 141.74)",
+          "oklch(73% 0.02726 141.74)",
+          "oklch(84% 0.02726 141.74)",
+          "oklch(95% 0.02726 141.74)"
+        ]
+      },
+      "focus-rust": {
+        "role": "neutral",
+        "displayName": "Focus Rust",
+        "tonalRamp": [
+          "oklch(15% 0.11474 49.71)",
+          "oklch(27% 0.11474 49.71)",
+          "oklch(38% 0.11474 49.71)",
+          "oklch(50% 0.11474 49.71)",
+          "oklch(61% 0.11474 49.71)",
+          "oklch(73% 0.11474 49.71)",
+          "oklch(84% 0.11474 49.71)",
+          "oklch(95% 0.11474 49.71)"
+        ]
+      },
+      "shop-walnut": {
+        "role": "primary",
+        "displayName": "Shop Walnut",
+        "tonalRamp": [
+          "oklch(15% 0.02944 46.28)",
+          "oklch(27% 0.02944 46.28)",
+          "oklch(38% 0.02944 46.28)",
+          "oklch(50% 0.02944 46.28)",
+          "oklch(61% 0.02944 46.28)",
+          "oklch(73% 0.02944 46.28)",
+          "oklch(84% 0.02944 46.28)",
+          "oklch(95% 0.02944 46.28)"
+        ]
+      },
+      "shop-wood": {
+        "role": "primary",
+        "displayName": "Shop Wood",
+        "tonalRamp": [
+          "oklch(15% 0.04976 50.44)",
+          "oklch(27% 0.04976 50.44)",
+          "oklch(38% 0.04976 50.44)",
+          "oklch(50% 0.04976 50.44)",
+          "oklch(61% 0.04976 50.44)",
+          "oklch(73% 0.04976 50.44)",
+          "oklch(84% 0.04976 50.44)",
+          "oklch(95% 0.04976 50.44)"
+        ]
+      },
+      "shop-brass": {
+        "role": "primary",
+        "displayName": "Shop Brass",
+        "tonalRamp": [
+          "oklch(15% 0.08863 81.93)",
+          "oklch(27% 0.08863 81.93)",
+          "oklch(38% 0.08863 81.93)",
+          "oklch(50% 0.08863 81.93)",
+          "oklch(61% 0.08863 81.93)",
+          "oklch(73% 0.08863 81.93)",
+          "oklch(84% 0.08863 81.93)",
+          "oklch(95% 0.08863 81.93)"
+        ]
+      },
+      "shop-paper": {
+        "role": "neutral",
+        "displayName": "Shop Paper",
+        "tonalRamp": [
+          "oklch(15% 0.02458 83.42)",
+          "oklch(27% 0.02458 83.42)",
+          "oklch(38% 0.02458 83.42)",
+          "oklch(50% 0.02458 83.42)",
+          "oklch(61% 0.02458 83.42)",
+          "oklch(73% 0.02458 83.42)",
+          "oklch(84% 0.02458 83.42)",
+          "oklch(95% 0.02458 83.42)"
+        ]
+      },
+      "shop-burgundy": {
+        "role": "primary",
+        "displayName": "Shop Burgundy",
+        "tonalRamp": [
+          "oklch(15% 0.07809 13.47)",
+          "oklch(27% 0.07809 13.47)",
+          "oklch(38% 0.07809 13.47)",
+          "oklch(50% 0.07809 13.47)",
+          "oklch(61% 0.07809 13.47)",
+          "oklch(73% 0.07809 13.47)",
+          "oklch(84% 0.07809 13.47)",
+          "oklch(95% 0.07809 13.47)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Bookshop entrance title; bound volumes and other pages retain contextual display sizes."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Recurring chapter and section headings."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Map character entries and smaller literary titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Representative introductory copy, not every prose context."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Retained primary-action text."
+      }
+    },
+    "shadows": [
+      {
+        "name": "mobile-menu",
+        "value": "0 12px 20px #27352f18",
+        "purpose": "Separate the retained mobile navigation dropdown from the page."
+      },
+      {
+        "name": "bound-volume",
+        "value": "inset 7px 0 9px #0005, 9px 12px 16px #1d130e80",
+        "purpose": "Binding and cast shadow of the entrance volumes."
+      },
+      {
+        "name": "shelf-ledge",
+        "value": "0 14px 20px #1d130e80",
+        "purpose": "Structural depth beneath the wood bookcase ledge."
+      },
+      {
+        "name": "reading-rail",
+        "value": "inset 7px 0 14px #61433219",
+        "purpose": "Recessed map inspection rail."
+      }
+    ],
+    "motion": [
+      {
+        "name": "story-image",
+        "value": "transform .5s ease",
+        "purpose": "Home story image hover scale to 1.04; transition disabled for reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "editorial-mobile",
+        "value": "760px"
+      },
+      {
+        "name": "compact-navigation",
+        "value": "340px"
+      },
+      {
+        "name": "retained-cast-single-column",
+        "value": "380px"
+      },
+      {
+        "name": "catalog-slip-stack",
+        "value": "900px"
+      },
+      {
+        "name": "entrance-volume-stack",
+        "value": "359px"
+      },
+      {
+        "name": "lending-card-compact",
+        "value": "420px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "description": "Retained global reading action.",
+      "html": "<a class=\"ds-primary\" href=\"#reading\">Explore the map</a>",
+      "css": ".ds-primary{display:inline-flex;align-items:center;gap:50px;background:#283e34;color:#fff;padding:18px 22px;border-radius:3px;font-size:13px;font-weight:600;text-decoration:none;font-family:'DM Sans',sans-serif;}.ds-primary:hover{background:#3d5a49;}.ds-primary:focus-visible{outline:3px solid #bc6f42;outline-offset:4px;}",
+      "refersTo": "button-primary"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "description": "Retained secondary account action.",
+      "html": "<button class=\"ds-secondary\" type=\"button\">Continue as guest</button>",
+      "css": ".ds-secondary{background:transparent;border:1px solid var(--atlas-dark-rule, #789181);padding:16px 20px;border-radius:3px;color:#273b30;cursor:pointer;font-family:'DM Sans',sans-serif;}.ds-secondary:focus-visible{outline:3px solid #bc6f42;outline-offset:4px;}.ds-secondary:hover{background:transparent;}",
+      "refersTo": "button-secondary"
+    },
+    {
+      "name": "Account Field",
+      "kind": "input",
+      "description": "Retained atlas-paper field within the bookshop account folio.",
+      "html": "<label class=\"ds-field\">Email<input class=\"ds-input\" type=\"email\" autocomplete=\"email\" /></label>",
+      "css": ".ds-field{display:grid;gap:10px;color:var(--atlas-ink, #27352f);font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;}.ds-input{min-width:0;min-height:52px;padding:13px;border:1px solid #aab8a8;border-radius:0;background:var(--atlas-paper, #f6f4ed);caret-color:var(--atlas-rust, #87452c);font-family:'DM Sans',sans-serif;}.ds-input:focus-visible{outline:3px solid #bc6f42;outline-offset:3px;}.ds-input:hover{border-color:#aab8a8;}",
+      "refersTo": "account-input"
+    },
+    {
+      "name": "Storefront Navigation",
+      "kind": "nav",
+      "refersTo": "navigation-tab",
+      "description": "Transparent desktop destinations on the paper fascia.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main navigation\"><a href=\"#library\" aria-current=\"page\">Library</a><a href=\"#guides\">Guides</a></nav>",
+      "css": ".ds-nav{display:flex;gap:12px;background:var(--shop-paper,#f3ead9);font:600 13px \"DM Sans\",sans-serif;padding:12px;}.ds-nav a{display:flex;align-items:center;min-height:48px;padding:14px 12px;background:transparent;color:var(--shop-walnut,#38271f);border-bottom:1px solid transparent;text-decoration:none;}.ds-nav a:hover,.ds-nav a[aria-current=\"page\"]{color:var(--shop-burgundy,#642e35);border-color:var(--shop-burgundy,#642e35);}.ds-nav a[aria-current=\"page\"]{text-decoration:underline;text-underline-offset:7px;}.ds-nav a:focus-visible{outline:3px solid #bc6f42;outline-offset:4px;}"
+    },
+    {
+      "name": "Locale Switch",
+      "kind": "custom",
+      "description": "Compact segmented language control from the shared header.",
+      "html": "<div class=\"ds-locale\" role=\"group\" aria-label=\"Page language\"><a href=\"?lang=pl\" lang=\"pl\">PL</a><span aria-current=\"true\" lang=\"en\">EN</span></div>",
+      "css": ".ds-locale{display:inline-flex;align-items:center;gap:4px;padding:3px;border:1px solid #b8c5b7;border-radius:3px;font-size:11px;font-weight:700;letter-spacing:.04em;font-family:'DM Sans',sans-serif;}.ds-locale a,.ds-locale span{display:grid;place-items:center;min-width:34px;min-height:34px;padding:0 4px;}.ds-locale span{background:#334b3d;color:#fff;}.ds-locale a{color:var(--atlas-muted, #405448);text-decoration:none;}.ds-locale a:hover{text-decoration:underline;text-underline-offset:3px;}.ds-locale a:focus-visible{outline:3px solid #bc6f42;outline-offset:4px;}"
+    },
+    {
+      "name": "Current Chapter",
+      "kind": "card",
+      "description": "Non-interactive current chapter inside the walnut sorting tray.",
+      "html": "<div class=\"ds-chapter\"><small>Current chapter</small><strong>Down the Rabbit-Hole</strong><span>Chapter 1</span></div>",
+      "css": ".ds-chapter{display:flex;flex-direction:column;gap:16px;min-height:180px;padding:26px;background:var(--shop-burgundy,#642e35);color:var(--shop-paper,#f3ead9);border-radius:0 0 12px 0;font-family:\"DM Sans\",sans-serif;}.ds-chapter strong{font:500 clamp(24px,3vw,40px)/1.15 \"Playfair Display\",serif;}.ds-chapter small,.ds-chapter>span{color:var(--shop-paper,#f3ead9);}",
+      "refersTo": "chapter-current"
+    },
+    {
+      "name": "Accession Slip",
+      "kind": "card",
+      "description": "Paper character entry from the directory.",
+      "html": "<a class=\"ds-slip\" href=\"#character\"><span class=\"ds-initial\">A</span><span class=\"ds-person\"><strong>Alice</strong><span>Alice’s Adventures in Wonderland</span></span><span aria-hidden=\"true\">→</span></a>",
+      "css": ".ds-slip{display:grid;grid-template-columns:52px minmax(0,1fr) auto;align-items:center;gap:16px;padding:26px 20px;border-top:1px solid #b9a382;background:#fffaf0;color:var(--atlas-ink,#27352f);font-family:\"DM Sans\",sans-serif;text-decoration:none;}.ds-initial{display:grid;place-items:center;width:52px;height:66px;border:1px solid #b9a382;color:var(--shop-burgundy,#642e35);font:500 36px \"Playfair Display\",serif;}.ds-person{display:flex;flex-direction:column;gap:8px;}.ds-person strong{font:500 clamp(24px,3vw,36px) \"Playfair Display\",serif;}.ds-person>span{font-size:14px;line-height:1.6;}.ds-slip:hover{background:#fffaf0;}.ds-slip:focus-visible{outline:3px solid #bc6f42;outline-offset:4px;}"
+    },
+    {
+      "name": "Entrance Action",
+      "kind": "button",
+      "refersTo": "entrance-action",
+      "description": "Brass reading action on the walnut entrance.",
+      "html": "<div class=\"ds-action-surface\"><a class=\"ds-entrance-action\" href=\"#reading\">Choose a story <span aria-hidden=\"true\">→</span></a></div>",
+      "css": ".ds-action-surface{padding:16px;background:var(--shop-walnut,#38271f);}.ds-entrance-action{display:inline-flex;align-items:center;gap:50px;min-height:54px;padding:18px 22px;border-radius:3px;background:var(--shop-brass,#dfbd7f);color:var(--shop-walnut,#38271f);font:600 13px \"DM Sans\",sans-serif;text-decoration:none;}.ds-entrance-action:hover{background:var(--shop-brass,#dfbd7f);}.ds-entrance-action:focus-visible{outline:3px solid #bc6f42;outline-offset:4px;}"
+    },
+    {
+      "name": "Bound Volume",
+      "kind": "custom",
+      "refersTo": "bound-book",
+      "description": "Catalog-derived native story link; artwork is omitted from this self-contained specimen.",
+      "html": "<nav class=\"ds-bookcase\" aria-label=\"Choose a book from the shelf\"><a class=\"ds-volume\" href=\"#story\"><span class=\"ds-author\">Lewis Carroll</span><strong>Alice’s Adventures in Wonderland</strong><span class=\"ds-book-action\">Open the story <svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></span></a><div class=\"ds-ledge\">Castellation</div></nav>",
+      "css": ".ds-bookcase{padding:30px 20px 0;background:var(--shop-walnut,#38271f);}.ds-volume{position:relative;display:flex;flex-direction:column;align-items:center;gap:16px;max-width:270px;min-height:435px;padding:30px 20px 22px 28px;text-align:center;background:var(--atlas-forest,#263e33);color:var(--shop-paper,#f3ead9);border:1px solid #c19a6255;border-radius:5px 12px 3px 3px;box-shadow:inset 7px 0 9px #0005,9px 12px 16px #1d130e80;transform:rotate(-3deg);text-decoration:none;font-family:\"DM Sans\",sans-serif;}.ds-volume::before{content:\"\";position:absolute;inset:12px;border:1px solid #dfbd7f66;border-radius:2px 6px 0 0;pointer-events:none;}.ds-author{font-size:11px;line-height:1.5;letter-spacing:.06em;text-transform:uppercase;color:var(--shop-brass,#dfbd7f);}.ds-volume strong{font:500 clamp(24px,2.6vw,37px)/1.12 \"Playfair Display\",serif;text-wrap:balance;}.ds-book-action{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;margin-top:auto;padding-top:14px;border-top:1px solid #dfbd7f77;font-size:12px;}.ds-volume:hover strong{text-decoration:underline;text-underline-offset:5px;}.ds-volume:focus-visible{outline:3px solid var(--shop-brass,#dfbd7f);outline-offset:6px;}.ds-ledge{padding:20px 24px;margin-top:8px;border-top:4px solid #8c664a;background:var(--shop-wood,#614332);color:var(--shop-brass,#dfbd7f);box-shadow:0 14px 20px #1d130e80;font:500 18px \"Playfair Display\",serif;}@media(max-width:358px){.ds-volume{max-width:none;min-height:300px;transform:none;}.ds-volume strong{font-size:28px;}}"
+    },
+    {
+      "name": "Catalog Drawer",
+      "kind": "custom",
+      "refersTo": "catalog-drawer",
+      "description": "Framed author name within a wood drawer.",
+      "html": "<div class=\"ds-cabinet\"><a class=\"ds-drawer\" href=\"#author\"><strong>Lewis Carroll</strong><span aria-hidden=\"true\">→</span></a></div>",
+      "css": ".ds-cabinet{padding:16px;background:var(--shop-walnut,#38271f);}.ds-drawer{display:flex;justify-content:space-between;align-items:center;gap:20px;min-height:110px;padding:24px;background:var(--shop-wood,#614332);color:var(--shop-paper,#f3ead9);text-decoration:none;}.ds-drawer strong{padding:12px 20px;border:1px solid #c4a16a;font:500 clamp(22px,2.6vw,32px)/1.2 \"Playfair Display\",serif;}.ds-drawer>span{color:var(--shop-brass,#dfbd7f);}.ds-drawer:hover{background:var(--shop-wood,#614332);}.ds-drawer:focus-visible{outline:3px solid #bc6f42;outline-offset:4px;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Old Bookshop and Its Reading Desk",
+    "overview": "Castellation welcomes readers through a mahogany bookcase of readable bound volumes. Walnut, brass, burgundy, paper, existing story artwork, and literary titles give the catalog a tactile old-bookshop character. The first shelf contains real catalog titles and native story links, rendered without client JavaScript.\n\nDeeper surfaces reinterpret catalog drawers, accession slips, bookplates, folded leaves, reference cabinets, and reading desks. The literary atlas remains part of the implementation: routes and surfaces without a bookshop override retain its paper, forest, sage, rust, and peach vocabulary. Reading maps remain working tools with chapter controls and inspection rails.",
+    "keyCharacteristics": [
+      "A readable mahogany bookshelf as the first entrance.",
+      "Paper catalog objects within wood and clothbound surfaces.",
+      "Playfair Display literary titles and DM Sans interface text.",
+      "Native reading links, responsive tools, and visible keyboard focus."
+    ],
+    "rules": [
+      {
+        "name": "The Material Pairing Rule",
+        "body": "On bookshop wood and burgundy surfaces, use shop paper for copy and brass for selected details. Retained forest panels keep their atlas paper, sage, and peach pairings.",
+        "section": "colors"
+      },
+      {
+        "name": "The Literary Hierarchy Rule",
+        "body": "Use Playfair Display for literary titles and DM Sans for controls and supporting interface copy.",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "Do make catalog titles and native reading actions readable on the entrance bookshelf.",
+      "Do use bookshop materials on the implemented surfaces and retain atlas treatments where no override exists.",
+      "Do pair literary serif titles with sans-serif interface labels and supporting text.",
+      "Do collapse editorial columns and the map rail into a single reading sequence at the implemented mobile breakpoint.",
+      "Do preserve reading boundaries, native form controls, focus indicators, and reduced-motion handling."
+    ],
+    "donts": [
+      "Don't apply the entrance bookshelf to every page; maps, chapter briefings, and account forms have their own layouts.",
+      "Don't let material decoration conceal titles, reading controls, or keyboard focus.",
+      "Don't replace existing story artwork with generic decoration.",
+      "Don't infer a universal radius, body size, or button color from a single surface."
+    ]
+  }
+}
