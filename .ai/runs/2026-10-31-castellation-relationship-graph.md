@@ -33,12 +33,14 @@ Engine: om-auto-create-pr (steps: 5, --loop: no)
 
 ## Progress
 
+PR: #1
+
 > Convention: `- [ ]` pending, `- [x]` done. Append a commit SHA when a step lands. Do not rename step titles.
 
 ### Phase 1: Portrait-led map
 
-- [ ] 1.1 Add the opt-in atlas shell and scoped map styles
-- [ ] 1.2 Add pure deterministic layout and portrait rendering
+- [x] 1.1 Add the opt-in atlas shell and scoped map styles - 0ba8873
+- [x] 1.2 Add pure deterministic layout and portrait rendering - 0ba8873
 
 ### Phase 2: Chapter-safe navigation
 
@@ -48,3 +50,5 @@ Engine: om-auto-create-pr (steps: 5, --loop: no)
 ### Phase 3: Acceptance evidence
 
 - [ ] 3.1 Complete acceptance verification, review and UI evidence
+
+Phase 1 validation: 7 geometry tests and 6 focused browser tests passed; web build passed.
