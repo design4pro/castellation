@@ -38,3 +38,10 @@ test('a failed chapter update does not expose a stale share link', async ({ page
   await expect(page.locator('#story-app')).toHaveAttribute('data-state', 'error');
   await expect(page.locator('#map-share')).toBeHidden();
 });
+
+test('contextual selection never enters the shared URL', async ({ page }) => {
+  await page.goto('/books/alices-adventures-in-wonderland/map?lang=en&volume=1&chapter=1&character=alice&relation=unknown&search=private');
+  await expect(page.locator('#map-detail-name')).toHaveText('Alice');
+  const url = new URL(await page.locator('#map-share-url').inputValue());
+  expect([...url.searchParams.keys()]).toEqual(['lang', 'volume', 'chapter']);
+});

@@ -1,3 +1,6 @@
+import { selectPortrait } from '../../../../packages/domain/src/catalog.js';
+import { layoutCharacters, layoutRelations, PORTRAIT_RADIUS } from './relationship-layout.js';
+
 const root = document.querySelector('#story-app');
 if (root) {
 const api = root.dataset.api;
@@ -34,6 +37,10 @@ const detailPrompt = document.querySelector('#map-detail-prompt');
 const retry = document.querySelector('#map-retry');
 let requestedPosition;
 let selectedNode = null;
+let selectionTrigger = null;
+let entryPending = true;
+const characterActions = new Map();
+const relationActions = new Map();
 const ns = 'http://www.w3.org/2000/svg';
 let state = { x: 0, y: 0, scale: 1 };
 let pointers = new Map();
@@ -41,6 +48,8 @@ let start = null;
 let moved = false;
 let layer;
 let data;
+let portraitObserver;
+const failedPortraits = new Set();
 let requestId = 0;
 let saveQueue = Promise.resolve();
 const storageKey = `castellation:guest-progress:${root.dataset.slug}`;
@@ -62,31 +71,87 @@ function element(name, attrs = {}) { const node = document.createElementNS(ns, n
 function transform() { if (layer) layer.setAttribute('transform', `translate(${state.x} ${state.y}) scale(${state.scale})`); }
 function setScale(scale) { state.scale = Math.max(.5, Math.min(3, scale)); transform(); }
 function addText(parent, name, value) { const el = document.createElement(name); el.textContent = value || ''; parent.append(el); return el; }
+function addPortrait(group, character, defs) {
+  const portrait = selectPortrait(character.portraits, data.progress);
+  if (!portrait?.url || failedPortraits.has(portrait.url)) return;
+  const clipId = `portrait-${requestId}-${defs.childElementCount}`;
+  const clip = element('clipPath', { id: clipId });
+  clip.append(element('circle', { r: PORTRAIT_RADIUS })); defs.append(clip);
+  const image = element('image', { x: -PORTRAIT_RADIUS, y: -PORTRAIT_RADIUS, width: PORTRAIT_RADIUS * 2, height: PORTRAIT_RADIUS * 2, 'clip-path': `url(#${clipId})`, preserveAspectRatio: 'xMidYMid slice', 'aria-hidden': 'true' });
+  image.dataset.src = portrait.url;
+  image.addEventListener('error', () => { failedPortraits.add(portrait.url); image.remove(); }, { once: true });
+  group.append(image); portraitObserver.observe(image);
+  group.addEventListener('focus', () => { if (image.isConnected && !image.hasAttribute('href')) image.setAttribute('href', portrait.url); });
+}
+function renderDetailPortrait(character) {
+  const frame = document.querySelector('.map-detail-mark');
+  frame.textContent = character.name.slice(0, 1);
+  const portrait = selectPortrait(character.portraits, data.progress);
+  if (!portrait?.url || failedPortraits.has(portrait.url)) return;
+  const image = document.createElement('img'); image.src = portrait.url; image.alt = '';
+  image.addEventListener('error', () => { failedPortraits.add(portrait.url); image.remove(); }, { once: true });
+  frame.append(image);
+}
+function highlightSelection(control) {
+  svg.querySelectorAll('.is-related').forEach((item) => item.classList.remove('is-related'));
+  const ids = control.dataset.character ? [control.dataset.character] : [control.dataset.from, control.dataset.to];
+  svg.querySelectorAll('[data-character], [data-from]').forEach((item) => {
+    if (ids.includes(item.dataset.character) || (control.dataset.character && [item.dataset.from, item.dataset.to].includes(control.dataset.character))) item.classList.add('is-related');
+  });
+}
+function bindInspector(group, render) {
+  const open = (focus = true, trigger = group) => {
+    if (trigger === group && moved) return;
+    selectionTrigger = trigger;
+    if (selectedNode) { selectedNode.classList.remove('is-selected'); selectedNode.setAttribute('aria-expanded', 'false'); }
+    selectedNode = group; group.classList.add('is-selected'); group.setAttribute('aria-expanded', 'true');
+    highlightSelection(group); detailPrompt.hidden = true;
+    render(); detail.hidden = false;
+    const heading = document.querySelector('#map-detail-name');
+    document.querySelector('#map-selection-status').textContent = heading.textContent;
+    if (focus) heading.focus();
+  };
+  group.addEventListener('focus', () => {
+    const box = group.getBoundingClientRect(), canvas = svg.getBoundingClientRect();
+    if (box.left < canvas.left || box.top < canvas.top || box.right > canvas.right || box.bottom > canvas.bottom) {
+      state = { x: 0, y: 0, scale: 1 }; transform();
+    }
+    group.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  });
+  group.addEventListener('click', () => open());
+  group.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); moved = false; open(); }
+  });
+  return open;
+}
 function draw() {
-  detail.hidden = true; selectedNode = null;
+  detail.hidden = true; selectedNode = null; selectionTrigger = null;
+  characterActions.clear(); relationActions.clear();
   svg.replaceChildren(); layer = element('g'); svg.append(layer);
   const chars = data.story.characters;
   detailPrompt.hidden = chars.length === 0;
-  const nodes = new Map(chars.map((character, index) => {
-    const angle = (2 * Math.PI * index / Math.max(chars.length, 1)) - Math.PI / 2;
-    return [character.id, { ...character, x: 400 + 230 * Math.cos(angle), y: 260 + 170 * Math.sin(angle) }];
-  }));
+  const { nodes, width, height } = layoutCharacters(chars, data.story.relations, Math.max(660, document.querySelector('.graph-scroll').clientWidth));
+  svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  svg.style.minWidth = `${width}px`;
+  svg.style.minHeight = `${height}px`;
+  portraitObserver?.disconnect();
+  portraitObserver = new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting && entry.target.isConnected) {
+      entry.target.setAttribute('href', entry.target.dataset.src);
+      portraitObserver.unobserve(entry.target);
+    }
+  }, { root: document.querySelector('.graph-scroll') });
   const defs = element('defs');
   const marker = element('marker', { id:'relation-arrow', viewBox:'0 0 10 10', refX:'9', refY:'5', markerWidth:'7', markerHeight:'7', orient:'auto' });
   marker.append(element('path', { d:'M 0 0 L 10 5 L 0 10 z', fill:'#536d5b' })); defs.append(marker); layer.append(defs);
-  data.story.relations.forEach((relation) => {
-    const a = nodes.get(relation.from), b = nodes.get(relation.to); if (!a || !b) return;
-    const dx = b.x - a.x, dy = b.y - a.y, distance = Math.hypot(dx, dy);
-    const ux = distance ? dx / distance : 0, uy = distance ? dy / distance : 0;
+  layoutRelations(data.story.relations, nodes).forEach(({ relation, path, x, y }) => {
+    const a = nodes.get(relation.from), b = nodes.get(relation.to);
     const group = element('g', { class:'edge-group', tabindex:'0', role:'button', 'aria-label': `${a.name} - ${relation.label} - ${b.name}`, 'aria-controls':'map-detail', 'aria-expanded':'false' });
-    const line = distance ? element('line', { x1:a.x + ux * 40, y1:a.y + uy * 40, x2:b.x - ux * 43, y2:b.y - uy * 43, class:'edge', 'marker-end':'url(#relation-arrow)', 'aria-hidden':'true' }) : element('path', { d:`M ${a.x - 27} ${a.y - 30} C ${a.x - 85} ${a.y - 120}, ${a.x + 85} ${a.y - 120}, ${a.x + 27} ${a.y - 30}`, class:'edge', fill:'none', 'marker-end':'url(#relation-arrow)', 'aria-hidden':'true' });
-    const label = element('text', { x:distance ? (a.x + b.x) / 2 - uy * 13 : a.x, y:distance ? (a.y + b.y) / 2 + ux * 13 : a.y - 98, 'text-anchor':'middle', class:'edge-label', 'aria-hidden':'true' });
+    group.dataset.from = relation.from; group.dataset.to = relation.to;
+    const line = element('path', { d: path, class: 'edge', fill: 'none', 'marker-end': 'url(#relation-arrow)', 'aria-hidden': 'true' });
+    const label = element('text', { x, y, 'text-anchor':'middle', class:'edge-label', 'aria-hidden':'true' });
     label.textContent = relation.label.length > 28 ? `${relation.label.slice(0, 27)}…` : relation.label;
-    const open = () => {
-      if (moved) return;
-      if (selectedNode) { selectedNode.classList.remove('is-selected'); selectedNode.setAttribute('aria-expanded', 'false'); }
-      selectedNode = group; group.classList.add('is-selected'); group.setAttribute('aria-expanded', 'true');
-      detailPrompt.hidden = true;
+    const open = bindInspector(group, () => {
       document.querySelector('.map-detail-mark').textContent = '↗';
       document.querySelector('.map-detail-content .eyebrow').textContent = pl ? 'WYBRANE POWIĄZANIE' : 'SELECTED CONNECTION';
       const heading = document.querySelector('#map-detail-name'); heading.textContent = `${a.name} → ${b.name}`;
@@ -94,32 +159,37 @@ function draw() {
       const link = document.querySelector('#map-detail-link');
       link.href = `/books/${encodeURIComponent(root.dataset.slug)}/relations/${encodeURIComponent(relation.id)}?lang=${lang}&volume=${data.progress.volume}&chapter=${data.progress.chapter}`;
       link.textContent = pl ? 'Otwórz szczegóły relacji ↗' : 'Open connection details ↗';
-      detail.hidden = false; heading.focus();
-    };
-    group.addEventListener('click', open); group.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); moved = false; open(); } });
+    });
+
+    relationActions.set(relation.id, open);
     group.append(line, label); layer.append(group);
   });
   nodes.forEach((character) => {
     const group = element('g', { transform:`translate(${character.x} ${character.y})`, class:'graph-node', tabindex:'0', role:'button', 'aria-label':character.name, 'aria-controls':'map-detail', 'aria-expanded':'false' });
-    group.append(element('circle', { r:38, class:'node-ring' }), element('circle', { r:31, class:'node-inner' }));
-    const initial = element('text', { y:8, 'text-anchor':'middle', class:'node-initial' }); initial.textContent = character.name.slice(0, 1); group.append(initial);
-    const label = element('text', { y:58, 'text-anchor':'middle', class:'node-label' }); label.textContent = character.name; group.append(label);
-    const open = () => {
-      if (moved) return;
-      if (selectedNode) { selectedNode.classList.remove('is-selected'); selectedNode.setAttribute('aria-expanded', 'false'); }
-      selectedNode = group; group.classList.add('is-selected'); group.setAttribute('aria-expanded', 'true');
-      detailPrompt.hidden = true;
-      document.querySelector('.map-detail-mark').textContent = character.name.slice(0, 1);
+    group.dataset.character = character.id;
+    group.append(element('circle', { r:PORTRAIT_RADIUS + 6, class:'node-ring' }), element('circle', { r:PORTRAIT_RADIUS, class:'node-inner' }));
+    const initial = element('text', { y:13, 'text-anchor':'middle', class:'node-initial', 'aria-hidden':'true' }); initial.textContent = character.name.slice(0, 1); group.append(initial);
+    addPortrait(group, character, defs);
+    const label = element('text', { y:78, 'text-anchor':'middle', class:'node-label' }); label.textContent = character.name.length > 22 ? `${character.name.slice(0, 21)}…` : character.name; group.append(label);
+    const open = bindInspector(group, () => {
+      renderDetailPortrait(character);
       document.querySelector('.map-detail-content .eyebrow').textContent = pl ? 'WYBRANA POSTAĆ' : 'SELECTED CHARACTER';
       document.querySelector('#map-detail-link').textContent = pl ? 'Otwórz profil postaci ↗' : 'Open character profile ↗';
       const heading = document.querySelector('#map-detail-name');
       heading.textContent = character.name;
       document.querySelector('#map-detail-description').textContent = character.descriptions.at(-1)?.text || '';
       document.querySelector('#map-detail-link').href = `/books/${encodeURIComponent(root.dataset.slug)}/characters/${encodeURIComponent(character.slug)}?lang=${lang}&volume=${data.progress.volume}&chapter=${data.progress.chapter}`;
-      detail.hidden = false; heading.focus();
-    };
-    group.addEventListener('click', open); group.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); moved = false; open(); } }); layer.append(group);
+    });
+    characterActions.set(character.slug, open);
+    layer.append(group);
   }); transform();
+  const viewport = document.querySelector('.graph-scroll');
+  const first = nodes.values().next().value;
+  if (first) {
+    const scale = svg.getBoundingClientRect().width / width;
+    viewport.scrollLeft = Math.max(0, first.x * scale - viewport.clientWidth / 2);
+    viewport.scrollTop = 0;
+  }
   const discoveries = document.querySelector('#chapter-discoveries-list');
   const discoveryPosition = document.querySelector('#chapter-discoveries-position');
   const atCurrentChapter = (item) => item.volume === data.progress.volume && item.chapter === data.progress.chapter;
@@ -136,7 +206,7 @@ function draw() {
   });
   if (!discoveries.childElementCount) { const empty = addText(discoveries, 'p', pl ? 'Brak nowych szczegółów w tym rozdziale.' : 'No new details are available for this chapter.'); empty.className = 'chapter-discoveries-empty'; }
   const list = document.querySelector('#character-list'); list.replaceChildren();
-  chars.forEach((character) => { const article = document.createElement('article'); article.className = 'list-item'; article.id = `character-${character.slug}`; article.tabIndex = -1; const portrait = character.portraits.at(-1); if (portrait?.url) { const img = document.createElement('img'); img.src = portrait.url; img.alt = character.name; img.className = 'character-portrait'; img.loading = 'lazy'; article.append(img); } const heading = addText(article, 'h3', ''); const link = document.createElement('a'); const progressQuery = `&volume=${data.progress.volume}&chapter=${data.progress.chapter}`; link.href = `/books/${encodeURIComponent(root.dataset.slug)}/characters/${encodeURIComponent(character.slug)}?lang=${lang}${progressQuery}`; link.textContent = character.name; heading.append(link); const description = character.descriptions.at(-1); if (description) addText(article, 'p', description.text); data.story.relations.filter((r) => r.from === character.id || r.to === character.id).forEach((r) => { const from = nodes.get(r.from), to = nodes.get(r.to); if (from && to) addText(article, 'p', `${from.name} · ${r.label} → ${to.name}`); }); list.append(article); });
+  chars.forEach((character) => { const article = document.createElement('article'); article.className = 'list-item'; article.id = `character-${character.slug}`; article.tabIndex = -1; const portrait = selectPortrait(character.portraits, data.progress); if (portrait?.url) { const img = document.createElement('img'); img.src = portrait.url; img.alt = character.name; img.className = 'character-portrait'; img.loading = 'lazy'; img.addEventListener('error', () => img.remove(), { once: true }); article.append(img); } const heading = addText(article, 'h3', ''); const link = document.createElement('a'); const progressQuery = `&volume=${data.progress.volume}&chapter=${data.progress.chapter}`; link.href = `/books/${encodeURIComponent(root.dataset.slug)}/characters/${encodeURIComponent(character.slug)}?lang=${lang}${progressQuery}`; link.textContent = character.name; heading.append(link); const inspect = document.createElement('button'); inspect.type = 'button'; inspect.className = 'character-select'; inspect.textContent = pl ? `Obejrzyj: ${character.name}` : `Inspect ${character.name}`; inspect.addEventListener('click', () => characterActions.get(character.slug)(true, inspect)); article.append(inspect); const description = character.descriptions.at(-1); if (description) addText(article, 'p', description.text); data.story.relations.filter((r) => r.from === character.id || r.to === character.id).forEach((r) => { const from = nodes.get(r.from), to = nodes.get(r.to); if (from && to) addText(article, 'p', `${from.name} · ${r.label} → ${to.name}`); }); list.append(article); });
   const connections = document.querySelector('#map-connections-list'); connections.replaceChildren();
   const summary = document.querySelector('#map-summary');
   summary.textContent = pl ? `Tom ${data.progress.volume}, rozdział ${data.progress.chapter} · ${chars.length} postaci · ${data.story.relations.length} relacji` : `Volume ${data.progress.volume}, chapter ${data.progress.chapter} · ${chars.length} ${chars.length === 1 ? 'character' : 'characters'} · ${data.story.relations.length} ${data.story.relations.length === 1 ? 'connection' : 'connections'}`;
@@ -158,22 +228,47 @@ function draw() {
     const item = document.createElement('li');
     const linkFor = (character) => { const link = document.createElement('a'); link.href = `/books/${encodeURIComponent(root.dataset.slug)}/characters/${encodeURIComponent(character.slug)}?lang=${lang}${progressQuery}`; link.textContent = character.name; return link; };
     const label = document.createElement('span'); label.className = 'map-relation-label'; label.textContent = `${relation.label} →`;
-    item.append(linkFor(from), label, linkFor(to)); connections.append(item);
+    const inspect = document.createElement('button'); inspect.type = 'button'; inspect.textContent = pl ? `Obejrzyj: ${from.name} - ${relation.label} - ${to.name}` : `Inspect ${from.name} - ${relation.label} - ${to.name}`; inspect.addEventListener('click', () => relationActions.get(relation.id)(true, inspect));
+    item.append(linkFor(from), label, linkFor(to), inspect); connections.append(item);
   });
   if (!connections.childElementCount) { const item = document.createElement('li'); item.textContent = pl ? 'Brak widocznych powiązań na tym etapie.' : 'No connections are visible at this point.'; connections.append(item); }
   const events = document.querySelector('#event-list'); events.replaceChildren(); data.story.events.forEach((event) => { const article = document.createElement('article'); article.className = 'list-item'; addText(article, 'small', `${pl ? 'Rozdział' : 'Chapter'} ${event.chapter}`); addText(article, 'h3', event.title); addText(article, 'p', event.description); events.append(article); });
 }
+function charsEmptyMessage() {
+  return data.story.characters.length ? '' : (pl ? 'Na tym etapie nie ma jeszcze widocznych postaci.' : 'No characters are visible at this point.');
+}
+function clearChapterContent() {
+  portraitObserver?.disconnect();
+  for (const selector of ['#graph-svg', '#character-list', '#event-list', '#chapter-discoveries-list', '#map-connections-list', '.map-detail-mark']) document.querySelector(selector).replaceChildren();
+  for (const selector of ['#map-detail-name', '#map-detail-description', '#map-summary', '#chapter-discoveries-position', '#map-selection-status', '#map-share-boundary', '#map-share-status']) document.querySelector(selector).textContent = '';
+  document.querySelector('#map-detail-link').removeAttribute('href');
+  document.querySelector('#reading-sheet-link').removeAttribute('href');
+  document.querySelector('#reading-sheet-link').hidden = true;
+  document.querySelector('#map-share-url').value = '';
+  detail.hidden = true; detailPrompt.hidden = true;
+  selectedNode = null; selectionTrigger = null; layer = null; data = null;
+  characterActions.clear(); relationActions.clear();
+  state = { x: 0, y: 0, scale: 1 };
+  pointers.clear(); moved = false; start = null;
+}
+function applyEntrySelection() {
+  if (!entryPending) return;
+  entryPending = false;
+  const params = new URLSearchParams(location.search);
+  const action = relationActions.get(params.get('relation')) || characterActions.get(params.get('character'));
+  action?.(false);
+}
 async function load(position) {
   if (!api) { status.textContent = pl ? 'Brak skonfigurowanego API.' : 'The API is not configured.'; return; }
   const currentRequest = ++requestId;
-  requestedPosition = position; root.dataset.state = 'loading'; retry.hidden = true; detail.hidden = true; document.querySelector('#map-share').hidden = true; updateChapterControls(false);
+  requestedPosition = position; clearChapterContent(); root.dataset.state = 'loading'; retry.hidden = true; detail.hidden = true; document.querySelector('#map-share').hidden = true; updateChapterControls(false);
   status.textContent = pl ? 'Aktualizujemy mapę dla wybranego rozdziału...' : 'Updating the map for your selected chapter...';
   try {
     const query = position ? `?volume=${position.volume}&chapter=${position.chapter}` : '';
     const response = await fetch(`${api}/api/books/${encodeURIComponent(root.dataset.slug)}${query}`); if (!response.ok) throw new Error(); const result = await response.json(); if (currentRequest !== requestId) return; data = result;
     document.querySelector('#book-title').textContent = data.book.title; document.querySelector('#book-author').textContent = data.book.author;
     progress.replaceChildren(); data.book.positions.forEach((p) => { const option = document.createElement('option'); option.value = `${p.volume}:${p.chapter}`; option.textContent = `${pl ? 'Tom' : 'Volume'} ${p.volume} · ${pl ? 'Rozdział' : 'Chapter'} ${p.chapter}`; option.selected = p.volume === data.progress.volume && p.chapter === data.progress.chapter; progress.append(option); });
-    draw(); root.dataset.state = 'ready'; updateChapterControls(true); status.textContent = '';
+    draw(); root.dataset.state = 'ready'; applyEntrySelection(); updateChapterControls(true); status.textContent = charsEmptyMessage();
   } catch { if (currentRequest === requestId) { root.dataset.state = 'error'; status.textContent = pl ? 'Nie udało się zaktualizować mapy.' : 'Unable to update the map.'; retry.hidden = false; } }
 }
 document.querySelector('#map-share-copy').addEventListener('click', async () => {
@@ -188,8 +283,17 @@ document.querySelector('#map-share-copy').addEventListener('click', async () => 
   }
 });
 retry.addEventListener('click', () => load(requestedPosition));
-document.querySelector('#map-detail-close').addEventListener('click', () => { detail.hidden = true; detailPrompt.hidden = false; if (selectedNode) { selectedNode.classList.remove('is-selected'); selectedNode.setAttribute('aria-expanded', 'false'); selectedNode.focus(); selectedNode = null; } });
+document.querySelector('#map-detail-close').addEventListener('click', () => {
+  detail.hidden = true; detailPrompt.hidden = !data?.story.characters.length;
+  document.querySelector('#map-selection-status').textContent = pl ? 'Szczegóły zamknięte.' : 'Details closed.';
+  svg.querySelectorAll('.is-related').forEach((item) => item.classList.remove('is-related'));
+  if (selectedNode) { selectedNode.classList.remove('is-selected'); selectedNode.setAttribute('aria-expanded', 'false'); }
+  (selectionTrigger?.isConnected ? selectionTrigger : progress).focus();
+  selectedNode = null; selectionTrigger = null;
+});
 progress.addEventListener('change', () => {
+  entryPending = false;
+  const url = new URL(location.href); url.searchParams.delete('character'); url.searchParams.delete('relation'); history.replaceState(null, '', url);
   detail.hidden = true;
   const [volume, chapter] = progress.value.split(':').map(Number);
   const position={volume,chapter};
@@ -209,13 +313,18 @@ svg.addEventListener('pointermove', (event) => {
   if (!pointers.has(event.pointerId)) return;
   const previous = pointers.get(event.pointerId); pointers.set(event.pointerId, {x:event.clientX,y:event.clientY});
   const points = [...pointers.values()];
-  if (points.length === 1) { const dx = event.clientX - previous.x, dy = event.clientY - previous.y; if (Math.abs(dx)+Math.abs(dy)>1) moved = true; const bounds = svg.getBoundingClientRect(); state.x += dx * 800 / bounds.width; state.y += dy * 520 / bounds.height; transform(); }
+  if (points.length === 1) { const dx = event.clientX - previous.x, dy = event.clientY - previous.y; if (Math.abs(dx)+Math.abs(dy)>1) moved = true; const bounds = svg.getBoundingClientRect(); state.x += dx * svg.viewBox.baseVal.width / bounds.width; state.y += dy * svg.viewBox.baseVal.height / bounds.height; transform(); }
   if (points.length === 2) { const distance = Math.hypot(points[0].x-points[1].x, points[0].y-points[1].y); if (start) setScale(state.scale * distance / start); start = distance; moved = true; }
 });
 for (const type of ['pointerup','pointercancel']) svg.addEventListener(type, (event) => { pointers.delete(event.pointerId); start = null; });
 document.querySelector('#zoom-in').addEventListener('click', () => setScale(state.scale * 1.25));
 document.querySelector('#zoom-out').addEventListener('click', () => setScale(state.scale / 1.25));
 document.querySelector('#zoom-reset').addEventListener('click', () => { state = {x:0,y:0,scale:1}; transform(); });
+availablePositions.forEach((position) => {
+  const option = document.createElement('option'); option.value = `${position.volume}:${position.chapter}`;
+  option.textContent = `${pl ? 'Tom' : 'Volume'} ${position.volume} · ${pl ? 'Rozdział' : 'Chapter'} ${position.chapter}`;
+  progress.append(option);
+});
 async function loadInitial() {
   const params = new URLSearchParams(location.search);
   const volume = params.get('volume'), chapter = params.get('chapter');

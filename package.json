@@ -8,7 +8,7 @@
     "packages/cms-plugin"
   ],
   "scripts": {
-    "test": "node --test packages/domain/test/*.test.js apps/api/test/*.test.js packages/cms-plugin/*.test.js",
+    "test": "node --test packages/domain/test/*.test.js apps/api/test/*.test.js packages/cms-plugin/*.test.js apps/web/test/*.test.js",
     "build:web": "npm run build -w @castellation/web",
     "dev:web": "npm run dev -w @castellation/web",
     "dev:mobile": "npm run start -w @castellation/mobile",
