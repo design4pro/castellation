@@ -1,0 +1,25 @@
+---
+import Atlas from '../components/Atlas.jsx';
+import '../styles.css';
+
+export function getStaticPaths() {
+  return ['home', 'character', 'map'].map((screen) => ({
+    params: { screen: screen === 'home' ? undefined : screen }, props: { screen },
+  }));
+}
+const { screen } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{screen === 'home' ? 'A world between characters' : screen === 'map' ? 'The relationship atlas' : 'Character portrait'} · Castellation</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='20' fill='%23304a40'/%3E%3Ctext x='20' y='29' text-anchor='middle' font-size='30' fill='%23f5f1e8'%3EC%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+  </head>
+  <body><Atlas screen={screen} client:load /></body>
+</html>

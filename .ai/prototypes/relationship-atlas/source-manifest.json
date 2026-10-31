@@ -1,0 +1,28 @@
+{
+  "prototypeId": "castellation-relationship-atlas-v1",
+  "version": "v1",
+  "sourceRevision": "55ea88685c47142ed855b715153fbc7a4cb96db4",
+  "source": ".ai/specs/product-brief.md",
+  "acceptance": "accepted",
+  "files": {
+    "README.md": "afd3dc295982c9e3c05c7ea5df8b2a2c138f652453849ec8b13920deb66745ba",
+    "astro.config.mjs": "f77abf81c78ebd883c5e31e20331512478b018c9e1c3ec55c738716da6c9a957",
+    "evidence/character-1440.png": "2a0078740ddeccdbba3b07287fc1b2e651d4929eb9f75acb4ee4691cadebadbb",
+    "evidence/character-390.png": "050f7893e2d759f228651082ca6007eeb262ad527112836c662541a6b2895aab",
+    "evidence/home-1440.png": "8bc268c47eb499c162370111cba787e9858fe92c2522df759131daabd23756b1",
+    "evidence/home-390.png": "5022d26ed390830297d9637d346d5fca797607ce3818f3ea82eb8261d3203cd1",
+    "evidence/map-1440.png": "6130b697b9618e71074c7332055b15c6a4a19660129e781655d0f74ab79e3b5d",
+    "evidence/map-390.png": "1873236b62f67183e22232f13d7c3809e7ded46c3cd4d2e2d0ee184b763e7341",
+    "public/portraits.png": "6ccc644979ffc0b3e20ed151c248f8191d0ee54210aa65f0a3afbe1d28d5e466",
+    "src/components/Atlas.jsx": "e15fc1f531dcd07eba987e7b677f4eed4882e4103fb5af5603622f33a44d6f91",
+    "src/data.js": "a08888c941841c5ba3e03a8c371527b0ffdcf065ee23bcc614c5dfa3de9533b3",
+    "src/pages/[...screen].astro": "e8a6adef20a9e80070d2f5a0ef4e567b9abf7d074356836e136f51c3331837c0",
+    "src/screens.css": "5acd417bc4eb5b65d6cdb86ae52200695665c89bf803371373ac6629365fba9f",
+    "src/styles.css": "460abf6c9e2110754b1f8b55f623dd02f0ebd7c250e8958fc000a5d79a62cddd",
+    "wrangler.jsonc": "2869df24bcf8aa3cae7dcada06e8cbef5e6bf63b3d2bdeed547192d3d69f11e2",
+    "ACCEPTANCE.md": "a3f1fc13a6dfe7f56a9e980551f7ad50858e1a4f347549e406367ac93e03c19f"
+  },
+  "acceptanceRecord": "ACCEPTANCE.md",
+  "acceptedAt": "2026-10-31",
+  "reviewedManifestSha256": "45de6141bcfed2a4165b048f50187213312033b46fe4206cfe226bea1605407b"
+}
