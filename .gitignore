@@ -11,3 +11,8 @@ test-results/
 
 .dev.vars*
 !.dev.vars.example
+
+# Agent QA runtime state and artifacts
+.ai/qa/artifacts_*/
+.ai/qa/test-env.json
+.ai/qa/test-env.env
