@@ -2,9 +2,10 @@
 import '../styles/global.css';
 import '../styles/reading-atlas.css';
 import '../styles/bookshop.css';
+import '../styles/relationship-atlas.css';
 const canonical = new URL(Astro.url.pathname, Astro.url.origin);
 if (Astro.props.lang === 'pl') canonical.searchParams.set('lang', 'pl');
-const { title = 'Castellation - Stories, connected', lang = 'en', noindex = false, description = 'Explore literary characters and their connections, one chapter at a time.' } = Astro.props;
+const { variant = 'default', title = 'Castellation - Stories, connected', lang = 'en', noindex = false, description = 'Explore literary characters and their connections, one chapter at a time.' } = Astro.props;
 const translatedPages = new Set(['/', '/how-it-works', '/help', '/our-method', '/guides', '/reading-paths', '/guides/choose-your-next-classic', '/guides/track-characters', '/guides/lewis-carroll-and-alice', '/guides/alice-down-the-rabbit-hole', '/guides/book-club-questions', '/guides/two-unexpected-beginnings']);
 const localized = !noindex && translatedPages.has(Astro.url.pathname.replace(/\/$/, '') || '/');
 const englishUrl = new URL(Astro.url.pathname, Astro.url.origin);
@@ -21,5 +22,5 @@ polishUrl.searchParams.set('lang', 'pl');
     <title>{title}</title>{!noindex && <><link rel="canonical" href={canonical.href} /><meta property="og:type" content="website" /><meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:url" content={canonical.href} /><meta property="og:site_name" content="Castellation" /></>}{noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" /><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
-  <body id="page"><slot /></body>
+  <body id="page" class:list={{ 'relationship-atlas': variant === 'relationship-atlas' }}><slot /></body>
 </html>

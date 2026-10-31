@@ -1,3 +1,6 @@
+import { selectPortrait } from '../../../../packages/domain/src/catalog.js';
+import { layoutCharacters, layoutRelations, PORTRAIT_RADIUS } from './relationship-layout.js';
+
 const root = document.querySelector('#story-app');
 if (root) {
 const api = root.dataset.api;
@@ -41,6 +44,8 @@ let start = null;
 let moved = false;
 let layer;
 let data;
+let portraitObserver;
+const failedPortraits = new Set();
 let requestId = 0;
 let saveQueue = Promise.resolve();
 const storageKey = `castellation:guest-progress:${root.dataset.slug}`;
@@ -62,30 +67,65 @@ function element(name, attrs = {}) { const node = document.createElementNS(ns, n
 function transform() { if (layer) layer.setAttribute('transform', `translate(${state.x} ${state.y}) scale(${state.scale})`); }
 function setScale(scale) { state.scale = Math.max(.5, Math.min(3, scale)); transform(); }
 function addText(parent, name, value) { const el = document.createElement(name); el.textContent = value || ''; parent.append(el); return el; }
+function addPortrait(group, character, defs) {
+  const portrait = selectPortrait(character.portraits, data.progress);
+  if (!portrait?.url || failedPortraits.has(portrait.url)) return;
+  const clipId = `portrait-${requestId}-${defs.childElementCount}`;
+  const clip = element('clipPath', { id: clipId });
+  clip.append(element('circle', { r: PORTRAIT_RADIUS })); defs.append(clip);
+  const image = element('image', { x: -PORTRAIT_RADIUS, y: -PORTRAIT_RADIUS, width: PORTRAIT_RADIUS * 2, height: PORTRAIT_RADIUS * 2, 'clip-path': `url(#${clipId})`, preserveAspectRatio: 'xMidYMid slice', 'aria-hidden': 'true' });
+  image.dataset.src = portrait.url;
+  image.addEventListener('error', () => { failedPortraits.add(portrait.url); image.remove(); }, { once: true });
+  group.append(image); portraitObserver.observe(image);
+  group.addEventListener('focus', () => { if (image.isConnected && !image.hasAttribute('href')) image.setAttribute('href', portrait.url); });
+}
+function renderDetailPortrait(character) {
+  const frame = document.querySelector('.map-detail-mark');
+  frame.textContent = character.name.slice(0, 1);
+  const portrait = selectPortrait(character.portraits, data.progress);
+  if (!portrait?.url || failedPortraits.has(portrait.url)) return;
+  const image = document.createElement('img'); image.src = portrait.url; image.alt = '';
+  image.addEventListener('error', () => { failedPortraits.add(portrait.url); image.remove(); }, { once: true });
+  frame.replaceChildren(image);
+}
+function highlightSelection(control) {
+  svg.querySelectorAll('.is-related').forEach((item) => item.classList.remove('is-related'));
+  const ids = control.dataset.character ? [control.dataset.character] : [control.dataset.from, control.dataset.to];
+  svg.querySelectorAll('[data-character], [data-from]').forEach((item) => {
+    if (ids.includes(item.dataset.character) || (control.dataset.character && [item.dataset.from, item.dataset.to].includes(control.dataset.character))) item.classList.add('is-related');
+  });
+}
 function draw() {
   detail.hidden = true; selectedNode = null;
   svg.replaceChildren(); layer = element('g'); svg.append(layer);
   const chars = data.story.characters;
   detailPrompt.hidden = chars.length === 0;
-  const nodes = new Map(chars.map((character, index) => {
-    const angle = (2 * Math.PI * index / Math.max(chars.length, 1)) - Math.PI / 2;
-    return [character.id, { ...character, x: 400 + 230 * Math.cos(angle), y: 260 + 170 * Math.sin(angle) }];
-  }));
+  const { nodes, width, height } = layoutCharacters(chars);
+  svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  svg.style.minWidth = `${Math.max(660, width * .9)}px`;
+  svg.style.minHeight = `${height * .9}px`;
+  portraitObserver?.disconnect();
+  portraitObserver = new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) {
+      entry.target.setAttribute('href', entry.target.dataset.src);
+      portraitObserver.unobserve(entry.target);
+    }
+  }, { root: document.querySelector('.graph-scroll') });
   const defs = element('defs');
   const marker = element('marker', { id:'relation-arrow', viewBox:'0 0 10 10', refX:'9', refY:'5', markerWidth:'7', markerHeight:'7', orient:'auto' });
   marker.append(element('path', { d:'M 0 0 L 10 5 L 0 10 z', fill:'#536d5b' })); defs.append(marker); layer.append(defs);
-  data.story.relations.forEach((relation) => {
-    const a = nodes.get(relation.from), b = nodes.get(relation.to); if (!a || !b) return;
-    const dx = b.x - a.x, dy = b.y - a.y, distance = Math.hypot(dx, dy);
-    const ux = distance ? dx / distance : 0, uy = distance ? dy / distance : 0;
+  layoutRelations(data.story.relations, nodes).forEach(({ relation, path, x, y }) => {
+    const a = nodes.get(relation.from), b = nodes.get(relation.to);
     const group = element('g', { class:'edge-group', tabindex:'0', role:'button', 'aria-label': `${a.name} - ${relation.label} - ${b.name}`, 'aria-controls':'map-detail', 'aria-expanded':'false' });
-    const line = distance ? element('line', { x1:a.x + ux * 40, y1:a.y + uy * 40, x2:b.x - ux * 43, y2:b.y - uy * 43, class:'edge', 'marker-end':'url(#relation-arrow)', 'aria-hidden':'true' }) : element('path', { d:`M ${a.x - 27} ${a.y - 30} C ${a.x - 85} ${a.y - 120}, ${a.x + 85} ${a.y - 120}, ${a.x + 27} ${a.y - 30}`, class:'edge', fill:'none', 'marker-end':'url(#relation-arrow)', 'aria-hidden':'true' });
-    const label = element('text', { x:distance ? (a.x + b.x) / 2 - uy * 13 : a.x, y:distance ? (a.y + b.y) / 2 + ux * 13 : a.y - 98, 'text-anchor':'middle', class:'edge-label', 'aria-hidden':'true' });
+    group.dataset.from = relation.from; group.dataset.to = relation.to;
+    const line = element('path', { d: path, class: 'edge', fill: 'none', 'marker-end': 'url(#relation-arrow)', 'aria-hidden': 'true' });
+    const label = element('text', { x, y, 'text-anchor':'middle', class:'edge-label', 'aria-hidden':'true' });
     label.textContent = relation.label.length > 28 ? `${relation.label.slice(0, 27)}…` : relation.label;
     const open = () => {
       if (moved) return;
       if (selectedNode) { selectedNode.classList.remove('is-selected'); selectedNode.setAttribute('aria-expanded', 'false'); }
       selectedNode = group; group.classList.add('is-selected'); group.setAttribute('aria-expanded', 'true');
+      highlightSelection(group);
       detailPrompt.hidden = true;
       document.querySelector('.map-detail-mark').textContent = '↗';
       document.querySelector('.map-detail-content .eyebrow').textContent = pl ? 'WYBRANE POWIĄZANIE' : 'SELECTED CONNECTION';
@@ -96,20 +136,24 @@ function draw() {
       link.textContent = pl ? 'Otwórz szczegóły relacji ↗' : 'Open connection details ↗';
       detail.hidden = false; heading.focus();
     };
+    group.addEventListener('focus', () => group.scrollIntoView({ block: 'nearest', inline: 'nearest' }));
     group.addEventListener('click', open); group.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); moved = false; open(); } });
     group.append(line, label); layer.append(group);
   });
   nodes.forEach((character) => {
     const group = element('g', { transform:`translate(${character.x} ${character.y})`, class:'graph-node', tabindex:'0', role:'button', 'aria-label':character.name, 'aria-controls':'map-detail', 'aria-expanded':'false' });
-    group.append(element('circle', { r:38, class:'node-ring' }), element('circle', { r:31, class:'node-inner' }));
-    const initial = element('text', { y:8, 'text-anchor':'middle', class:'node-initial' }); initial.textContent = character.name.slice(0, 1); group.append(initial);
-    const label = element('text', { y:58, 'text-anchor':'middle', class:'node-label' }); label.textContent = character.name; group.append(label);
+    group.dataset.character = character.id;
+    group.append(element('circle', { r:PORTRAIT_RADIUS + 6, class:'node-ring' }), element('circle', { r:PORTRAIT_RADIUS, class:'node-inner' }));
+    const initial = element('text', { y:13, 'text-anchor':'middle', class:'node-initial', 'aria-hidden':'true' }); initial.textContent = character.name.slice(0, 1); group.append(initial);
+    addPortrait(group, character, defs);
+    const label = element('text', { y:78, 'text-anchor':'middle', class:'node-label' }); label.textContent = character.name; group.append(label);
     const open = () => {
       if (moved) return;
       if (selectedNode) { selectedNode.classList.remove('is-selected'); selectedNode.setAttribute('aria-expanded', 'false'); }
       selectedNode = group; group.classList.add('is-selected'); group.setAttribute('aria-expanded', 'true');
+      highlightSelection(group);
       detailPrompt.hidden = true;
-      document.querySelector('.map-detail-mark').textContent = character.name.slice(0, 1);
+      renderDetailPortrait(character);
       document.querySelector('.map-detail-content .eyebrow').textContent = pl ? 'WYBRANA POSTAĆ' : 'SELECTED CHARACTER';
       document.querySelector('#map-detail-link').textContent = pl ? 'Otwórz profil postaci ↗' : 'Open character profile ↗';
       const heading = document.querySelector('#map-detail-name');
@@ -118,6 +162,7 @@ function draw() {
       document.querySelector('#map-detail-link').href = `/books/${encodeURIComponent(root.dataset.slug)}/characters/${encodeURIComponent(character.slug)}?lang=${lang}&volume=${data.progress.volume}&chapter=${data.progress.chapter}`;
       detail.hidden = false; heading.focus();
     };
+    group.addEventListener('focus', () => group.scrollIntoView({ block: 'nearest', inline: 'nearest' }));
     group.addEventListener('click', open); group.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); moved = false; open(); } }); layer.append(group);
   }); transform();
   const discoveries = document.querySelector('#chapter-discoveries-list');
@@ -136,7 +181,7 @@ function draw() {
   });
   if (!discoveries.childElementCount) { const empty = addText(discoveries, 'p', pl ? 'Brak nowych szczegółów w tym rozdziale.' : 'No new details are available for this chapter.'); empty.className = 'chapter-discoveries-empty'; }
   const list = document.querySelector('#character-list'); list.replaceChildren();
-  chars.forEach((character) => { const article = document.createElement('article'); article.className = 'list-item'; article.id = `character-${character.slug}`; article.tabIndex = -1; const portrait = character.portraits.at(-1); if (portrait?.url) { const img = document.createElement('img'); img.src = portrait.url; img.alt = character.name; img.className = 'character-portrait'; img.loading = 'lazy'; article.append(img); } const heading = addText(article, 'h3', ''); const link = document.createElement('a'); const progressQuery = `&volume=${data.progress.volume}&chapter=${data.progress.chapter}`; link.href = `/books/${encodeURIComponent(root.dataset.slug)}/characters/${encodeURIComponent(character.slug)}?lang=${lang}${progressQuery}`; link.textContent = character.name; heading.append(link); const description = character.descriptions.at(-1); if (description) addText(article, 'p', description.text); data.story.relations.filter((r) => r.from === character.id || r.to === character.id).forEach((r) => { const from = nodes.get(r.from), to = nodes.get(r.to); if (from && to) addText(article, 'p', `${from.name} · ${r.label} → ${to.name}`); }); list.append(article); });
+  chars.forEach((character) => { const article = document.createElement('article'); article.className = 'list-item'; article.id = `character-${character.slug}`; article.tabIndex = -1; const portrait = selectPortrait(character.portraits, data.progress); if (portrait?.url) { const img = document.createElement('img'); img.src = portrait.url; img.alt = character.name; img.className = 'character-portrait'; img.loading = 'lazy'; img.addEventListener('error', () => img.remove(), { once: true }); article.append(img); } const heading = addText(article, 'h3', ''); const link = document.createElement('a'); const progressQuery = `&volume=${data.progress.volume}&chapter=${data.progress.chapter}`; link.href = `/books/${encodeURIComponent(root.dataset.slug)}/characters/${encodeURIComponent(character.slug)}?lang=${lang}${progressQuery}`; link.textContent = character.name; heading.append(link); const description = character.descriptions.at(-1); if (description) addText(article, 'p', description.text); data.story.relations.filter((r) => r.from === character.id || r.to === character.id).forEach((r) => { const from = nodes.get(r.from), to = nodes.get(r.to); if (from && to) addText(article, 'p', `${from.name} · ${r.label} → ${to.name}`); }); list.append(article); });
   const connections = document.querySelector('#map-connections-list'); connections.replaceChildren();
   const summary = document.querySelector('#map-summary');
   summary.textContent = pl ? `Tom ${data.progress.volume}, rozdział ${data.progress.chapter} · ${chars.length} postaci · ${data.story.relations.length} relacji` : `Volume ${data.progress.volume}, chapter ${data.progress.chapter} · ${chars.length} ${chars.length === 1 ? 'character' : 'characters'} · ${data.story.relations.length} ${data.story.relations.length === 1 ? 'connection' : 'connections'}`;
@@ -188,7 +233,7 @@ document.querySelector('#map-share-copy').addEventListener('click', async () => 
   }
 });
 retry.addEventListener('click', () => load(requestedPosition));
-document.querySelector('#map-detail-close').addEventListener('click', () => { detail.hidden = true; detailPrompt.hidden = false; if (selectedNode) { selectedNode.classList.remove('is-selected'); selectedNode.setAttribute('aria-expanded', 'false'); selectedNode.focus(); selectedNode = null; } });
+document.querySelector('#map-detail-close').addEventListener('click', () => { detail.hidden = true; detailPrompt.hidden = false; svg.querySelectorAll('.is-related').forEach((item) => item.classList.remove('is-related')); if (selectedNode) { selectedNode.classList.remove('is-selected'); selectedNode.setAttribute('aria-expanded', 'false'); selectedNode.focus(); selectedNode = null; } });
 progress.addEventListener('change', () => {
   detail.hidden = true;
   const [volume, chapter] = progress.value.split(':').map(Number);
