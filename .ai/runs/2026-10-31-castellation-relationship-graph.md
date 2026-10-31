@@ -44,11 +44,15 @@ PR: #1
 
 ### Phase 2: Chapter-safe navigation
 
-- [ ] 2.1 Add contextual entry and equivalent textual controls
-- [ ] 2.2 Clear previous chapter content and preserve safe transitions
+- [x] 2.1 Add contextual entry and equivalent textual controls - 567a4e5
+- [x] 2.2 Clear previous chapter content and preserve safe transitions - 567a4e5
 
 ### Phase 3: Acceptance evidence
 
 - [ ] 3.1 Complete acceptance verification, review and UI evidence
 
 Phase 1 validation: 7 geometry tests and 6 focused browser tests passed; web build passed.
+
+Test fixture rule: read the catalog positions before selecting chapter boundaries. The demo Alice catalog has chapters 1 and 2; chapter 3 belongs only to the accepted prototype fixture.
+
+Phase 2 validation: 16 focused browser scenarios passed, including backward error/retry, out-of-order responses, invalid position, withdrawn book, contextual precedence, focus return and share privacy. Tests use DEV_TEST_API_URL=http://localhost:8797 because another project owns port 8787.
