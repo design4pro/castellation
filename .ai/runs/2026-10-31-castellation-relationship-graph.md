@@ -56,3 +56,9 @@ Phase 1 validation: 7 geometry tests and 6 focused browser tests passed; web bui
 Test fixture rule: read the catalog positions before selecting chapter boundaries. The demo Alice catalog has chapters 1 and 2; chapter 3 belongs only to the accepted prototype fixture.
 
 Phase 2 validation: 16 focused browser scenarios passed, including backward error/retry, out-of-order responses, invalid position, withdrawn book, contextual precedence, focus return and share privacy. Tests use DEV_TEST_API_URL=http://localhost:8797 because another project owns port 8787.
+
+Style verification rule: compare rendered screenshots as well as flow tests. The older shell uses ID-prefixed selectors; the atlas explicitly excludes its stylesheets and uses the opted-in body ID for component-style precedence.
+
+Phase 3 implementation: 7628533. Full authoritative review gate passed: 73 unit/integration tests, web build, 78 E2E. See .ai/qa/2026-10-31-relationship-graph.md and the PR screenshot evidence. Step 3.1 stays pending until actual 200% browser zoom and a screen-reader pass are verified. GitHub rejected formal self-approval; another reviewer must provide any formal approval. No QA approval was granted.
+
+Review sequencing rule: await completion of tracker claim operations before starting the validation/review commands; do not overlap dependent tool sessions.
