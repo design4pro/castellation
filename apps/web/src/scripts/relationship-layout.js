@@ -1,17 +1,28 @@
 export const PORTRAIT_RADIUS = 48;
 
 /** Stable introduction ordering makes selection independent of layout. */
-export function layoutCharacters(characters) {
+export function layoutCharacters(characters, relations = [], canvasWidth = 800) {
   const ordered = [...characters].sort((a, b) => a.volume - b.volume || a.chapter - b.chapter || String(a.id).localeCompare(String(b.id), 'en'));
   const small = [[.47, .44], [.19, .18], [.77, .17], [.18, .72], [.66, .8], [.87, .48]];
   const radius = Math.max(230, ordered.length * 150 / (2 * Math.PI));
-  const width = ordered.length <= 6 ? 800 : Math.ceil(radius * 2 + 200);
-  const height = ordered.length <= 6 ? 550 : width;
+  let width = ordered.length <= 6 ? canvasWidth : Math.ceil(radius * 2 + 200);
+  let height = ordered.length <= 6 ? 550 : width;
   const nodes = new Map(ordered.map((character, index) => {
     const angle = index * 2 * Math.PI / ordered.length - Math.PI / 2;
     const [x, y] = ordered.length === 1 ? [width / 2, height / 2] : ordered.length <= 6 ? [small[index][0] * width, small[index][1] * height] : [width / 2 + radius * Math.cos(angle), height / 2 + radius * Math.sin(angle)];
     return [character.id, { ...character, x, y }];
   }));
+  const loops = new Map();
+  for (const relation of relations) if (relation.from === relation.to && nodes.has(relation.from)) loops.set(relation.from, (loops.get(relation.from) || 0) + 1);
+  let left = 0, top = 0, right = 0;
+  for (const [id, count] of loops) {
+    const node = nodes.get(id), reach = 110 + (count - 1) * 45;
+    left = Math.max(left, reach + 20 - node.x);
+    top = Math.max(top, reach + 75 - node.y);
+    right = Math.max(right, node.x + reach + 20 - width);
+  }
+  for (const node of nodes.values()) { node.x += left; node.y += top; }
+  width += left + right; height += top;
   return { nodes, width, height };
 }
 

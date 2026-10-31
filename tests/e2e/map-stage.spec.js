@@ -124,3 +124,28 @@ test('invalid position and withdrawn-book errors leave explicit recovery control
   await expect(page.locator('#graph-svg')).toBeEmpty();
   await expect(page.getByRole('link', { name: 'Library', exact: true }).first()).toBeVisible();
 });
+
+
+test('an inspector portrait failure retains the initial inside the reserved frame', async ({ page }) => {
+  await page.route('**/missing-inspector-portrait', (route) => route.fulfill({ status: 404 }));
+  await page.route('**/api/books/alices-adventures-in-wonderland?*', async (route) => {
+    const response = await route.fetch(), data = await response.json();
+    data.story.characters.find((character) => character.slug === 'alice').portraits = [{ volume: 1, chapter: 1, url: '/missing-inspector-portrait' }];
+    await route.fulfill({ json: data });
+  });
+  await page.goto('/books/alices-adventures-in-wonderland/map?lang=en&volume=1&chapter=1&character=alice');
+  await expect(page.locator('#map-detail-name')).toHaveText('Alice');
+  await expect(page.locator('.map-detail-mark img')).toHaveCount(0);
+  await expect(page.locator('.map-detail-mark')).toHaveText('A');
+  await expect(page.locator('.map-detail-mark')).toHaveCSS('width', '152px');
+});
+
+test('a rejected save reports failure without changing the graph or writing guest progress', async ({ page }) => {
+  await page.route('**/api/progress/alices-adventures-in-wonderland', (route) => route.fulfill({ status: route.request().method() === 'PUT' ? 400 : 401 }));
+  await page.goto('/books/alices-adventures-in-wonderland/map?lang=en&volume=1&chapter=1');
+  await expect(page.locator('#story-app')).toHaveAttribute('data-state', 'ready');
+  await page.locator('#progress').selectOption('1:2');
+  await expect(page.locator('#map-summary')).toContainText('chapter 2');
+  await expect(page.locator('#progress-memory-text')).toHaveText('Unable to save reading progress.');
+  expect(await page.evaluate(() => localStorage.getItem('castellation:guest-progress:alices-adventures-in-wonderland'))).toBeNull();
+});

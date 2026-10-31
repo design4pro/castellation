@@ -90,7 +90,7 @@ function renderDetailPortrait(character) {
   if (!portrait?.url || failedPortraits.has(portrait.url)) return;
   const image = document.createElement('img'); image.src = portrait.url; image.alt = '';
   image.addEventListener('error', () => { failedPortraits.add(portrait.url); image.remove(); }, { once: true });
-  frame.replaceChildren(image);
+  frame.append(image);
 }
 function highlightSelection(control) {
   svg.querySelectorAll('.is-related').forEach((item) => item.classList.remove('is-related'));
@@ -111,7 +111,13 @@ function bindInspector(group, render) {
     document.querySelector('#map-selection-status').textContent = heading.textContent;
     if (focus) heading.focus();
   };
-  group.addEventListener('focus', () => group.scrollIntoView({ block: 'nearest', inline: 'nearest' }));
+  group.addEventListener('focus', () => {
+    const box = group.getBoundingClientRect(), canvas = svg.getBoundingClientRect();
+    if (box.left < canvas.left || box.top < canvas.top || box.right > canvas.right || box.bottom > canvas.bottom) {
+      state = { x: 0, y: 0, scale: 1 }; transform();
+    }
+    group.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  });
   group.addEventListener('click', () => open());
   group.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); moved = false; open(); }
@@ -124,13 +130,13 @@ function draw() {
   svg.replaceChildren(); layer = element('g'); svg.append(layer);
   const chars = data.story.characters;
   detailPrompt.hidden = chars.length === 0;
-  const { nodes, width, height } = layoutCharacters(chars);
+  const { nodes, width, height } = layoutCharacters(chars, data.story.relations, Math.max(660, document.querySelector('.graph-scroll').clientWidth));
   svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
-  svg.style.minWidth = `${Math.max(660, width * .9)}px`;
-  svg.style.minHeight = `${height * .9}px`;
+  svg.style.minWidth = `${width}px`;
+  svg.style.minHeight = `${height}px`;
   portraitObserver?.disconnect();
   portraitObserver = new IntersectionObserver((entries) => {
-    for (const entry of entries) if (entry.isIntersecting) {
+    for (const entry of entries) if (entry.isIntersecting && entry.target.isConnected) {
       entry.target.setAttribute('href', entry.target.dataset.src);
       portraitObserver.unobserve(entry.target);
     }
@@ -164,7 +170,7 @@ function draw() {
     group.append(element('circle', { r:PORTRAIT_RADIUS + 6, class:'node-ring' }), element('circle', { r:PORTRAIT_RADIUS, class:'node-inner' }));
     const initial = element('text', { y:13, 'text-anchor':'middle', class:'node-initial', 'aria-hidden':'true' }); initial.textContent = character.name.slice(0, 1); group.append(initial);
     addPortrait(group, character, defs);
-    const label = element('text', { y:78, 'text-anchor':'middle', class:'node-label' }); label.textContent = character.name; group.append(label);
+    const label = element('text', { y:78, 'text-anchor':'middle', class:'node-label' }); label.textContent = character.name.length > 22 ? `${character.name.slice(0, 21)}…` : character.name; group.append(label);
     const open = bindInspector(group, () => {
       renderDetailPortrait(character);
       document.querySelector('.map-detail-content .eyebrow').textContent = pl ? 'WYBRANA POSTAĆ' : 'SELECTED CHARACTER';
@@ -175,8 +181,15 @@ function draw() {
       document.querySelector('#map-detail-link').href = `/books/${encodeURIComponent(root.dataset.slug)}/characters/${encodeURIComponent(character.slug)}?lang=${lang}&volume=${data.progress.volume}&chapter=${data.progress.chapter}`;
     });
     characterActions.set(character.slug, open);
- layer.append(group);
+    layer.append(group);
   }); transform();
+  const viewport = document.querySelector('.graph-scroll');
+  const first = nodes.values().next().value;
+  if (first) {
+    const scale = svg.getBoundingClientRect().width / width;
+    viewport.scrollLeft = Math.max(0, first.x * scale - viewport.clientWidth / 2);
+    viewport.scrollTop = 0;
+  }
   const discoveries = document.querySelector('#chapter-discoveries-list');
   const discoveryPosition = document.querySelector('#chapter-discoveries-position');
   const atCurrentChapter = (item) => item.volume === data.progress.volume && item.chapter === data.progress.chapter;
@@ -221,6 +234,9 @@ function draw() {
   if (!connections.childElementCount) { const item = document.createElement('li'); item.textContent = pl ? 'Brak widocznych powiązań na tym etapie.' : 'No connections are visible at this point.'; connections.append(item); }
   const events = document.querySelector('#event-list'); events.replaceChildren(); data.story.events.forEach((event) => { const article = document.createElement('article'); article.className = 'list-item'; addText(article, 'small', `${pl ? 'Rozdział' : 'Chapter'} ${event.chapter}`); addText(article, 'h3', event.title); addText(article, 'p', event.description); events.append(article); });
 }
+function charsEmptyMessage() {
+  return data.story.characters.length ? '' : (pl ? 'Na tym etapie nie ma jeszcze widocznych postaci.' : 'No characters are visible at this point.');
+}
 function clearChapterContent() {
   portraitObserver?.disconnect();
   for (const selector of ['#graph-svg', '#character-list', '#event-list', '#chapter-discoveries-list', '#map-connections-list', '.map-detail-mark']) document.querySelector(selector).replaceChildren();
@@ -252,7 +268,7 @@ async function load(position) {
     const response = await fetch(`${api}/api/books/${encodeURIComponent(root.dataset.slug)}${query}`); if (!response.ok) throw new Error(); const result = await response.json(); if (currentRequest !== requestId) return; data = result;
     document.querySelector('#book-title').textContent = data.book.title; document.querySelector('#book-author').textContent = data.book.author;
     progress.replaceChildren(); data.book.positions.forEach((p) => { const option = document.createElement('option'); option.value = `${p.volume}:${p.chapter}`; option.textContent = `${pl ? 'Tom' : 'Volume'} ${p.volume} · ${pl ? 'Rozdział' : 'Chapter'} ${p.chapter}`; option.selected = p.volume === data.progress.volume && p.chapter === data.progress.chapter; progress.append(option); });
-    draw(); root.dataset.state = 'ready'; applyEntrySelection(); updateChapterControls(true); status.textContent = '';
+    draw(); root.dataset.state = 'ready'; applyEntrySelection(); updateChapterControls(true); status.textContent = charsEmptyMessage();
   } catch { if (currentRequest === requestId) { root.dataset.state = 'error'; status.textContent = pl ? 'Nie udało się zaktualizować mapy.' : 'Unable to update the map.'; retry.hidden = false; } }
 }
 document.querySelector('#map-share-copy').addEventListener('click', async () => {

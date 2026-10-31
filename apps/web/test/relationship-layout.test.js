@@ -44,3 +44,17 @@ test('self, parallel and reverse connections remain distinct and clipped', () =>
   }
   assert.deepEqual(layoutRelations([{ id: 'hidden', from, to: 'unrevealed' }], nodes), []);
 });
+
+
+test('self loops at the top and side of the constellation fit inside the canvas', () => {
+  const characters = cast(6);
+  const relations = Array.from({ length: 4 }, (_, index) => ({ id: `loop-${index}`, from: characters[1].id, to: characters[1].id }));
+  const { nodes, width, height } = layoutCharacters(characters, relations);
+  for (const edge of layoutRelations(relations, nodes)) {
+    const numbers = edge.path.match(/-?\d+(?:\.\d+)?/g).map(Number);
+    for (let index = 0; index < numbers.length; index += 2) {
+      assert.ok(numbers[index] >= 0 && numbers[index] <= width);
+      assert.ok(numbers[index + 1] >= 0 && numbers[index + 1] <= height);
+    }
+  }
+});

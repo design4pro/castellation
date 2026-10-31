@@ -1,4 +1,4 @@
-.relationship-atlas {
+#page.relationship-atlas {
   --atlas-paper: #f5f1e8;
   --atlas-surface: #fcfaf5;
   --atlas-ink: #242c29;
@@ -9,88 +9,112 @@
   background: var(--atlas-paper);
   color: var(--atlas-ink);
 }
-.relationship-atlas .wrap { width: min(1320px, calc(100% - 96px)); }
-.relationship-atlas .atlas-shell.site-header { background: transparent; border-bottom: 1px solid var(--atlas-line); }
-.relationship-atlas .atlas-shell .brand { color: var(--atlas-ink); }
-.relationship-atlas .atlas-shell .brand-mark, .relationship-atlas .atlas-shell .brand-dot { color: var(--atlas-forest); }
-.relationship-atlas .atlas-shell.site-footer { background: var(--atlas-paper); color: var(--atlas-ink); border-top: 1px solid var(--atlas-line); }
-.relationship-atlas .atlas-shell.site-footer p, .relationship-atlas .atlas-shell.site-footer span { color: var(--atlas-muted); }
-.relationship-atlas :is(a, button, select, summary, [tabindex]):focus-visible { outline: 3px solid var(--atlas-wine); outline-offset: 4px; }
-.relationship-atlas .map-page { padding-block: 26px 65px; }
-.relationship-atlas .map-page-intro { padding: 0; max-width: none; }
-.relationship-atlas .map-page-intro h1 { font-size: clamp(32px, 4vw, 58px); font-weight: 400; margin: 12px 0 5px; }
-.relationship-atlas .map-page-intro > p:not(.eyebrow) { margin: 5px 0; color: var(--atlas-muted); font-size: 13px; }
-.relationship-atlas .book-toolbar { display: block; margin: 24px 0; }
-.relationship-atlas .book-toolbar h2 { font-size: 23px; margin: 0; }
-.relationship-atlas .book-toolbar .muted { font-size: 12px; color: var(--atlas-muted); }
-.relationship-atlas .map-boundary { display: flex; justify-content: space-between; align-items: center; gap: 24px; background: #e8ebe3; border: 1px solid #cbd1c6; padding: 18px 23px; margin-top: 18px; }
-.relationship-atlas .map-boundary-copy { display: flex; align-items: start; gap: 15px; max-width: 650px; }
-.relationship-atlas .map-boundary-copy > span { font-size: 26px; color: var(--atlas-forest); }
-.relationship-atlas .map-boundary-copy strong { font-size: 13px; }
-.relationship-atlas .map-boundary-copy p { font-size: 12px; line-height: 1.6; margin: 5px 0 0; color: #4d5e51; }
-.relationship-atlas .map-boundary-copy a { text-decoration: underline; text-underline-offset: 3px; }
-.relationship-atlas .map-boundary label { min-width: 180px; }
-.relationship-atlas .map-boundary select { min-height: 44px; width: 100%; border: 1px solid #7b8274; border-radius: 2px; background: var(--atlas-surface); color: var(--atlas-ink); }
-.relationship-atlas .map-stage { display: grid; grid-template-columns: minmax(0, 1fr) 278px; border: 1px solid var(--atlas-line); background: var(--atlas-surface); margin-bottom: 24px; }
-.relationship-atlas .map-stage .graph { min-width: 0; background: var(--atlas-surface); border: 0; border-radius: 0; padding-bottom: 62px; }
-.relationship-atlas .atlas-graph-heading { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 20px 24px; font-size: 11px; color: var(--atlas-muted); }
-.relationship-atlas .atlas-graph-heading a { text-decoration: underline; text-underline-offset: 3px; }
-.relationship-atlas .graph-scroll { overflow: auto; scrollbar-width: thin; max-height: 650px; }
-.relationship-atlas .map-stage .graph svg { min-height: 520px; display: block; width: 100%; min-width: 660px; }
-.relationship-atlas .graph-hint { color: var(--atlas-muted); bottom: 25px; font-size: 9px; max-width: calc(100% - 180px); }
-.relationship-atlas .zoom-controls button { width: 44px; height: 44px; color: var(--atlas-ink); background: var(--atlas-surface); border-color: var(--atlas-line); }
-.relationship-atlas .map-stage-rail { min-width: 0; background: #efebe2; border-left: 1px solid var(--atlas-line); }
-.relationship-atlas .map-detail-prompt { padding: 26px; }
-.relationship-atlas .map-detail-prompt strong { font: 400 28px/1.2 'Playfair Display', Georgia, serif; }
-.relationship-atlas .map-detail-prompt p { color: var(--atlas-muted); font-size: 13px; line-height: 1.8; }
-.relationship-atlas .map-stage-rail .map-detail { display: block; position: relative; padding: 26px; margin: 0; color: var(--atlas-ink); background: transparent; }
-.relationship-atlas .map-detail-mark { display: grid; place-items: center; width: 152px; height: 152px; margin: 35px auto 25px; border: 1px solid #b7af9e; outline: 1px solid #c7c1b1; outline-offset: 5px; background: #e9e2d3; color: var(--atlas-forest); overflow: hidden; font: 400 48px 'Playfair Display', Georgia, serif; }
-.relationship-atlas .map-detail-mark img { width: 100%; height: 100%; object-fit: cover; }
-.relationship-atlas .map-detail-content .eyebrow { color: var(--atlas-wine); }
-.relationship-atlas .map-detail-content h2 { font: 400 33px/1.15 'Playfair Display', Georgia, serif; overflow-wrap: anywhere; }
-.relationship-atlas .map-detail-content > p:not(.eyebrow) { font-size: 13px; line-height: 1.8; color: #555c50; overflow-wrap: anywhere; }
-.relationship-atlas .map-detail-link { display: block; background: var(--atlas-forest); color: var(--atlas-surface); padding: 14px 16px; border: 0; line-height: 1.5; }
-.relationship-atlas .map-detail button { position: absolute; top: 12px; right: 12px; color: var(--atlas-ink); border-color: #7b8274; }
-.relationship-atlas .map-stage .chapter-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 20px; margin: 0; background: transparent; border-top: 1px solid var(--atlas-line); }
-.relationship-atlas .map-stage .chapter-position { grid-column: 1/-1; grid-row: 1; text-align: left; }
-.relationship-atlas .chapter-controls button { min-height: 44px; padding: 8px; }
-.relationship-atlas .map-stage .progress-memory { padding: 20px; margin: 0; display: flex; flex-wrap: wrap; gap: 10px; background: transparent; font-size: 12px; }
-.relationship-atlas .map-stage .progress-memory a { margin: 0; white-space: normal; }
-.relationship-atlas .node-ring { fill: #e9e2d3; stroke: #aaa38f; stroke-width: 1; }
-.relationship-atlas .node-inner { fill: #e9e2d3; }
-.relationship-atlas .node-initial { fill: var(--atlas-forest); font: 38px 'Playfair Display', Georgia, serif; }
-.relationship-atlas .node-label { fill: var(--atlas-ink); font: 16px 'Playfair Display', Georgia, serif; paint-order: stroke; stroke: var(--atlas-surface); stroke-width: 6px; stroke-linejoin: round; }
-.relationship-atlas .edge-group .edge { stroke: #7b8075; stroke-width: 1.5; }
-.relationship-atlas .edge-label { fill: #6d4e53; font: 11px 'DM Sans', sans-serif; stroke: var(--atlas-surface); stroke-width: 7px; }
-.relationship-atlas .graph-node:is(.is-selected, .is-related, :focus-visible) .node-ring { stroke: var(--atlas-wine); stroke-width: 3; }
-.relationship-atlas .edge-group:is(.is-selected, .is-related, :focus-visible) .edge { stroke: var(--atlas-wine); stroke-width: 3; }
-.relationship-atlas .map-connections-list button, .relationship-atlas .character-select { min-height: 44px; background: transparent; color: var(--atlas-forest); border: 1px solid #7b8274; padding: 10px 14px; cursor: pointer; text-align: left; overflow-wrap: anywhere; }
-.relationship-atlas .map-connections-list li { flex-wrap: wrap; overflow-wrap: anywhere; }
-.relationship-atlas .chapter-discoveries { display: grid; grid-template-columns: 1fr 2fr; gap: 30px; padding: 30px; margin-bottom: 24px; background: #e8ebe3; }
-.relationship-atlas .chapter-discoveries h2 { font: 400 30px 'Playfair Display', Georgia, serif; }
-.relationship-atlas .chapter-discoveries-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-.relationship-atlas .chapter-discoveries-group { border-top: 1px solid #b5bcae; font-size: 13px; overflow-wrap: anywhere; }
-.relationship-atlas .chapter-discoveries-group h3 { font-size: 12px; }
-.relationship-atlas .chapter-discoveries-group ul { padding-left: 16px; line-height: 1.7; }
-.relationship-atlas .reading-sheet-link { font-size: 13px; text-decoration: underline; }
-.relationship-atlas .map-stage [hidden], .relationship-atlas #story-app [hidden] { display: none; }
-.relationship-atlas #story-app:not([data-state="ready"]) :is(.chapter-discoveries, .map-connections, .story-columns) { display: none; }
+#page.relationship-atlas .wrap { width: min(1320px, calc(100% - 96px)); }
+#page.relationship-atlas .atlas-shell.site-header { background: transparent; border-bottom: 1px solid var(--atlas-line); }
+#page.relationship-atlas .atlas-shell .brand { color: var(--atlas-ink); }
+#page.relationship-atlas .atlas-shell .brand-mark, #page.relationship-atlas .atlas-shell .brand-dot { color: var(--atlas-forest); }
+#page.relationship-atlas .atlas-shell.site-footer { background: var(--atlas-paper); color: var(--atlas-ink); border-top: 1px solid var(--atlas-line); }
+#page.relationship-atlas .atlas-shell.site-footer p, #page.relationship-atlas .atlas-shell.site-footer span { color: var(--atlas-muted); }
+#page.relationship-atlas :is(a, button, select, summary, [tabindex]):focus-visible { outline: 3px solid var(--atlas-wine); outline-offset: 4px; }
+#page.relationship-atlas .map-page { padding-block: 26px 65px; }
+#page.relationship-atlas .map-page-intro { padding: 0; max-width: none; }
+#page.relationship-atlas .map-page-intro h1 { font-size: clamp(32px, 4vw, 58px); font-weight: 400; margin: 12px 0 5px; }
+#page.relationship-atlas .map-page-intro > p:not(.eyebrow) { margin: 5px 0; color: var(--atlas-muted); font-size: 13px; }
+#page.relationship-atlas .book-toolbar { display: block; margin: 24px 0; }
+#page.relationship-atlas .book-toolbar h2 { font-size: 23px; margin: 0; }
+#page.relationship-atlas .book-toolbar .muted { font-size: 12px; color: var(--atlas-muted); }
+#page.relationship-atlas .map-boundary { display: flex; justify-content: space-between; align-items: center; gap: 24px; background: #e8ebe3; border: 1px solid #cbd1c6; padding: 18px 23px; margin-top: 18px; }
+#page.relationship-atlas .map-boundary-copy { display: flex; align-items: start; gap: 15px; max-width: 650px; }
+#page.relationship-atlas .map-boundary-copy > span { font-size: 26px; color: var(--atlas-forest); }
+#page.relationship-atlas .map-boundary-copy strong { font-size: 13px; }
+#page.relationship-atlas .map-boundary-copy p { font-size: 12px; line-height: 1.6; margin: 5px 0 0; color: #4d5e51; }
+#page.relationship-atlas .map-boundary-copy a { text-decoration: underline; text-underline-offset: 3px; }
+#page.relationship-atlas .map-boundary label { min-width: 180px; }
+#page.relationship-atlas .map-boundary select { min-height: 44px; width: 100%; border: 1px solid #7b8274; border-radius: 2px; background: var(--atlas-surface); color: var(--atlas-ink); }
+#page.relationship-atlas .map-stage { display: grid; grid-template-columns: minmax(0, 1fr) 278px; border: 1px solid var(--atlas-line); background: var(--atlas-surface); margin-bottom: 24px; }
+#page.relationship-atlas .map-stage .graph { min-width: 0; background: var(--atlas-surface); border: 0; border-radius: 0; padding-bottom: 62px; }
+#page.relationship-atlas .atlas-graph-heading { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 20px 24px; font-size: 11px; color: var(--atlas-muted); }
+#page.relationship-atlas .atlas-graph-heading a { text-decoration: underline; text-underline-offset: 3px; }
+#page.relationship-atlas .graph-scroll { overflow: auto; scrollbar-width: thin; max-height: 650px; }
+#page.relationship-atlas .map-stage .graph svg { min-height: 520px; display: block; width: 100%; min-width: 660px; }
+#page.relationship-atlas .graph-hint { color: var(--atlas-muted); bottom: 25px; font-size: 9px; max-width: calc(100% - 180px); }
+#page.relationship-atlas .zoom-controls button { width: 44px; height: 44px; color: var(--atlas-ink); background: var(--atlas-surface); border-color: var(--atlas-line); }
+#page.relationship-atlas .map-stage-rail { min-width: 0; background: #efebe2; border-left: 1px solid var(--atlas-line); }
+#page.relationship-atlas .map-detail-prompt { padding: 26px; }
+#page.relationship-atlas .map-detail-prompt strong { font: 400 28px/1.2 'Playfair Display', Georgia, serif; }
+#page.relationship-atlas .map-detail-prompt p { color: var(--atlas-muted); font-size: 13px; line-height: 1.8; }
+#page.relationship-atlas .map-stage-rail .map-detail { display: block; position: relative; padding: 26px; margin: 0; color: var(--atlas-ink); background: transparent; }
+#page.relationship-atlas .map-detail-mark { display: grid; place-items: center; position: relative; width: 152px; height: 152px; margin: 35px auto 25px; border: 1px solid #b7af9e; outline: 1px solid #c7c1b1; outline-offset: 5px; background: #e9e2d3; color: var(--atlas-forest); overflow: hidden; font: 400 48px 'Playfair Display', Georgia, serif; }
+#page.relationship-atlas .map-detail-mark img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+#page.relationship-atlas .map-detail-content .eyebrow { color: var(--atlas-wine); }
+#page.relationship-atlas .map-detail-content h2 { font: 400 33px/1.15 'Playfair Display', Georgia, serif; overflow-wrap: anywhere; }
+#page.relationship-atlas .map-detail-content > p:not(.eyebrow) { font-size: 13px; line-height: 1.8; color: #555c50; overflow-wrap: anywhere; }
+#page.relationship-atlas .map-detail-link { display: block; background: var(--atlas-forest); color: var(--atlas-surface); padding: 14px 16px; border: 0; line-height: 1.5; }
+#page.relationship-atlas .map-detail button { position: absolute; top: 12px; right: 12px; color: var(--atlas-ink); border-color: #7b8274; }
+#page.relationship-atlas .map-stage .chapter-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 20px; margin: 0; background: transparent; border-top: 1px solid var(--atlas-line); }
+#page.relationship-atlas .map-stage .chapter-position { grid-column: 1/-1; grid-row: 1; text-align: left; }
+#page.relationship-atlas .chapter-controls button { min-height: 44px; padding: 8px; }
+#page.relationship-atlas .map-stage .progress-memory { padding: 20px; margin: 0; display: flex; flex-wrap: wrap; gap: 10px; background: transparent; font-size: 12px; }
+#page.relationship-atlas .map-stage .progress-memory a { margin: 0; white-space: normal; }
+#page.relationship-atlas .node-ring { fill: #e9e2d3; stroke: #aaa38f; stroke-width: 1; }
+#page.relationship-atlas .node-inner { fill: #e9e2d3; }
+#page.relationship-atlas .node-initial { fill: var(--atlas-forest); font: 38px 'Playfair Display', Georgia, serif; }
+#page.relationship-atlas .node-label { fill: var(--atlas-ink); font: 16px 'Playfair Display', Georgia, serif; paint-order: stroke; stroke: var(--atlas-surface); stroke-width: 6px; stroke-linejoin: round; }
+#page.relationship-atlas .edge-group .edge { stroke: #7b8075; stroke-width: 1.5; }
+#page.relationship-atlas .edge-label { fill: #6d4e53; font: 11px 'DM Sans', sans-serif; stroke: var(--atlas-surface); stroke-width: 7px; }
+#page.relationship-atlas .graph-node:is(.is-selected, .is-related, :focus-visible) .node-ring { stroke: var(--atlas-wine); stroke-width: 3; }
+#page.relationship-atlas .edge-group:is(.is-selected, .is-related, :focus-visible) .edge { stroke: var(--atlas-wine); stroke-width: 3; }
+#page.relationship-atlas .map-connections-list button, #page.relationship-atlas .character-select { min-height: 44px; background: transparent; color: var(--atlas-forest); border: 1px solid #7b8274; padding: 10px 14px; cursor: pointer; text-align: left; overflow-wrap: anywhere; }
+#page.relationship-atlas .map-connections-list li { flex-wrap: wrap; overflow-wrap: anywhere; }
+#page.relationship-atlas .chapter-discoveries { display: grid; grid-template-columns: 1fr 2fr; gap: 30px; padding: 30px; margin-bottom: 24px; background: #e8ebe3; }
+#page.relationship-atlas .chapter-discoveries h2 { font: 400 30px 'Playfair Display', Georgia, serif; }
+#page.relationship-atlas .chapter-discoveries-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+#page.relationship-atlas .chapter-discoveries-group { border-top: 1px solid #b5bcae; font-size: 13px; overflow-wrap: anywhere; }
+#page.relationship-atlas .chapter-discoveries-group h3 { font-size: 12px; }
+#page.relationship-atlas .chapter-discoveries-group ul { padding-left: 16px; line-height: 1.7; }
+#page.relationship-atlas .reading-sheet-link { font-size: 13px; text-decoration: underline; }
+#page.relationship-atlas .map-stage [hidden], #page.relationship-atlas #story-app [hidden] { display: none; }
+#page.relationship-atlas #story-app:not([data-state="ready"]) :is(.chapter-discoveries, .map-connections, .story-columns) { display: none; }
 @media (max-width: 1050px) {
-  .relationship-atlas .wrap { width: calc(100% - 48px); }
-  .relationship-atlas .map-stage { grid-template-columns: 1fr; }
-  .relationship-atlas .map-stage-rail { border-left: 0; border-top: 1px solid var(--atlas-line); }
+  #page.relationship-atlas .wrap { width: calc(100% - 48px); }
+  #page.relationship-atlas .map-stage { grid-template-columns: 1fr; }
+  #page.relationship-atlas .map-stage-rail { border-left: 0; border-top: 1px solid var(--atlas-line); }
 }
 @media (max-width: 760px) {
-  .relationship-atlas .wrap { width: calc(100% - 36px); }
-  .relationship-atlas .map-page { padding-top: 18px; }
-  .relationship-atlas .map-page-intro h1 { font-size: 35px; }
-  .relationship-atlas .map-boundary { display: block; padding: 17px; }
-  .relationship-atlas .map-boundary label { display: block; margin-top: 14px; }
-  .relationship-atlas .atlas-graph-heading { padding: 18px 16px; }
-  .relationship-atlas .chapter-discoveries, .relationship-atlas .chapter-discoveries-list { grid-template-columns: 1fr; gap: 16px; }
+  #page.relationship-atlas .wrap { width: calc(100% - 36px); }
+  #page.relationship-atlas .map-page { padding-top: 18px; }
+  #page.relationship-atlas .map-page-intro h1 { font-size: 35px; }
+  #page.relationship-atlas .map-boundary { display: block; padding: 17px; }
+  #page.relationship-atlas .map-boundary label { display: block; margin-top: 14px; }
+  #page.relationship-atlas .atlas-graph-heading { padding: 18px 16px; }
+  #page.relationship-atlas .chapter-discoveries, #page.relationship-atlas .chapter-discoveries-list { grid-template-columns: 1fr; gap: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .relationship-atlas * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+  #page.relationship-atlas * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }
 
-.relationship-atlas .atlas-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+#page.relationship-atlas .atlas-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+#page.relationship-atlas .chapter-controls, #page.relationship-atlas .chapter-controls button { color: var(--atlas-ink); }
+#page.relationship-atlas .chapter-position .eyebrow { color: var(--atlas-muted); }
+#page.relationship-atlas .chapter-controls button:hover[aria-disabled="false"] { background: #dce1d7; }
+#page.relationship-atlas .chapter-track { background: #cbd1c6; }
+#page.relationship-atlas .chapter-track span { background: var(--atlas-forest); }
+#page.relationship-atlas .map-connections { background: transparent; padding: 20px 0; }
+#page.relationship-atlas .map-connections-list li { grid-template-columns: 1fr 1fr 1fr auto; font: 13px 'DM Sans', sans-serif; }
+#page.relationship-atlas .map-connections-list button { font: 12px 'DM Sans', sans-serif; }
+#page.relationship-atlas .map-relation-label { color: var(--atlas-muted); font: italic 16px 'Playfair Display', Georgia, serif; }
+#page.relationship-atlas .character-portrait { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; }
+#page.relationship-atlas .eyebrow { color: var(--atlas-muted); }
+#page.relationship-atlas .atlas-shell .brand { font-weight: 400; font-size: 26px; letter-spacing: -.7px; }
+#page.relationship-atlas .site-footer-intro p { color: var(--atlas-muted); }
+#page.relationship-atlas .site-footer nav p { color: var(--atlas-wine); }
+@media (max-width: 760px) {
+  #page.relationship-atlas .map-connections-list li { grid-template-columns: 1fr 1fr; }
+  #page.relationship-atlas .map-connections-list button { grid-column: 1/-1; }
+}
+#page.relationship-atlas .book-toolbar > div:first-child { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+#page.relationship-atlas .list-item p, #page.relationship-atlas .list-item small { color: var(--atlas-muted); }
+@media (prefers-reduced-motion: reduce) {
+  html:has(> body.relationship-atlas) { scroll-behavior: auto; }
+}
